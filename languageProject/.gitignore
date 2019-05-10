@@ -1,0 +1,17 @@
+/.cache
+/bin
+/src-gen/stratego-java
+/src-gen/stratego_sugar
+!/target/replicate/strj-includes
+/target/metaborg
+/target/classes
+/target/analysis/
+/target/import-cache/
+/target/pluto/
+
+/.classpath
+/.project
+/.settings
+/.factorypath
+
+/.polyglot.metaborg.yaml
