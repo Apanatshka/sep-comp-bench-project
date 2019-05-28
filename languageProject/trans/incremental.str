@@ -13,5 +13,7 @@ rules // Debugging
     (node, _, _, path, project-path) -> (filename, result)
     with
       filename := <guarantee-extension(|"aterm")> path
+    ; debug
     ; result   := node{A()}
+    ; debug
 

@@ -5,7 +5,9 @@ imports signatures/Tiger-sig
 strategies
   
   desugar-all = 
-    topdown(try(desugar))
+    debug
+  ; topdown(try(desugar))
+  ; debug
     
 rules
 
