@@ -1,0 +1,29 @@
+module ds-signatures/Types-sig
+
+imports ds-signatures/Bindings-sig
+
+imports ds-signatures/Occurrences-sig
+
+signature
+    sorts
+      Dec
+      TypeDec
+      Type
+      TypeId
+      Scope
+      Ty
+    constructors
+      TypeDecs : List(TypeDec) -> Dec 
+      TypeDec : Occ * Type -> TypeDec 
+    constructors
+      __TypeId2Type__ : TypeId -> Type {implicit}
+      Tid : Occ -> TypeId 
+    constructors
+      INT : Ty 
+      STRING : Ty 
+      NIL : Ty 
+      UNIT : Ty 
+      NAME : Occ -> Ty 
+      RECORD : Scope -> Ty 
+      ARRAY : Ty * Scope -> Ty 
+      FUN : List(Ty) * Ty -> Ty 

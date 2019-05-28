@@ -1,0 +1,6 @@
+module ds-signatures/Identifiers-sig
+
+signature
+    sorts
+    sort aliases
+      Id = String

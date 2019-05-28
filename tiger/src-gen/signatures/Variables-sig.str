@@ -1,0 +1,33 @@
+module signatures/Variables-sig
+
+imports
+  signatures/Types-sig
+
+
+imports
+  signatures/Occurrences-sig
+
+
+signature
+  sorts
+    Var
+
+  constructors
+    VarDec       : Occ * Type * Exp -> Dec
+    VarDecNoType : Occ * Exp -> Dec
+    Var          : Occ -> Var
+                 : Var -> LValue
+                 : LValue -> Exp
+    Assign       : LValue * Exp -> Exp
+    Type-Plhdr   : Type
+    Dec-Plhdr    : Dec
+    Occ-Plhdr    : Occ
+    Var-Plhdr    : Var
+    LValue-Plhdr : LValue
+    Exp-Plhdr    : Exp
+    Type-Plhdr   : COMPLETION-INSERTION -> Type
+    Dec-Plhdr    : COMPLETION-INSERTION -> Dec
+    Occ-Plhdr    : COMPLETION-INSERTION -> Occ
+    Var-Plhdr    : COMPLETION-INSERTION -> Var
+    LValue-Plhdr : COMPLETION-INSERTION -> LValue
+    Exp-Plhdr    : COMPLETION-INSERTION -> Exp

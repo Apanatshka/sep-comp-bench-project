@@ -1,0 +1,19 @@
+module ds-signatures/Bindings-sig
+
+imports ds-signatures/Control-Flow-sig
+
+imports ds-signatures/Identifiers-sig
+
+imports ds-signatures/Types-sig
+
+imports ds-signatures/Functions-sig
+
+imports ds-signatures/Variables-sig
+
+signature
+    sorts
+      Exp
+      Declarations
+    constructors
+      Let : List(Dec) * List(Exp) -> Exp 
+      Declarations : List(Dec) -> Declarations 

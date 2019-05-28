@@ -1,0 +1,8 @@
+module completion/colorer/Occurrences-cc-esv
+
+imports
+  completion/colorer/Identifiers-cc-esv
+
+colorer
+  _.Occ-Plhdr : gray   
+  _.Id-Plhdr  : gray   

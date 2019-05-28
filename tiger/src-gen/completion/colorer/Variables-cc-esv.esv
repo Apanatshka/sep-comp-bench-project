@@ -1,0 +1,13 @@
+module completion/colorer/Variables-cc-esv
+
+imports
+  completion/colorer/Types-cc-esv
+  completion/colorer/Occurrences-cc-esv
+
+colorer
+  _.Type-Plhdr   : gray   
+  _.Dec-Plhdr    : gray   
+  _.Occ-Plhdr    : gray   
+  _.Var-Plhdr    : gray   
+  _.LValue-Plhdr : gray   
+  _.Exp-Plhdr    : gray   

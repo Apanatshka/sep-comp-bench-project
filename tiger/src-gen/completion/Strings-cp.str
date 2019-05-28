@@ -1,0 +1,51 @@
+module completion/Strings-cp
+
+imports
+  libstratego-gpp
+  libspoofax/editor/completion/-
+
+
+imports
+  signatures/Strings-sig
+
+
+rules
+
+  suggest-completions(|completions):
+    Exp-Plhdr() -> <add-completions(
+                    | ( "String"
+                      , String(
+                          <try(inline-completions(|Exp-Plhdr()))> StrConst-Plhdr()
+                        )
+                      )
+                    )
+                    ; fail> completions
+
+
+rules
+
+  is-lexical-completion-sort :
+    "StrConst" -> <id>
+
+  is-lexical-completion-sort :
+    "StrChar" -> <id>
+
+  is-left-recursive :
+    "StrConst" -> <is-left-recursive> "Exp"
+    where <not(is-lexical-completion-sort)> "StrConst"
+
+  is-right-recursive :
+    "StrConst" -> <is-right-recursive> "Exp"
+    where <not(is-lexical-completion-sort)> "StrConst"
+
+  is-Exp-completion-sort :
+    "StrConst" -> <id>
+
+
+rules
+
+  is-SDF-placeholder =
+    ?Exp-Plhdr()
+
+  is-SDF-placeholder =
+    ?StrConst-Plhdr()

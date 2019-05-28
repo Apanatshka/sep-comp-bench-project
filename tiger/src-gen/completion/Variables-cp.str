@@ -1,0 +1,155 @@
+module completion/Variables-cp
+
+imports
+  libstratego-gpp
+  libspoofax/editor/completion/-
+
+
+imports
+  signatures/Variables-sig
+
+
+imports
+  completion/Types-cp
+
+
+imports
+  completion/Occurrences-cp
+
+
+rules
+
+  suggest-completions(|completions):
+    Dec-Plhdr() -> <add-completions(
+                    | ( "VarDec"
+                      , VarDec(
+                          <try(inline-completions(|Dec-Plhdr()))> Occ-Plhdr()
+                        , <try(inline-completions(|Dec-Plhdr()))> Type-Plhdr()
+                        , <try(inline-completions(|Dec-Plhdr()))> Exp-Plhdr()
+                        )
+                      )
+                    )
+                    ; fail> completions
+
+  suggest-completions(|completions):
+    Dec-Plhdr() -> <add-completions(
+                    | ( "VarDecNoType"
+                      , VarDecNoType(
+                          <try(inline-completions(|Dec-Plhdr()))> Occ-Plhdr()
+                        , <try(inline-completions(|Dec-Plhdr()))> Exp-Plhdr()
+                        )
+                      )
+                    )
+                    ; fail> completions
+
+  suggest-completions(|completions):
+    Var-Plhdr() -> <add-completions(
+                    | ( "Var"
+                      , Var(
+                          <try(inline-completions(|Var-Plhdr()))> Occ-Plhdr()
+                        )
+                      )
+                    )
+                    ; fail> completions
+
+  suggest-completions(|completions):
+    LValue-Plhdr() -> <suggest-completions(|completions)> Var-Plhdr()
+    where <not(is-expanded)> (LValue-Plhdr(), Var-Plhdr())
+          ; rules (
+              is-expanded :
+                (LValue-Plhdr(), Var-Plhdr()) -> <id>
+            )
+
+  suggest-completions(|completions):
+    Exp-Plhdr() -> <suggest-completions(|completions)> LValue-Plhdr()
+    where <not(is-expanded)> (Exp-Plhdr(), LValue-Plhdr())
+          ; rules (
+              is-expanded :
+                (Exp-Plhdr(), LValue-Plhdr()) -> <id>
+            )
+
+  suggest-completions(|completions):
+    Exp-Plhdr() -> <add-completions(
+                    | ( "Assign"
+                      , Assign(
+                          <try(inline-completions(|Exp-Plhdr()))> LValue-Plhdr()
+                        , <try(inline-completions(|Exp-Plhdr()))> Exp-Plhdr()
+                        )
+                      )
+                    )
+                    ; fail> completions
+
+
+rules
+
+  is-right-recursive :
+    "Exp" -> <id>
+
+  suggest-completions-right-rec(|completions):
+    (sort, orig-term) -> <add-completions(
+                          | ( "Assign"
+                            , Assign(
+                                <try(inline-completions(|Exp-Plhdr()))> LValue-Plhdr()
+                              , orig-term
+                              )
+                            )
+                          )
+                          ; fail> completions
+    where <is-Exp-completion-sort> sort
+
+  is-Exp-completion-sort :
+    "Exp" -> <id>
+
+  is-left-recursive :
+    "Occ" -> <is-left-recursive> "Var"
+    where <not(is-lexical-completion-sort)> "Occ"
+
+  is-right-recursive :
+    "Occ" -> <is-right-recursive> "Var"
+    where <not(is-lexical-completion-sort)> "Occ"
+
+  is-Var-completion-sort :
+    "Occ" -> <id>
+
+  is-left-recursive :
+    "Var" -> <is-left-recursive> "LValue"
+    where <not(is-lexical-completion-sort)> "Var"
+
+  is-right-recursive :
+    "Var" -> <is-right-recursive> "LValue"
+    where <not(is-lexical-completion-sort)> "Var"
+
+  is-LValue-completion-sort :
+    "Var" -> <id>
+
+  is-left-recursive :
+    "LValue" -> <is-left-recursive> "Exp"
+    where <not(is-lexical-completion-sort)> "LValue"
+
+  is-right-recursive :
+    "LValue" -> <is-right-recursive> "Exp"
+    where <not(is-lexical-completion-sort)> "LValue"
+
+  is-Exp-completion-sort :
+    "LValue" -> <id>
+
+
+rules
+
+  is-SDF-placeholder =
+    ?Type-Plhdr()
+
+  is-SDF-placeholder =
+    ?Dec-Plhdr()
+
+  is-SDF-placeholder =
+    ?Occ-Plhdr()
+
+  is-SDF-placeholder =
+    ?Var-Plhdr()
+
+  is-SDF-placeholder =
+    ?LValue-Plhdr()
+
+  is-SDF-placeholder =
+    ?Exp-Plhdr()

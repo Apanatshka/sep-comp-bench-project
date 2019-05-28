@@ -1,0 +1,14 @@
+module signatures/Strings-sig
+
+signature
+  sorts
+    StrConst
+
+  constructors
+                   : String -> StrConst
+                   : String -> StrChar
+    String         : StrConst -> Exp
+    Exp-Plhdr      : Exp
+    StrConst-Plhdr : StrConst
+    Exp-Plhdr      : COMPLETION-INSERTION -> Exp
+    StrConst-Plhdr : COMPLETION-INSERTION -> StrConst

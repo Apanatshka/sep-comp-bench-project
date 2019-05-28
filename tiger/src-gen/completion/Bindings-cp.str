@@ -1,0 +1,58 @@
+module completion/Bindings-cp
+
+imports
+  libstratego-gpp
+  libspoofax/editor/completion/-
+
+
+imports
+  signatures/Bindings-sig
+
+
+imports
+  completion/Control-Flow-cp
+
+
+imports
+  completion/Identifiers-cp
+
+
+imports
+  completion/Types-cp
+
+
+imports
+  completion/Functions-cp
+
+
+imports
+  completion/Variables-cp
+
+
+rules
+
+  suggest-completions(|completions):
+    Exp-Plhdr() -> <add-completions(
+                    | ( "Let"
+                      , Let(CURSOR_ELEMENT(), CURSOR_ELEMENT())
+                      )
+                    )
+                    ; fail> completions
+
+  suggest-completions(|completions):
+    Declarations-Plhdr() -> <add-completions(
+                             | ("Declarations", Declarations(CURSOR_ELEMENT()))
+                             )
+                             ; fail> completions
+
+
+rules
+
+  is-SDF-placeholder =
+    ?Exp-Plhdr()
+
+  is-SDF-placeholder =
+    ?Declarations-Plhdr()
+
+  is-SDF-placeholder =
+    ?Dec-Plhdr()

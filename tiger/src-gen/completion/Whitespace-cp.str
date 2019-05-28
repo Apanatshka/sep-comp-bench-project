@@ -1,0 +1,27 @@
+module completion/Whitespace-cp
+
+imports
+  libstratego-gpp
+  libspoofax/editor/completion/-
+
+
+imports
+  signatures/Whitespace-sig
+
+
+rules
+
+  is-lexical-completion-sort :
+    "CommentChar" -> <id>
+
+  is-lexical-completion-sort :
+    "InsideComment" -> <id>
+
+  is-lexical-completion-sort :
+    "SingleLineComment" -> <id>
+
+  is-lexical-completion-sort :
+    "NewLineEOF" -> <id>
+
+  is-lexical-completion-sort :
+    "EOF" -> <id>

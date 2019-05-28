@@ -1,0 +1,31 @@
+module signatures/Functions-sig
+
+imports
+  signatures/Types-sig
+
+
+imports
+  signatures/Occurrences-sig
+
+
+signature
+  constructors
+    FunDecs        : List(FunDec) -> Dec
+    ProcDec        : Occ * List(FArg) * Exp -> FunDec
+    FunDec         : Occ * List(FArg) * Type * Exp -> FunDec
+    FArg           : Occ * Type -> FArg
+    Call           : Occ * List(Exp) -> Exp
+    Dec-Plhdr      : Dec
+    FunDec-Plhdr   : FunDec
+    FArg-Plhdr     : FArg
+    Type-Plhdr     : Type
+    Occ-Plhdr      : Occ
+    Exp-Plhdr      : Exp
+    Dec-Plhdr      : COMPLETION-INSERTION -> Dec
+    FunDec-Plhdr   : COMPLETION-INSERTION -> FunDec
+    FArg-Plhdr     : COMPLETION-INSERTION -> FArg
+    Type-Plhdr     : COMPLETION-INSERTION -> Type
+    Occ-Plhdr      : COMPLETION-INSERTION -> Occ
+    Exp-Plhdr      : COMPLETION-INSERTION -> Exp
+    FArg-Opt-Plhdr : FArg
+    Exp-Opt-Plhdr  : Exp

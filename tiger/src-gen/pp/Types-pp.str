@@ -1,0 +1,925 @@
+module pp/Types-pp
+
+imports
+  libstratego-gpp
+  libspoofax/sdf/pp
+  libspoofax/term/origin
+  libspoofax/term/annotation
+  libstratego-sglr
+  libstratego-sglr
+  signatures/Types-sig
+
+
+imports
+  signatures/Bindings-sig
+
+
+imports
+  signatures/Occurrences-sig
+
+
+imports
+  pp/Bindings-pp
+
+
+imports
+  pp/Occurrences-pp
+
+
+strategies
+  prettyprint-example =
+    prettyprint-Tiger
+
+  prettyprint-Tiger =
+    fail
+
+  prettyprint-Tiger(|sort) =
+    fail
+
+
+strategies
+  prettyprint-SDF-start-symbols =
+    prettyprint-Tiger-start-symbols
+
+  prettyprint-Tiger-start-symbols =
+    fail
+
+
+strategies
+  prettyprint-Tiger =
+    prettyprint-Tiger-Dec
+
+  prettyprint-Tiger =
+    prettyprint-Tiger-TypeDec
+
+  prettyprint-Tiger(|sort):
+    t -> <prettyprint-Tiger-Dec>
+    where <?"Dec"> sort
+
+  prettyprint-Tiger(|sort):
+    t -> <prettyprint-Tiger-TypeDec>
+    where <?"TypeDec"> sort
+
+  prettyprint-Tiger-Dec :
+    TypeDecs(t1__) -> [ H(
+                          [SOpt(HS(), "0")]
+                        , t1__'
+                        )
+                      ]
+    with t1__' := <clean-layout-empty-symbols(
+                   | ""
+                   , FALSE()
+                   , FALSE()
+                   )
+                   ; flatten-list> [ <check-nonterminal-isEmpty ; id
+                                      <+ pp-V-list(prettyprint-Tiger-TypeDec)
+                                      <+ pp-one-Z(prettyprint-completion-aux)> t1__
+                                   ]
+
+  is-Tiger-Dec =
+    ?TypeDecs(_)
+
+  Tiger-get-indent :
+    (t@TypeDecs(t1__), index) -> indent
+    where sort := <ia-get-sort> t
+          ; <?"Dec"> sort
+    with switch !index
+           case ?1 :
+             indent := ""
+           otherwise :
+             indent := ""
+         end
+
+  Tiger-get-separator :
+    (t@TypeDecs(t1__), index) -> separator
+    where sort := <ia-get-sort> t
+          ; <?"Dec"> sort
+    with switch !index
+           case ?1 :
+             separator := "\n"
+           otherwise :
+             separator := ""
+         end
+
+  Tiger-get-leading-ws :
+    (t@TypeDecs(t1__), index) -> ws
+    where sort := <ia-get-sort> t
+          ; <?"Dec"> sort
+    with switch !index
+           case ?1 :
+             ws := ""
+           otherwise :
+             ws := ""
+         end
+
+  prettyprint-Tiger-TypeDec :
+    TypeDec(t1__, t2__) -> [ H(
+                               [SOpt(HS(), "0")]
+                             , t1__'
+                             )
+                           ]
+    with t1__' := <clean-layout-empty-symbols(
+                   | ""
+                   , FALSE()
+                   , FALSE()
+                   )
+                   ; flatten-list> [ S("type")
+                                   , S(" ")
+                                   , <check-nonterminal-isEmpty ; id
+                                      <+ pp-one-Z(prettyprint-Tiger-Occ)
+                                      <+ pp-one-Z(prettyprint-completion-aux)> t1__
+                                   , S(" ")
+                                   , S("=")
+                                   , S(" ")
+                                   , <check-nonterminal-isEmpty ; id
+                                      <+ pp-one-Z(prettyprint-Tiger-Type)
+                                      <+ pp-one-Z(prettyprint-completion-aux)> t2__
+                                   ]
+
+  is-Tiger-TypeDec =
+    ?TypeDec(_, _)
+
+  Tiger-get-indent :
+    (t@TypeDec(t1__, t2__), index) -> indent
+    where sort := <ia-get-sort> t
+          ; <?"TypeDec"> sort
+    with switch !index
+           case ?1 :
+             indent := ""
+           case ?2 :
+             indent := ""
+           otherwise :
+             indent := ""
+         end
+
+  Tiger-get-separator :
+    (t@TypeDec(t1__, t2__), index) -> separator
+    where sort := <ia-get-sort> t
+          ; <?"TypeDec"> sort
+    with switch !index
+           case ?1 :
+             separator := ""
+           case ?2 :
+             separator := ""
+           otherwise :
+             separator := ""
+         end
+
+  Tiger-get-leading-ws :
+    (t@TypeDec(t1__, t2__), index) -> ws
+    where sort := <ia-get-sort> t
+          ; <?"TypeDec"> sort
+    with switch !index
+           case ?1 :
+             ws := " "
+           case ?2 :
+             ws := " "
+           otherwise :
+             ws := ""
+         end
+
+  is-Tiger-Dec =
+    fail
+
+  is-Tiger-TypeDec =
+    fail
+
+  prettyprint-Tiger-Dec :
+    amb([h|hs]) -> <prettyprint-Tiger-Dec> h
+
+  prettyprint-Tiger-TypeDec :
+    amb([h|hs]) -> <prettyprint-Tiger-TypeDec> h
+
+  prettyprint-Tiger-Dec :
+    Dec-Plhdr() -> [ H(
+                       [SOpt(HS(), "0")]
+                     , [S("$Dec")]
+                     )
+                   ]
+
+  is-Tiger-Dec =
+    ?Dec-Plhdr()
+
+  prettyprint-Tiger-TypeDec :
+    TypeDec-Plhdr() -> [ H(
+                           [SOpt(HS(), "0")]
+                         , [S("$TypeDec")]
+                         )
+                       ]
+
+  is-Tiger-TypeDec =
+    ?TypeDec-Plhdr()
+
+  prettyprint-Tiger-Occ :
+    Occ-Plhdr() -> [ H(
+                       [SOpt(HS(), "0")]
+                     , [S("$Occ")]
+                     )
+                   ]
+
+  is-Tiger-Occ =
+    ?Occ-Plhdr()
+
+  prettyprint-Tiger-Type :
+    Type-Plhdr() -> [ H(
+                        [SOpt(HS(), "0")]
+                      , [S("$Type")]
+                      )
+                    ]
+
+  is-Tiger-Type =
+    ?Type-Plhdr()
+
+  prettyprint-Tiger-Dec :
+    Dec-Plhdr(_) -> [ H(
+                        [SOpt(HS(), "0")]
+                      , [S("$Dec")]
+                      )
+                    ]
+
+  is-Tiger-Dec =
+    ?Dec-Plhdr(_)
+
+  prettyprint-Tiger-TypeDec :
+    TypeDec-Plhdr(_) -> [ H(
+                            [SOpt(HS(), "0")]
+                          , [S("$TypeDec")]
+                          )
+                        ]
+
+  is-Tiger-TypeDec =
+    ?TypeDec-Plhdr(_)
+
+  prettyprint-Tiger-Occ :
+    Occ-Plhdr(_) -> [ H(
+                        [SOpt(HS(), "0")]
+                      , [S("$Occ")]
+                      )
+                    ]
+
+  is-Tiger-Occ =
+    ?Occ-Plhdr(_)
+
+  prettyprint-Tiger-Type :
+    Type-Plhdr(_) -> [ H(
+                         [SOpt(HS(), "0")]
+                       , [S("$Type")]
+                       )
+                     ]
+
+  is-Tiger-Type =
+    ?Type-Plhdr(_)
+
+
+strategies
+  prettyprint-Tiger =
+    prettyprint-Tiger-Type
+
+  prettyprint-Tiger =
+    prettyprint-Tiger-TypeId
+
+  prettyprint-Tiger(|sort):
+    t -> <prettyprint-Tiger-Type>
+    where <?"Type"> sort
+
+  prettyprint-Tiger(|sort):
+    t -> <prettyprint-Tiger-TypeId>
+    where <?"TypeId"> sort
+
+  prettyprint-Tiger-Type :
+    t1__ -> [ H(
+                [SOpt(HS(), "0")]
+              , t1__'
+              )
+            ]
+    where not(is-Tiger-Type)
+    where t1__' := <clean-layout-empty-symbols(
+                    | ""
+                    , FALSE()
+                    , FALSE()
+                    )
+                    ; flatten-list> [ <check-nonterminal-isEmpty ; id
+                                       <+ pp-one-Z(prettyprint-Tiger-TypeId)
+                                       <+ pp-one-Z(prettyprint-completion-aux)> t1__
+                                    ]
+
+  prettyprint-Tiger-TypeId :
+    Tid(t1__) -> [ H(
+                     [SOpt(HS(), "0")]
+                   , t1__'
+                   )
+                 ]
+    with t1__' := <clean-layout-empty-symbols(
+                   | ""
+                   , FALSE()
+                   , FALSE()
+                   )
+                   ; flatten-list> [ <check-nonterminal-isEmpty ; id
+                                      <+ pp-one-Z(prettyprint-Tiger-Occ)
+                                      <+ pp-one-Z(prettyprint-completion-aux)> t1__
+                                   ]
+
+  is-Tiger-TypeId =
+    ?Tid(_)
+
+  Tiger-get-indent :
+    (t@Tid(t1__), index) -> indent
+    where sort := <ia-get-sort> t
+          ; <?"TypeId"> sort
+    with switch !index
+           case ?1 :
+             indent := ""
+           otherwise :
+             indent := ""
+         end
+
+  Tiger-get-separator :
+    (t@Tid(t1__), index) -> separator
+    where sort := <ia-get-sort> t
+          ; <?"TypeId"> sort
+    with switch !index
+           case ?1 :
+             separator := ""
+           otherwise :
+             separator := ""
+         end
+
+  Tiger-get-leading-ws :
+    (t@Tid(t1__), index) -> ws
+    where sort := <ia-get-sort> t
+          ; <?"TypeId"> sort
+    with switch !index
+           case ?1 :
+             ws := ""
+           otherwise :
+             ws := ""
+         end
+
+  is-Tiger-Type =
+    fail
+
+  is-Tiger-TypeId =
+    fail
+
+  prettyprint-Tiger-Type :
+    amb([h|hs]) -> <prettyprint-Tiger-Type> h
+
+  prettyprint-Tiger-TypeId :
+    amb([h|hs]) -> <prettyprint-Tiger-TypeId> h
+
+  prettyprint-Tiger-Type :
+    Type-Plhdr() -> [ H(
+                        [SOpt(HS(), "0")]
+                      , [S("$Type")]
+                      )
+                    ]
+
+  is-Tiger-Type =
+    ?Type-Plhdr()
+
+  prettyprint-Tiger-TypeId :
+    TypeId-Plhdr() -> [ H(
+                          [SOpt(HS(), "0")]
+                        , [S("$TypeId")]
+                        )
+                      ]
+
+  is-Tiger-TypeId =
+    ?TypeId-Plhdr()
+
+  prettyprint-Tiger-Occ :
+    Occ-Plhdr() -> [ H(
+                       [SOpt(HS(), "0")]
+                     , [S("$Occ")]
+                     )
+                   ]
+
+  is-Tiger-Occ =
+    ?Occ-Plhdr()
+
+  prettyprint-Tiger-Type :
+    Type-Plhdr(_) -> [ H(
+                         [SOpt(HS(), "0")]
+                       , [S("$Type")]
+                       )
+                     ]
+
+  is-Tiger-Type =
+    ?Type-Plhdr(_)
+
+  prettyprint-Tiger-TypeId :
+    TypeId-Plhdr(_) -> [ H(
+                           [SOpt(HS(), "0")]
+                         , [S("$TypeId")]
+                         )
+                       ]
+
+  is-Tiger-TypeId =
+    ?TypeId-Plhdr(_)
+
+  prettyprint-Tiger-Occ :
+    Occ-Plhdr(_) -> [ H(
+                        [SOpt(HS(), "0")]
+                      , [S("$Occ")]
+                      )
+                    ]
+
+  is-Tiger-Occ =
+    ?Occ-Plhdr(_)
+
+
+strategies
+  prettyprint-Tiger =
+    prettyprint-Tiger-Ty
+
+  prettyprint-Tiger(|sort):
+    t -> <prettyprint-Tiger-Ty>
+    where <?"Ty"> sort
+
+  prettyprint-Tiger-Ty :
+    INT() -> [ H(
+                 [SOpt(HS(), "0")]
+               , t1__'
+               )
+             ]
+    with t1__' := <clean-layout-empty-symbols(
+                   | ""
+                   , FALSE()
+                   , FALSE()
+                   )
+                   ; flatten-list> [S("INT")]
+
+  is-Tiger-Ty =
+    ?INT()
+
+  Tiger-get-indent :
+    (t@INT(), index) -> indent
+    where sort := <ia-get-sort> t
+          ; <?"Ty"> sort
+    with switch !index
+           otherwise :
+             indent := ""
+         end
+
+  Tiger-get-separator :
+    (t@INT(), index) -> separator
+    where sort := <ia-get-sort> t
+          ; <?"Ty"> sort
+    with switch !index
+           otherwise :
+             separator := ""
+         end
+
+  Tiger-get-leading-ws :
+    (t@INT(), index) -> ws
+    where sort := <ia-get-sort> t
+          ; <?"Ty"> sort
+    with switch !index
+           otherwise :
+             ws := ""
+         end
+
+  prettyprint-Tiger-Ty :
+    STRING() -> [ H(
+                    [SOpt(HS(), "0")]
+                  , t1__'
+                  )
+                ]
+    with t1__' := <clean-layout-empty-symbols(
+                   | ""
+                   , FALSE()
+                   , FALSE()
+                   )
+                   ; flatten-list> [S("STRING")]
+
+  is-Tiger-Ty =
+    ?STRING()
+
+  Tiger-get-indent :
+    (t@STRING(), index) -> indent
+    where sort := <ia-get-sort> t
+          ; <?"Ty"> sort
+    with switch !index
+           otherwise :
+             indent := ""
+         end
+
+  Tiger-get-separator :
+    (t@STRING(), index) -> separator
+    where sort := <ia-get-sort> t
+          ; <?"Ty"> sort
+    with switch !index
+           otherwise :
+             separator := ""
+         end
+
+  Tiger-get-leading-ws :
+    (t@STRING(), index) -> ws
+    where sort := <ia-get-sort> t
+          ; <?"Ty"> sort
+    with switch !index
+           otherwise :
+             ws := ""
+         end
+
+  prettyprint-Tiger-Ty :
+    NIL() -> [ H(
+                 [SOpt(HS(), "0")]
+               , t1__'
+               )
+             ]
+    with t1__' := <clean-layout-empty-symbols(
+                   | ""
+                   , FALSE()
+                   , FALSE()
+                   )
+                   ; flatten-list> [S("NIL")]
+
+  is-Tiger-Ty =
+    ?NIL()
+
+  Tiger-get-indent :
+    (t@NIL(), index) -> indent
+    where sort := <ia-get-sort> t
+          ; <?"Ty"> sort
+    with switch !index
+           otherwise :
+             indent := ""
+         end
+
+  Tiger-get-separator :
+    (t@NIL(), index) -> separator
+    where sort := <ia-get-sort> t
+          ; <?"Ty"> sort
+    with switch !index
+           otherwise :
+             separator := ""
+         end
+
+  Tiger-get-leading-ws :
+    (t@NIL(), index) -> ws
+    where sort := <ia-get-sort> t
+          ; <?"Ty"> sort
+    with switch !index
+           otherwise :
+             ws := ""
+         end
+
+  prettyprint-Tiger-Ty :
+    UNIT() -> [ H(
+                  [SOpt(HS(), "0")]
+                , t1__'
+                )
+              ]
+    with t1__' := <clean-layout-empty-symbols(
+                   | ""
+                   , FALSE()
+                   , FALSE()
+                   )
+                   ; flatten-list> [S("UNIT")]
+
+  is-Tiger-Ty =
+    ?UNIT()
+
+  Tiger-get-indent :
+    (t@UNIT(), index) -> indent
+    where sort := <ia-get-sort> t
+          ; <?"Ty"> sort
+    with switch !index
+           otherwise :
+             indent := ""
+         end
+
+  Tiger-get-separator :
+    (t@UNIT(), index) -> separator
+    where sort := <ia-get-sort> t
+          ; <?"Ty"> sort
+    with switch !index
+           otherwise :
+             separator := ""
+         end
+
+  Tiger-get-leading-ws :
+    (t@UNIT(), index) -> ws
+    where sort := <ia-get-sort> t
+          ; <?"Ty"> sort
+    with switch !index
+           otherwise :
+             ws := ""
+         end
+
+  prettyprint-Tiger-Ty :
+    NAME(t1__) -> [ H(
+                      [SOpt(HS(), "0")]
+                    , t1__'
+                    )
+                  ]
+    with t1__' := <clean-layout-empty-symbols(
+                   | ""
+                   , FALSE()
+                   , FALSE()
+                   )
+                   ; flatten-list> [ S("NAME")
+                                   , S(" ")
+                                   , <check-nonterminal-isEmpty ; id
+                                      <+ pp-one-Z(prettyprint-Tiger-Occ)
+                                      <+ pp-one-Z(prettyprint-completion-aux)> t1__
+                                   ]
+
+  is-Tiger-Ty =
+    ?NAME(_)
+
+  Tiger-get-indent :
+    (t@NAME(t1__), index) -> indent
+    where sort := <ia-get-sort> t
+          ; <?"Ty"> sort
+    with switch !index
+           case ?1 :
+             indent := ""
+           otherwise :
+             indent := ""
+         end
+
+  Tiger-get-separator :
+    (t@NAME(t1__), index) -> separator
+    where sort := <ia-get-sort> t
+          ; <?"Ty"> sort
+    with switch !index
+           case ?1 :
+             separator := ""
+           otherwise :
+             separator := ""
+         end
+
+  Tiger-get-leading-ws :
+    (t@NAME(t1__), index) -> ws
+    where sort := <ia-get-sort> t
+          ; <?"Ty"> sort
+    with switch !index
+           case ?1 :
+             ws := " "
+           otherwise :
+             ws := ""
+         end
+
+  prettyprint-Tiger-Ty :
+    RECORD(t1__) -> [ H(
+                        [SOpt(HS(), "0")]
+                      , t1__'
+                      )
+                    ]
+    with t1__' := <clean-layout-empty-symbols(
+                   | ""
+                   , FALSE()
+                   , FALSE()
+                   )
+                   ; flatten-list> [ S("RECORD")
+                                   , S(" ")
+                                   , <check-nonterminal-isEmpty ; id
+                                      <+ pp-one-Z(prettyprint-Tiger-Scope)
+                                      <+ pp-one-Z(prettyprint-completion-aux)> t1__
+                                   ]
+
+  is-Tiger-Ty =
+    ?RECORD(_)
+
+  Tiger-get-indent :
+    (t@RECORD(t1__), index) -> indent
+    where sort := <ia-get-sort> t
+          ; <?"Ty"> sort
+    with switch !index
+           case ?1 :
+             indent := ""
+           otherwise :
+             indent := ""
+         end
+
+  Tiger-get-separator :
+    (t@RECORD(t1__), index) -> separator
+    where sort := <ia-get-sort> t
+          ; <?"Ty"> sort
+    with switch !index
+           case ?1 :
+             separator := ""
+           otherwise :
+             separator := ""
+         end
+
+  Tiger-get-leading-ws :
+    (t@RECORD(t1__), index) -> ws
+    where sort := <ia-get-sort> t
+          ; <?"Ty"> sort
+    with switch !index
+           case ?1 :
+             ws := " "
+           otherwise :
+             ws := ""
+         end
+
+  prettyprint-Tiger-Ty :
+    ARRAY(t1__, t2__) -> [ H(
+                             [SOpt(HS(), "0")]
+                           , t1__'
+                           )
+                         ]
+    with t1__' := <clean-layout-empty-symbols(
+                   | ""
+                   , FALSE()
+                   , FALSE()
+                   )
+                   ; flatten-list> [ S("ARRAY")
+                                   , S(" ")
+                                   , <check-nonterminal-isEmpty ; id
+                                      <+ pp-one-Z(prettyprint-Tiger-Ty)
+                                      <+ pp-one-Z(prettyprint-completion-aux)> t1__
+                                   , S(" ")
+                                   , <check-nonterminal-isEmpty ; id
+                                      <+ pp-one-Z(prettyprint-Tiger-Scope)
+                                      <+ pp-one-Z(prettyprint-completion-aux)> t2__
+                                   ]
+
+  is-Tiger-Ty =
+    ?ARRAY(_, _)
+
+  Tiger-get-indent :
+    (t@ARRAY(t1__, t2__), index) -> indent
+    where sort := <ia-get-sort> t
+          ; <?"Ty"> sort
+    with switch !index
+           case ?1 :
+             indent := ""
+           case ?2 :
+             indent := ""
+           otherwise :
+             indent := ""
+         end
+
+  Tiger-get-separator :
+    (t@ARRAY(t1__, t2__), index) -> separator
+    where sort := <ia-get-sort> t
+          ; <?"Ty"> sort
+    with switch !index
+           case ?1 :
+             separator := ""
+           case ?2 :
+             separator := ""
+           otherwise :
+             separator := ""
+         end
+
+  Tiger-get-leading-ws :
+    (t@ARRAY(t1__, t2__), index) -> ws
+    where sort := <ia-get-sort> t
+          ; <?"Ty"> sort
+    with switch !index
+           case ?1 :
+             ws := " "
+           case ?2 :
+             ws := " "
+           otherwise :
+             ws := ""
+         end
+
+  prettyprint-Tiger-Ty :
+    FUN(t1__, t2__) -> [ H(
+                           [SOpt(HS(), "0")]
+                         , t1__'
+                         )
+                       ]
+    with t1__' := <clean-layout-empty-symbols(
+                   | ""
+                   , FALSE()
+                   , FALSE()
+                   )
+                   ; flatten-list> [ S("FUN")
+                                   , S(" ")
+                                   , S("(")
+                                   , S(" ")
+                                   , <check-nonterminal-isEmpty ; id
+                                      <+ pp-H-list(prettyprint-Tiger-Ty|",")
+                                      <+ pp-one-Z(prettyprint-completion-aux)> t1__
+                                   , S(" ")
+                                   , S(")")
+                                   , S(" ")
+                                   , <check-nonterminal-isEmpty ; id
+                                      <+ pp-one-Z(prettyprint-Tiger-Ty)
+                                      <+ pp-one-Z(prettyprint-completion-aux)> t2__
+                                   ]
+
+  is-Tiger-Ty =
+    ?FUN(_, _)
+
+  Tiger-get-indent :
+    (t@FUN(t1__, t2__), index) -> indent
+    where sort := <ia-get-sort> t
+          ; <?"Ty"> sort
+    with switch !index
+           case ?1 :
+             indent := ""
+           case ?2 :
+             indent := ""
+           otherwise :
+             indent := ""
+         end
+
+  Tiger-get-separator :
+    (t@FUN(t1__, t2__), index) -> separator
+    where sort := <ia-get-sort> t
+          ; <?"Ty"> sort
+    with switch !index
+           case ?1 :
+             separator := ","
+           case ?2 :
+             separator := ""
+           otherwise :
+             separator := ""
+         end
+
+  Tiger-get-leading-ws :
+    (t@FUN(t1__, t2__), index) -> ws
+    where sort := <ia-get-sort> t
+          ; <?"Ty"> sort
+    with switch !index
+           case ?1 :
+             ws := " "
+           case ?2 :
+             ws := " "
+           otherwise :
+             ws := ""
+         end
+
+  is-Tiger-Ty =
+    fail
+
+  prettyprint-Tiger-Ty :
+    amb([h|hs]) -> <prettyprint-Tiger-Ty> h
+
+  prettyprint-Tiger-Occ :
+    Occ-Plhdr() -> [ H(
+                       [SOpt(HS(), "0")]
+                     , [S("$Occ")]
+                     )
+                   ]
+
+  is-Tiger-Occ =
+    ?Occ-Plhdr()
+
+  prettyprint-Tiger-Scope :
+    Scope-Plhdr() -> [ H(
+                         [SOpt(HS(), "0")]
+                       , [S("$Scope")]
+                       )
+                     ]
+
+  is-Tiger-Scope =
+    ?Scope-Plhdr()
+
+  prettyprint-Tiger-Ty :
+    Ty-Plhdr() -> [ H(
+                      [SOpt(HS(), "0")]
+                    , [S("$Ty")]
+                    )
+                  ]
+
+  is-Tiger-Ty =
+    ?Ty-Plhdr()
+
+  prettyprint-Tiger-Occ :
+    Occ-Plhdr(_) -> [ H(
+                        [SOpt(HS(), "0")]
+                      , [S("$Occ")]
+                      )
+                    ]
+
+  is-Tiger-Occ =
+    ?Occ-Plhdr(_)
+
+  prettyprint-Tiger-Scope :
+    Scope-Plhdr(_) -> [ H(
+                          [SOpt(HS(), "0")]
+                        , [S("$Scope")]
+                        )
+                      ]
+
+  is-Tiger-Scope =
+    ?Scope-Plhdr(_)
+
+  prettyprint-Tiger-Ty :
+    Ty-Plhdr(_) -> [ H(
+                       [SOpt(HS(), "0")]
+                     , [S("$Ty")]
+                     )
+                   ]
+
+  is-Tiger-Ty =
+    ?Ty-Plhdr(_)
+
+  prettyprint-Tiger-Ty :
+    Ty-Opt-Plhdr() -> [ H(
+                          []
+                        , [S("")]
+                        )
+                      ]
+
+  is-Tiger-Ty =
+    ?Ty-Opt-Plhdr()

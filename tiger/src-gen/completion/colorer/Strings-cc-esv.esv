@@ -1,0 +1,5 @@
+module completion/colorer/Strings-cc-esv
+
+colorer
+  _.Exp-Plhdr      : gray   
+  _.StrConst-Plhdr : gray   

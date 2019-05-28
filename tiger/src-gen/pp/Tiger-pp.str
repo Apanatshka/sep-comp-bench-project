@@ -1,0 +1,229 @@
+module pp/Tiger-pp
+
+imports
+  libstratego-gpp
+  libspoofax/sdf/pp
+  libspoofax/term/origin
+  libspoofax/term/annotation
+  libstratego-sglr
+  libstratego-sglr
+  signatures/Tiger-sig
+
+
+imports
+  signatures/Whitespace-sig
+
+
+imports
+  signatures/Types-sig
+
+
+imports
+  signatures/Identifiers-sig
+
+
+imports
+  signatures/Bindings-sig
+
+
+imports
+  signatures/Variables-sig
+
+
+imports
+  signatures/Functions-sig
+
+
+imports
+  signatures/Numbers-sig
+
+
+imports
+  signatures/Strings-sig
+
+
+imports
+  signatures/Records-sig
+
+
+imports
+  signatures/Arrays-sig
+
+
+imports
+  signatures/Control-Flow-sig
+
+
+imports
+  pp/Whitespace-pp
+
+
+imports
+  pp/Types-pp
+
+
+imports
+  pp/Identifiers-pp
+
+
+imports
+  pp/Bindings-pp
+
+
+imports
+  pp/Variables-pp
+
+
+imports
+  pp/Functions-pp
+
+
+imports
+  pp/Numbers-pp
+
+
+imports
+  pp/Strings-pp
+
+
+imports
+  pp/Records-pp
+
+
+imports
+  pp/Arrays-pp
+
+
+imports
+  pp/Control-Flow-pp
+
+
+strategies
+  prettyprint-example =
+    prettyprint-Tiger
+
+  prettyprint-Tiger =
+    fail
+
+  prettyprint-Tiger(|sort) =
+    fail
+
+
+strategies
+  prettyprint-SDF-start-symbols =
+    prettyprint-Tiger-start-symbols
+
+  prettyprint-Tiger-start-symbols =
+    fail
+
+
+strategies
+  prettyprint-Tiger-start-symbols =
+    prettyprint-Tiger-Module
+
+
+strategies
+  prettyprint-Tiger =
+    prettyprint-Tiger-Module
+
+  prettyprint-Tiger(|sort):
+    t -> <prettyprint-Tiger-Module>
+    where <?"Module"> sort
+
+  prettyprint-Tiger-Module :
+    Mod(t1__) -> [ H(
+                     [SOpt(HS(), "0")]
+                   , t1__'
+                   )
+                 ]
+    with t1__' := <clean-layout-empty-symbols(
+                   | ""
+                   , FALSE()
+                   , FALSE()
+                   )
+                   ; flatten-list> [ <check-nonterminal-isEmpty ; id
+                                      <+ pp-one-Z(prettyprint-Tiger-Exp)
+                                      <+ pp-one-Z(prettyprint-completion-aux)> t1__
+                                   ]
+
+  is-Tiger-Module =
+    ?Mod(_)
+
+  Tiger-get-indent :
+    (t@Mod(t1__), index) -> indent
+    where sort := <ia-get-sort> t
+          ; <?"Module"> sort
+    with switch !index
+           case ?1 :
+             indent := ""
+           otherwise :
+             indent := ""
+         end
+
+  Tiger-get-separator :
+    (t@Mod(t1__), index) -> separator
+    where sort := <ia-get-sort> t
+          ; <?"Module"> sort
+    with switch !index
+           case ?1 :
+             separator := ""
+           otherwise :
+             separator := ""
+         end
+
+  Tiger-get-leading-ws :
+    (t@Mod(t1__), index) -> ws
+    where sort := <ia-get-sort> t
+          ; <?"Module"> sort
+    with switch !index
+           case ?1 :
+             ws := ""
+           otherwise :
+             ws := ""
+         end
+
+  is-Tiger-Module =
+    fail
+
+  prettyprint-Tiger-Module :
+    amb([h|hs]) -> <prettyprint-Tiger-Module> h
+
+  prettyprint-Tiger-Module :
+    Module-Plhdr() -> [ H(
+                          [SOpt(HS(), "0")]
+                        , [S("$Module")]
+                        )
+                      ]
+
+  is-Tiger-Module =
+    ?Module-Plhdr()
+
+  prettyprint-Tiger-Exp :
+    Exp-Plhdr() -> [ H(
+                       [SOpt(HS(), "0")]
+                     , [S("$Exp")]
+                     )
+                   ]
+
+  is-Tiger-Exp =
+    ?Exp-Plhdr()
+
+  prettyprint-Tiger-Module :
+    Module-Plhdr(_) -> [ H(
+                           [SOpt(HS(), "0")]
+                         , [S("$Module")]
+                         )
+                       ]
+
+  is-Tiger-Module =
+    ?Module-Plhdr(_)
+
+  prettyprint-Tiger-Exp :
+    Exp-Plhdr(_) -> [ H(
+                        [SOpt(HS(), "0")]
+                      , [S("$Exp")]
+                      )
+                    ]
+
+  is-Tiger-Exp =
+    ?Exp-Plhdr(_)

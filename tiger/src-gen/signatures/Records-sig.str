@@ -1,0 +1,38 @@
+module signatures/Records-sig
+
+imports
+  signatures/Base-sig
+
+
+imports
+  signatures/Types-sig
+
+
+imports
+  signatures/Occurrences-sig
+
+
+signature
+  constructors
+    RecordTy            : List(Field) -> Type
+    Field               : Occ * TypeId -> Field
+    NilExp              : Exp
+    Record              : TypeId * List(InitField) -> Exp
+    InitField           : Occ * Exp -> InitField
+    FieldVar            : LValue * Occ -> LValue
+    Type-Plhdr          : Type
+    Field-Plhdr         : Field
+    TypeId-Plhdr        : TypeId
+    InitField-Plhdr     : InitField
+    Exp-Plhdr           : Exp
+    LValue-Plhdr        : LValue
+    Occ-Plhdr           : Occ
+    Type-Plhdr          : COMPLETION-INSERTION -> Type
+    Field-Plhdr         : COMPLETION-INSERTION -> Field
+    TypeId-Plhdr        : COMPLETION-INSERTION -> TypeId
+    InitField-Plhdr     : COMPLETION-INSERTION -> InitField
+    Exp-Plhdr           : COMPLETION-INSERTION -> Exp
+    LValue-Plhdr        : COMPLETION-INSERTION -> LValue
+    Occ-Plhdr           : COMPLETION-INSERTION -> Occ
+    Field-Opt-Plhdr     : Field
+    InitField-Opt-Plhdr : InitField

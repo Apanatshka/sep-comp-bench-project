@@ -1,0 +1,10 @@
+module ds-signatures/Whitespace-sig
+
+signature
+    sorts
+    sort aliases
+      CommentChar = String
+      InsideComment = String
+      SingleLineComment = String
+      NewLineEOF = String
+      EOF = String

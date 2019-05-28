@@ -1,0 +1,438 @@
+module statics/base
+
+imports
+  signatures/nabl2/shared/-
+  signatures/nabl2/shared/common/-
+  signatures/nabl2/shared/constraints/-
+  nabl2/shared/-
+  signatures/nabl2/runtime/-
+  signatures/nabl2/runtime/analysis/-
+  signatures/nabl2/runtime/common/-
+  nabl2/runtime/-
+  nabl2/runtime/analysis/-
+  nabl2/runtime/prelude/-
+  nabl2/runtime/stdlib/-
+
+
+rules
+
+  nabl2--custom-labels =
+    ![P(), I()]
+
+  nabl2--custom-label-order =
+    ![ (D(), P())
+     , (D(), I())
+     , (I(), P())
+     ]
+
+  nabl2--custom-labels-wf =
+    !Concat(Closure(P()), Closure(I()))
+
+
+rules
+
+
+rules
+
+
+imports
+  signatures/-
+
+
+imports
+  statics/nabl-lib
+
+
+rules
+
+  prettyprint-Tiger(|sort) =
+    prettyprint-NaBL2-api-term(|sort)
+
+  prettyprint-Tiger-NaBL2Scope(|) =
+    prettyprint-NaBL2-api-term
+
+  prettyprint-Tiger-NaBL2Occurrence(|) =
+    prettyprint-NaBL2-api-term
+
+  nabl2--generate-constraint-init-rule(|):
+    (nabl2_source, term93@wld1) -> (args19, constraint5)
+    with(type29 := <nabl2--fresh-var(|nabl2_source)> "type29"
+         ; s := <nabl2--fresh-var(|nabl2_source)> "s"
+         ; id)
+    with(args19 := ParamsAndType((s), type29))
+    with(constraint5 := CConj(
+                          CNew([s], <nabl2--get-ast-index> term93)
+                        , CConj(
+                            CGDecl(
+                              Occurrence(
+                                Namespace("Type")
+                              , "int"
+                              , <nabl2--occurrence-index-of> term93
+                              )
+                            , s
+                            , <nabl2--get-ast-index> term93
+                            )
+                          , CConj(
+                              CDeclProperty(
+                                Occurrence(
+                                  Namespace("Type")
+                                , "int"
+                                , <nabl2--occurrence-index-of> term93
+                                )
+                              , Type()
+                              , INT()
+                              , "!!"
+                              , Message(Error(), Default(), <nabl2--get-ast-index> term93)
+                              )
+                            , CConj(
+                                CGDecl(
+                                  Occurrence(
+                                    Namespace("Type")
+                                  , "string"
+                                  , <nabl2--occurrence-index-of> term93
+                                  )
+                                , s
+                                , <nabl2--get-ast-index> term93
+                                )
+                              , CConj(
+                                  CDeclProperty(
+                                    Occurrence(
+                                      Namespace("Type")
+                                    , "string"
+                                    , <nabl2--occurrence-index-of> term93
+                                    )
+                                  , Type()
+                                  , STRING()
+                                  , "!!"
+                                  , Message(Error(), Default(), <nabl2--get-ast-index> term93)
+                                  )
+                                , CConj(
+                                    CGDecl(
+                                      Occurrence(
+                                        Namespace("Var")
+                                      , "print"
+                                      , <nabl2--occurrence-index-of> term93
+                                      )
+                                    , s
+                                    , <nabl2--get-ast-index> term93
+                                    )
+                                  , CConj(
+                                      CDeclProperty(
+                                        Occurrence(
+                                          Namespace("Var")
+                                        , "print"
+                                        , <nabl2--occurrence-index-of> term93
+                                        )
+                                      , Type()
+                                      , FUN(CList([STRING()]), UNIT())
+                                      , "!!"
+                                      , Message(Error(), Default(), <nabl2--get-ast-index> term93)
+                                      )
+                                    , CConj(
+                                        CGDecl(
+                                          Occurrence(
+                                            Namespace("Var")
+                                          , "timeGo"
+                                          , <nabl2--occurrence-index-of> term93
+                                          )
+                                        , s
+                                        , <nabl2--get-ast-index> term93
+                                        )
+                                      , CConj(
+                                          CDeclProperty(
+                                            Occurrence(
+                                              Namespace("Var")
+                                            , "timeGo"
+                                            , <nabl2--occurrence-index-of> term93
+                                            )
+                                          , Type()
+                                          , FUN(CList([]), UNIT())
+                                          , "!!"
+                                          , Message(Error(), Default(), <nabl2--get-ast-index> term93)
+                                          )
+                                        , CConj(
+                                            CGDecl(
+                                              Occurrence(
+                                                Namespace("Var")
+                                              , "timeStop"
+                                              , <nabl2--occurrence-index-of> term93
+                                              )
+                                            , s
+                                            , <nabl2--get-ast-index> term93
+                                            )
+                                          , CConj(
+                                              CDeclProperty(
+                                                Occurrence(
+                                                  Namespace("Var")
+                                                , "timeStop"
+                                                , <nabl2--occurrence-index-of> term93
+                                                )
+                                              , Type()
+                                              , FUN(CList([]), UNIT())
+                                              , "!!"
+                                              , Message(Error(), Default(), <nabl2--get-ast-index> term93)
+                                              )
+                                            , CConj(
+                                                CGDecl(
+                                                  Occurrence(
+                                                    Namespace("Var")
+                                                  , "printi"
+                                                  , <nabl2--occurrence-index-of> term93
+                                                  )
+                                                , s
+                                                , <nabl2--get-ast-index> term93
+                                                )
+                                              , CConj(
+                                                  CDeclProperty(
+                                                    Occurrence(
+                                                      Namespace("Var")
+                                                    , "printi"
+                                                    , <nabl2--occurrence-index-of> term93
+                                                    )
+                                                  , Type()
+                                                  , FUN(CList([INT()]), UNIT())
+                                                  , "!!"
+                                                  , Message(Error(), Default(), <nabl2--get-ast-index> term93)
+                                                  )
+                                                , CConj(
+                                                    CGDecl(
+                                                      Occurrence(
+                                                        Namespace("Var")
+                                                      , "flush"
+                                                      , <nabl2--occurrence-index-of> term93
+                                                      )
+                                                    , s
+                                                    , <nabl2--get-ast-index> term93
+                                                    )
+                                                  , CConj(
+                                                      CDeclProperty(
+                                                        Occurrence(
+                                                          Namespace("Var")
+                                                        , "flush"
+                                                        , <nabl2--occurrence-index-of> term93
+                                                        )
+                                                      , Type()
+                                                      , FUN(CList([]), UNIT())
+                                                      , "!!"
+                                                      , Message(Error(), Default(), <nabl2--get-ast-index> term93)
+                                                      )
+                                                    , CConj(
+                                                        CGDecl(
+                                                          Occurrence(
+                                                            Namespace("Var")
+                                                          , "getchar"
+                                                          , <nabl2--occurrence-index-of> term93
+                                                          )
+                                                        , s
+                                                        , <nabl2--get-ast-index> term93
+                                                        )
+                                                      , CConj(
+                                                          CDeclProperty(
+                                                            Occurrence(
+                                                              Namespace("Var")
+                                                            , "getchar"
+                                                            , <nabl2--occurrence-index-of> term93
+                                                            )
+                                                          , Type()
+                                                          , FUN(CList([]), STRING())
+                                                          , "!!"
+                                                          , Message(Error(), Default(), <nabl2--get-ast-index> term93)
+                                                          )
+                                                        , CConj(
+                                                            CGDecl(
+                                                              Occurrence(
+                                                                Namespace("Var")
+                                                              , "ord"
+                                                              , <nabl2--occurrence-index-of> term93
+                                                              )
+                                                            , s
+                                                            , <nabl2--get-ast-index> term93
+                                                            )
+                                                          , CConj(
+                                                              CDeclProperty(
+                                                                Occurrence(
+                                                                  Namespace("Var")
+                                                                , "ord"
+                                                                , <nabl2--occurrence-index-of> term93
+                                                                )
+                                                              , Type()
+                                                              , FUN(CList([STRING()]), INT())
+                                                              , "!!"
+                                                              , Message(Error(), Default(), <nabl2--get-ast-index> term93)
+                                                              )
+                                                            , CConj(
+                                                                CGDecl(
+                                                                  Occurrence(
+                                                                    Namespace("Var")
+                                                                  , "chr"
+                                                                  , <nabl2--occurrence-index-of> term93
+                                                                  )
+                                                                , s
+                                                                , <nabl2--get-ast-index> term93
+                                                                )
+                                                              , CConj(
+                                                                  CDeclProperty(
+                                                                    Occurrence(
+                                                                      Namespace("Var")
+                                                                    , "chr"
+                                                                    , <nabl2--occurrence-index-of> term93
+                                                                    )
+                                                                  , Type()
+                                                                  , FUN(CList([INT()]), STRING())
+                                                                  , "!!"
+                                                                  , Message(Error(), Default(), <nabl2--get-ast-index> term93)
+                                                                  )
+                                                                , CConj(
+                                                                    CGDecl(
+                                                                      Occurrence(
+                                                                        Namespace("Var")
+                                                                      , "size"
+                                                                      , <nabl2--occurrence-index-of> term93
+                                                                      )
+                                                                    , s
+                                                                    , <nabl2--get-ast-index> term93
+                                                                    )
+                                                                  , CConj(
+                                                                      CDeclProperty(
+                                                                        Occurrence(
+                                                                          Namespace("Var")
+                                                                        , "size"
+                                                                        , <nabl2--occurrence-index-of> term93
+                                                                        )
+                                                                      , Type()
+                                                                      , FUN(CList([STRING()]), INT())
+                                                                      , "!!"
+                                                                      , Message(Error(), Default(), <nabl2--get-ast-index> term93)
+                                                                      )
+                                                                    , CConj(
+                                                                        CGDecl(
+                                                                          Occurrence(
+                                                                            Namespace("Var")
+                                                                          , "substring"
+                                                                          , <nabl2--occurrence-index-of> term93
+                                                                          )
+                                                                        , s
+                                                                        , <nabl2--get-ast-index> term93
+                                                                        )
+                                                                      , CConj(
+                                                                          CDeclProperty(
+                                                                            Occurrence(
+                                                                              Namespace("Var")
+                                                                            , "substring"
+                                                                            , <nabl2--occurrence-index-of> term93
+                                                                            )
+                                                                          , Type()
+                                                                          , FUN(
+                                                                              CList([STRING(), INT(), INT()])
+                                                                            , STRING()
+                                                                            )
+                                                                          , "!!"
+                                                                          , Message(Error(), Default(), <nabl2--get-ast-index> term93)
+                                                                          )
+                                                                        , CConj(
+                                                                            CGDecl(
+                                                                              Occurrence(
+                                                                                Namespace("Var")
+                                                                              , "concat"
+                                                                              , <nabl2--occurrence-index-of> term93
+                                                                              )
+                                                                            , s
+                                                                            , <nabl2--get-ast-index> term93
+                                                                            )
+                                                                          , CConj(
+                                                                              CDeclProperty(
+                                                                                Occurrence(
+                                                                                  Namespace("Var")
+                                                                                , "concat"
+                                                                                , <nabl2--occurrence-index-of> term93
+                                                                                )
+                                                                              , Type()
+                                                                              , FUN(
+                                                                                  CList([STRING(), STRING()])
+                                                                                , STRING()
+                                                                                )
+                                                                              , "!!"
+                                                                              , Message(Error(), Default(), <nabl2--get-ast-index> term93)
+                                                                              )
+                                                                            , CConj(
+                                                                                CGDecl(
+                                                                                  Occurrence(
+                                                                                    Namespace("Var")
+                                                                                  , "not"
+                                                                                  , <nabl2--occurrence-index-of> term93
+                                                                                  )
+                                                                                , s
+                                                                                , <nabl2--get-ast-index> term93
+                                                                                )
+                                                                              , CConj(
+                                                                                  CDeclProperty(
+                                                                                    Occurrence(
+                                                                                      Namespace("Var")
+                                                                                    , "not"
+                                                                                    , <nabl2--occurrence-index-of> term93
+                                                                                    )
+                                                                                  , Type()
+                                                                                  , FUN(CList([INT()]), INT())
+                                                                                  , "!!"
+                                                                                  , Message(Error(), Default(), <nabl2--get-ast-index> term93)
+                                                                                  )
+                                                                                , CConj(
+                                                                                    CGDecl(
+                                                                                      Occurrence(
+                                                                                        Namespace("Var")
+                                                                                      , "exit"
+                                                                                      , <nabl2--occurrence-index-of> term93
+                                                                                      )
+                                                                                    , s
+                                                                                    , <nabl2--get-ast-index> term93
+                                                                                    )
+                                                                                  , CDeclProperty(
+                                                                                      Occurrence(
+                                                                                        Namespace("Var")
+                                                                                      , "exit"
+                                                                                      , <nabl2--occurrence-index-of> term93
+                                                                                      )
+                                                                                    , Type()
+                                                                                    , FUN(CList([INT()]), UNIT())
+                                                                                    , "!!"
+                                                                                    , Message(Error(), Default(), <nabl2--get-ast-index> term93)
+                                                                                    )
+                                                                                  )
+                                                                                )
+                                                                              )
+                                                                            )
+                                                                          )
+                                                                        )
+                                                                      )
+                                                                    )
+                                                                  )
+                                                                )
+                                                              )
+                                                            )
+                                                          )
+                                                        )
+                                                      )
+                                                    )
+                                                  )
+                                                )
+                                              )
+                                            )
+                                          )
+                                        )
+                                      )
+                                    )
+                                  )
+                                )
+                              )
+                            )
+                          )
+                        ))
+    with(if nabl2--is-debug-collection-enabled then
+           nabl2--collection-info-msg(
+           | <concat-strings> [ "init ^ "
+                              , <pp-NaBL2-CTerm> (s)
+                              , " : "
+                              , <pp-NaBL2-objlangterm> type29
+                              ]
+           )
+         end)

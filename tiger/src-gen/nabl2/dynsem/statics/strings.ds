@@ -1,0 +1,11 @@
+module statics/strings
+
+imports nabl2/runtime/interpreter/scopegraph-api ds-signatures/Tiger-sig
+
+signature
+    sorts
+    constructors
+    native operators
+    arrows
+
+rules

@@ -1,0 +1,53 @@
+module signatures/Tiger-sig
+
+imports
+  signatures/Whitespace-sig
+
+
+imports
+  signatures/Types-sig
+
+
+imports
+  signatures/Identifiers-sig
+
+
+imports
+  signatures/Bindings-sig
+
+
+imports
+  signatures/Variables-sig
+
+
+imports
+  signatures/Functions-sig
+
+
+imports
+  signatures/Numbers-sig
+
+
+imports
+  signatures/Strings-sig
+
+
+imports
+  signatures/Records-sig
+
+
+imports
+  signatures/Arrays-sig
+
+
+imports
+  signatures/Control-Flow-sig
+
+
+signature
+  constructors
+    Mod          : Exp -> Module
+    Module-Plhdr : Module
+    Exp-Plhdr    : Exp
+    Module-Plhdr : COMPLETION-INSERTION -> Module
+    Exp-Plhdr    : COMPLETION-INSERTION -> Exp

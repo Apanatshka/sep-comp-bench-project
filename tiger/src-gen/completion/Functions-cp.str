@@ -1,0 +1,99 @@
+module completion/Functions-cp
+
+imports
+  libstratego-gpp
+  libspoofax/editor/completion/-
+
+
+imports
+  signatures/Functions-sig
+
+
+imports
+  completion/Types-cp
+
+
+imports
+  completion/Occurrences-cp
+
+
+rules
+
+  suggest-completions(|completions):
+    Dec-Plhdr() -> <add-completions(
+                    | ( "FunDecs"
+                      , FunDecs(
+                          [ <try(inline-completions(|Dec-Plhdr()))> FunDec-Plhdr()
+                          ]
+                        )
+                      )
+                    )
+                    ; fail> completions
+
+  suggest-completions(|completions):
+    FunDec-Plhdr() -> <add-completions(
+                       | ( "ProcDec"
+                         , ProcDec(
+                             <try(inline-completions(|FunDec-Plhdr()))> Occ-Plhdr()
+                           , CURSOR_ELEMENT()
+                           , <try(inline-completions(|FunDec-Plhdr()))> Exp-Plhdr()
+                           )
+                         )
+                       )
+                       ; fail> completions
+
+  suggest-completions(|completions):
+    FunDec-Plhdr() -> <add-completions(
+                       | ( "FunDec"
+                         , FunDec(
+                             <try(inline-completions(|FunDec-Plhdr()))> Occ-Plhdr()
+                           , CURSOR_ELEMENT()
+                           , <try(inline-completions(|FunDec-Plhdr()))> Type-Plhdr()
+                           , <try(inline-completions(|FunDec-Plhdr()))> Exp-Plhdr()
+                           )
+                         )
+                       )
+                       ; fail> completions
+
+  suggest-completions(|completions):
+    FArg-Plhdr() -> <add-completions(
+                     | ( "FArg"
+                       , FArg(
+                           <try(inline-completions(|FArg-Plhdr()))> Occ-Plhdr()
+                         , <try(inline-completions(|FArg-Plhdr()))> Type-Plhdr()
+                         )
+                       )
+                     )
+                     ; fail> completions
+
+  suggest-completions(|completions):
+    Exp-Plhdr() -> <add-completions(
+                    | ( "Call"
+                      , Call(
+                          <try(inline-completions(|Exp-Plhdr()))> Occ-Plhdr()
+                        , CURSOR_ELEMENT()
+                        )
+                      )
+                    )
+                    ; fail> completions
+
+
+rules
+
+  is-SDF-placeholder =
+    ?Dec-Plhdr()
+
+  is-SDF-placeholder =
+    ?FunDec-Plhdr()
+
+  is-SDF-placeholder =
+    ?FArg-Plhdr()
+
+  is-SDF-placeholder =
+    ?Type-Plhdr()
+
+  is-SDF-placeholder =
+    ?Occ-Plhdr()
+
+  is-SDF-placeholder =
+    ?Exp-Plhdr()

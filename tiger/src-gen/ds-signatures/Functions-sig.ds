@@ -1,0 +1,18 @@
+module ds-signatures/Functions-sig
+
+imports ds-signatures/Types-sig
+
+imports ds-signatures/Occurrences-sig
+
+signature
+    sorts
+      Dec
+      FunDec
+      FArg
+      Exp
+    constructors
+      FunDecs : List(FunDec) -> Dec 
+      ProcDec : Occ * List(FArg) * Exp -> FunDec 
+      FunDec : Occ * List(FArg) * Type * Exp -> FunDec 
+      FArg : Occ * Type -> FArg 
+      Call : Occ * List(Exp) -> Exp 

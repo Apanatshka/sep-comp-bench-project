@@ -1,0 +1,17 @@
+module completion/colorer/Types-cc-esv
+
+imports
+  completion/colorer/Bindings-cc-esv
+  completion/colorer/Occurrences-cc-esv
+
+colorer
+  _.Dec-Plhdr     : gray   
+  _.TypeDec-Plhdr : gray   
+  _.Occ-Plhdr     : gray   
+  _.Type-Plhdr    : gray   
+  _.Type-Plhdr    : gray   
+  _.TypeId-Plhdr  : gray   
+  _.Occ-Plhdr     : gray   
+  _.Occ-Plhdr     : gray   
+  _.Scope-Plhdr   : gray   
+  _.Ty-Plhdr      : gray   

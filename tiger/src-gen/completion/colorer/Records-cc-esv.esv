@@ -1,0 +1,15 @@
+module completion/colorer/Records-cc-esv
+
+imports
+  completion/colorer/Base-cc-esv
+  completion/colorer/Types-cc-esv
+  completion/colorer/Occurrences-cc-esv
+
+colorer
+  _.Type-Plhdr      : gray   
+  _.Field-Plhdr     : gray   
+  _.TypeId-Plhdr    : gray   
+  _.InitField-Plhdr : gray   
+  _.Exp-Plhdr       : gray   
+  _.LValue-Plhdr    : gray   
+  _.Occ-Plhdr       : gray   

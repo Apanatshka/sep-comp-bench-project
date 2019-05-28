@@ -1,0 +1,22 @@
+module signatures/Arrays-sig
+
+imports
+  signatures/Types-sig
+
+
+signature
+  constructors
+    ArrayTy      : TypeId -> Type
+    Array        : TypeId * Exp * Exp -> Exp
+    Subscript    : LValue * Index -> LValue
+                 : Exp -> Index
+    Type-Plhdr   : Type
+    TypeId-Plhdr : TypeId
+    LValue-Plhdr : LValue
+    Index-Plhdr  : Index
+    Exp-Plhdr    : Exp
+    Type-Plhdr   : COMPLETION-INSERTION -> Type
+    TypeId-Plhdr : COMPLETION-INSERTION -> TypeId
+    LValue-Plhdr : COMPLETION-INSERTION -> LValue
+    Index-Plhdr  : COMPLETION-INSERTION -> Index
+    Exp-Plhdr    : COMPLETION-INSERTION -> Exp

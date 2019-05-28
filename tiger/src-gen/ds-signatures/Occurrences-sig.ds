@@ -1,0 +1,9 @@
+module ds-signatures/Occurrences-sig
+
+imports ds-signatures/Identifiers-sig
+
+signature
+    sorts
+      Occ
+    constructors
+      __Id2Occ__ : Id -> Occ {implicit}

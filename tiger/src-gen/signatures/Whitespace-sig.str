@@ -1,0 +1,9 @@
+module signatures/Whitespace-sig
+
+signature
+  constructors
+     : String -> CommentChar
+     : String -> InsideComment
+     : String -> SingleLineComment
+     : String -> NewLineEOF
+     : String -> EOF

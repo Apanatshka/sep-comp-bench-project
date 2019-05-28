@@ -1,0 +1,7 @@
+module completion/colorer/ATerms-cc-esv
+
+colorer
+  _.String-Plhdr : gray   
+  _.Int-Plhdr    : gray   
+  _.Cons-Plhdr   : gray   
+  _.Term-Plhdr   : gray   

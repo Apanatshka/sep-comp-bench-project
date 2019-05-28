@@ -1,0 +1,25 @@
+module signatures/ATerms-sig
+
+signature
+  sorts
+    Cons Term
+
+  constructors
+                   : String -> Cons
+                   : String -> Int
+                   : String -> String
+                   : String -> StringChar
+    Str            : String -> Term
+    Int            : Int -> Term
+    App            : Cons * List(Term) -> Term
+    List           : List(Term) -> Term
+    Tuple          : List(Term) -> Term
+    String-Plhdr   : String
+    Int-Plhdr      : Int
+    Cons-Plhdr     : Cons
+    Term-Plhdr     : Term
+    String-Plhdr   : COMPLETION-INSERTION -> String
+    Int-Plhdr      : COMPLETION-INSERTION -> Int
+    Cons-Plhdr     : COMPLETION-INSERTION -> Cons
+    Term-Plhdr     : COMPLETION-INSERTION -> Term
+    Term-Opt-Plhdr : Term

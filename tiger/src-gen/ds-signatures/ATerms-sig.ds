@@ -1,0 +1,17 @@
+module ds-signatures/ATerms-sig
+
+signature
+    sorts
+      Cons
+      Term
+    sort aliases
+      Cons = String
+      Int = String
+      String = String
+      StringChar = String
+    constructors
+      Str : String_ -> Term 
+      Int : Int_ -> Term 
+      App : Cons * List(Term) -> Term 
+      List_ : List(Term) -> Term 
+      Tuple : List(Term) -> Term 

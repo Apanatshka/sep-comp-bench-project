@@ -1,0 +1,25 @@
+module ds-signatures/Numbers-sig
+
+signature
+    sorts
+      Exp
+    sort aliases
+      IntConst = String
+    sort aliases
+      RealConst = String
+      Sign = String
+    constructors
+      Int : IntConst -> Exp 
+      Uminus : Exp -> Exp 
+      Times : Exp * Exp -> Exp 
+      Divide : Exp * Exp -> Exp 
+      Plus : Exp * Exp -> Exp 
+      Minus : Exp * Exp -> Exp 
+      Eq : Exp * Exp -> Exp 
+      Neq : Exp * Exp -> Exp 
+      Gt : Exp * Exp -> Exp 
+      Lt : Exp * Exp -> Exp 
+      Geq : Exp * Exp -> Exp 
+      Leq : Exp * Exp -> Exp 
+      And : Exp * Exp -> Exp 
+      Or : Exp * Exp -> Exp 

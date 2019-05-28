@@ -1,0 +1,23 @@
+module signatures/Control-Flow-sig
+
+imports
+  signatures/Identifiers-sig
+
+
+imports
+  signatures/Variables-sig
+
+
+signature
+  constructors
+    Seq           : List(Exp) -> Exp
+    If            : Exp * Exp * Exp -> Exp
+    IfThen        : Exp * Exp -> Exp
+    While         : Exp * Exp -> Exp
+    For           : Var * Exp * Exp * Exp -> Exp
+    Break         : Exp
+    Var-Plhdr     : Var
+    Exp-Plhdr     : Exp
+    Var-Plhdr     : COMPLETION-INSERTION -> Var
+    Exp-Plhdr     : COMPLETION-INSERTION -> Exp
+    Exp-Opt-Plhdr : Exp

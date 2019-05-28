@@ -1,0 +1,86 @@
+module statics/strings
+
+imports
+  signatures/nabl2/shared/-
+  signatures/nabl2/shared/common/-
+  signatures/nabl2/shared/constraints/-
+  nabl2/shared/-
+  signatures/nabl2/runtime/-
+  signatures/nabl2/runtime/analysis/-
+  signatures/nabl2/runtime/common/-
+  nabl2/runtime/-
+  nabl2/runtime/analysis/-
+  nabl2/runtime/prelude/-
+  nabl2/runtime/stdlib/-
+
+
+rules
+
+
+rules
+
+
+rules
+
+
+imports
+  signatures/-
+
+
+imports
+  statics/nabl-lib
+
+
+imports
+  statics/base
+
+
+rules
+
+  nabl2--generate-constraint-default-rule(|):
+    (nabl2_source, term82@String(str), args20) -> constraint6
+    with(id)
+    with(ParamsAndType(params12@(s), type23) := args20
+         <+ fatal-err(
+            | <concat-strings> [ "Cannot match expected "
+                               , "^ (s) : type23"
+                               , " with actual "
+                               , <nabl2--pp-flat-args> args20
+                               , " when matching "
+                               , "String(str)"
+                               , " with "
+                               , <pp-NaBL2-Term> term82
+                               , "."
+                               ]
+            ))
+    with(if nabl2--is-debug-collection-enabled then
+           nabl2--collection-info-msg(
+           | <concat-strings> [ "default"
+                              , " [[ "
+                              , <pp-NaBL2-Term> term82
+                              , " ^ "
+                              , <pp-NaBL2-CTerm> params12
+                              , " : "
+                              , <pp-NaBL2-objlangterm> type23
+                              , " ]]"
+                              ]
+           )
+         end)
+    with(constraint6 := CConj(
+                          CEqual(
+                            type23
+                          , STRING()
+                          , Message(Error(), Default(), <nabl2--get-ast-index> term82)
+                          )
+                        , CConj(
+                            CAstProperty(<nabl2--get-ast-index> term82, Type(), type23)
+                          , CConj(
+                              CAstProperty(
+                                <nabl2--get-ast-index> term82
+                              , Params()
+                              , (s)
+                              )
+                            , CTrue(<nabl2--get-ast-index> term82)
+                            )
+                          )
+                        ))

@@ -1,0 +1,89 @@
+module completion/Tiger-cp
+
+imports
+  libstratego-gpp
+  libspoofax/editor/completion/-
+
+
+imports
+  signatures/Tiger-sig
+
+
+imports
+  completion/Whitespace-cp
+
+
+imports
+  completion/Types-cp
+
+
+imports
+  completion/Identifiers-cp
+
+
+imports
+  completion/Bindings-cp
+
+
+imports
+  completion/Variables-cp
+
+
+imports
+  completion/Functions-cp
+
+
+imports
+  completion/Numbers-cp
+
+
+imports
+  completion/Strings-cp
+
+
+imports
+  completion/Records-cp
+
+
+imports
+  completion/Arrays-cp
+
+
+imports
+  completion/Control-Flow-cp
+
+
+rules
+
+  suggest-completions(|completions):
+    Module-Plhdr() -> <add-completions(
+                       | ( "Mod"
+                         , Mod(
+                             <try(inline-completions(|Module-Plhdr()))> Exp-Plhdr()
+                           )
+                         )
+                       )
+                       ; fail> completions
+
+
+rules
+
+  is-left-recursive :
+    "Exp" -> <is-left-recursive> "Module"
+    where <not(is-lexical-completion-sort)> "Exp"
+
+  is-right-recursive :
+    "Exp" -> <is-right-recursive> "Module"
+    where <not(is-lexical-completion-sort)> "Exp"
+
+  is-Module-completion-sort :
+    "Exp" -> <id>
+
+
+rules
+
+  is-SDF-placeholder =
+    ?Module-Plhdr()
+
+  is-SDF-placeholder =
+    ?Exp-Plhdr()

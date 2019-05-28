@@ -1,0 +1,11 @@
+module completion/colorer/Arrays-cc-esv
+
+imports
+  completion/colorer/Types-cc-esv
+
+colorer
+  _.Type-Plhdr   : gray   
+  _.TypeId-Plhdr : gray   
+  _.LValue-Plhdr : gray   
+  _.Index-Plhdr  : gray   
+  _.Exp-Plhdr    : gray   

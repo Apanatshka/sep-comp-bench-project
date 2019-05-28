@@ -1,0 +1,109 @@
+module pp/Occurrences-pp
+
+imports
+  libstratego-gpp
+  libspoofax/sdf/pp
+  libspoofax/term/origin
+  libspoofax/term/annotation
+  libstratego-sglr
+  libstratego-sglr
+  signatures/Occurrences-sig
+
+
+imports
+  signatures/Identifiers-sig
+
+
+imports
+  pp/Identifiers-pp
+
+
+strategies
+  prettyprint-example =
+    prettyprint-Tiger
+
+  prettyprint-Tiger =
+    fail
+
+  prettyprint-Tiger(|sort) =
+    fail
+
+
+strategies
+  prettyprint-SDF-start-symbols =
+    prettyprint-Tiger-start-symbols
+
+  prettyprint-Tiger-start-symbols =
+    fail
+
+
+strategies
+  prettyprint-Tiger =
+    prettyprint-Tiger-Occ
+
+  prettyprint-Tiger(|sort):
+    t -> <prettyprint-Tiger-Occ>
+    where <?"Occ"> sort
+
+  prettyprint-Tiger-Occ :
+    t1__ -> [ H(
+                [SOpt(HS(), "0")]
+              , t1__'
+              )
+            ]
+    where not(is-Tiger-Occ)
+    where t1__' := <clean-layout-empty-symbols(
+                    | ""
+                    , FALSE()
+                    , FALSE()
+                    )
+                    ; flatten-list> [ <check-nonterminal-isEmpty ; id
+                                       <+ pp-one-Z(prettyprint-Tiger-Id)
+                                       <+ pp-one-Z(prettyprint-completion-aux)> t1__
+                                    ]
+
+  is-Tiger-Occ =
+    fail
+
+  prettyprint-Tiger-Occ :
+    amb([h|hs]) -> <prettyprint-Tiger-Occ> h
+
+  prettyprint-Tiger-Occ :
+    Occ-Plhdr() -> [ H(
+                       [SOpt(HS(), "0")]
+                     , [S("$Occ")]
+                     )
+                   ]
+
+  is-Tiger-Occ =
+    ?Occ-Plhdr()
+
+  prettyprint-Tiger-Id :
+    Id-Plhdr() -> [ H(
+                      [SOpt(HS(), "0")]
+                    , [S("$Id")]
+                    )
+                  ]
+
+  is-Tiger-Id =
+    ?Id-Plhdr()
+
+  prettyprint-Tiger-Occ :
+    Occ-Plhdr(_) -> [ H(
+                        [SOpt(HS(), "0")]
+                      , [S("$Occ")]
+                      )
+                    ]
+
+  is-Tiger-Occ =
+    ?Occ-Plhdr(_)
+
+  prettyprint-Tiger-Id :
+    Id-Plhdr(_) -> [ H(
+                       [SOpt(HS(), "0")]
+                     , [S("$Id")]
+                     )
+                   ]
+
+  is-Tiger-Id =
+    ?Id-Plhdr(_)

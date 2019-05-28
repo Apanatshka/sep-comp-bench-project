@@ -1,0 +1,96 @@
+module pp/Whitespace-pp
+
+imports
+  libstratego-gpp
+  libspoofax/sdf/pp
+  libspoofax/term/origin
+  libspoofax/term/annotation
+  libstratego-sglr
+  libstratego-sglr
+  signatures/Whitespace-sig
+
+
+strategies
+  prettyprint-example =
+    prettyprint-Tiger
+
+  prettyprint-Tiger =
+    fail
+
+  prettyprint-Tiger(|sort) =
+    fail
+
+
+strategies
+  prettyprint-SDF-start-symbols =
+    prettyprint-Tiger-start-symbols
+
+  prettyprint-Tiger-start-symbols =
+    fail
+
+
+strategies
+  prettyprint-Tiger =
+    prettyprint-Tiger-CommentChar
+
+  prettyprint-Tiger =
+    prettyprint-Tiger-InsideComment
+
+  prettyprint-Tiger =
+    prettyprint-Tiger-SingleLineComment
+
+  prettyprint-Tiger =
+    prettyprint-Tiger-NewLineEOF
+
+  prettyprint-Tiger =
+    prettyprint-Tiger-EOF
+
+  prettyprint-Tiger(|sort):
+    t -> <prettyprint-Tiger-CommentChar>
+    where <?"CommentChar"> sort
+
+  prettyprint-Tiger(|sort):
+    t -> <prettyprint-Tiger-InsideComment>
+    where <?"InsideComment"> sort
+
+  prettyprint-Tiger(|sort):
+    t -> <prettyprint-Tiger-SingleLineComment>
+    where <?"SingleLineComment"> sort
+
+  prettyprint-Tiger(|sort):
+    t -> <prettyprint-Tiger-NewLineEOF>
+    where <?"NewLineEOF"> sort
+
+  prettyprint-Tiger(|sort):
+    t -> <prettyprint-Tiger-EOF>
+    where <?"EOF"> sort
+
+  prettyprint-Tiger-CommentChar =
+    ![S(<is-string>)]
+
+  prettyprint-Tiger-InsideComment =
+    ![S(<is-string>)]
+
+  prettyprint-Tiger-SingleLineComment =
+    ![S(<is-string>)]
+
+  prettyprint-Tiger-NewLineEOF =
+    ![S(<is-string>)]
+
+  prettyprint-Tiger-EOF =
+    ![S(<is-string>)]
+
+  prettyprint-Tiger-CommentChar :
+    amb([h|hs]) -> <prettyprint-Tiger-CommentChar> h
+
+  prettyprint-Tiger-InsideComment :
+    amb([h|hs]) -> <prettyprint-Tiger-InsideComment> h
+
+  prettyprint-Tiger-SingleLineComment :
+    amb([h|hs]) -> <prettyprint-Tiger-SingleLineComment> h
+
+  prettyprint-Tiger-NewLineEOF :
+    amb([h|hs]) -> <prettyprint-Tiger-NewLineEOF> h
+
+  prettyprint-Tiger-EOF :
+    amb([h|hs]) -> <prettyprint-Tiger-EOF> h

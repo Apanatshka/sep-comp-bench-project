@@ -1,0 +1,15 @@
+module completion/Identifiers-cp
+
+imports
+  libstratego-gpp
+  libspoofax/editor/completion/-
+
+
+imports
+  signatures/Identifiers-sig
+
+
+rules
+
+  is-lexical-completion-sort :
+    "Id" -> <id>

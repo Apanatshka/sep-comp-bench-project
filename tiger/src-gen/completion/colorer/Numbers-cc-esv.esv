@@ -1,0 +1,5 @@
+module completion/colorer/Numbers-cc-esv
+
+colorer
+  _.IntConst-Plhdr : gray   
+  _.Exp-Plhdr      : gray   

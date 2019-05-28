@@ -1,0 +1,15 @@
+module ds-signatures/Arrays-sig
+
+imports ds-signatures/Types-sig
+
+signature
+    sorts
+      Type
+      Exp
+      LValue
+      Index
+    constructors
+      ArrayTy : TypeId -> Type 
+      Array : TypeId * Exp * Exp -> Exp 
+      Subscript : LValue * Index -> LValue 
+      __Exp2Index__ : Exp -> Index {implicit}

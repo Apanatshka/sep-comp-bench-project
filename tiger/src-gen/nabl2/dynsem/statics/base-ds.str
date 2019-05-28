@@ -1,0 +1,13 @@
+module statics/base-ds
+
+imports
+  nabl2/runtime/-
+  nabl2/runtime/analysis/-
+
+
+imports
+  signatures/-
+  statics/nabl-lib-ds
+
+
+rules

@@ -1,0 +1,47 @@
+module completion/Occurrences-cp
+
+imports
+  libstratego-gpp
+  libspoofax/editor/completion/-
+
+
+imports
+  signatures/Occurrences-sig
+
+
+imports
+  completion/Identifiers-cp
+
+
+rules
+
+  suggest-completions(|completions):
+    Occ-Plhdr() -> <suggest-completions(|completions)> Id-Plhdr()
+    where <not(is-expanded)> (Occ-Plhdr(), Id-Plhdr())
+          ; rules (
+              is-expanded :
+                (Occ-Plhdr(), Id-Plhdr()) -> <id>
+            )
+
+
+rules
+
+  is-left-recursive :
+    "Id" -> <is-left-recursive> "Occ"
+    where <not(is-lexical-completion-sort)> "Id"
+
+  is-right-recursive :
+    "Id" -> <is-right-recursive> "Occ"
+    where <not(is-lexical-completion-sort)> "Id"
+
+  is-Occ-completion-sort :
+    "Id" -> <id>
+
+
+rules
+
+  is-SDF-placeholder =
+    ?Occ-Plhdr()
+
+  is-SDF-placeholder =
+    ?Id-Plhdr()

@@ -1,0 +1,164 @@
+module pp/Strings-pp
+
+imports
+  libstratego-gpp
+  libspoofax/sdf/pp
+  libspoofax/term/origin
+  libspoofax/term/annotation
+  libstratego-sglr
+  libstratego-sglr
+  signatures/Strings-sig
+
+
+strategies
+  prettyprint-example =
+    prettyprint-Tiger
+
+  prettyprint-Tiger =
+    fail
+
+  prettyprint-Tiger(|sort) =
+    fail
+
+
+strategies
+  prettyprint-SDF-start-symbols =
+    prettyprint-Tiger-start-symbols
+
+  prettyprint-Tiger-start-symbols =
+    fail
+
+
+strategies
+  prettyprint-Tiger =
+    prettyprint-Tiger-StrConst
+
+  prettyprint-Tiger =
+    prettyprint-Tiger-StrChar
+
+  prettyprint-Tiger(|sort):
+    t -> <prettyprint-Tiger-StrConst>
+    where <?"StrConst"> sort
+
+  prettyprint-Tiger(|sort):
+    t -> <prettyprint-Tiger-StrChar>
+    where <?"StrChar"> sort
+
+  prettyprint-Tiger-StrConst =
+    ![S(<is-string>)]
+
+  prettyprint-Tiger-StrChar =
+    ![S(<is-string>)]
+
+  prettyprint-Tiger-StrConst :
+    amb([h|hs]) -> <prettyprint-Tiger-StrConst> h
+
+  prettyprint-Tiger-StrChar :
+    amb([h|hs]) -> <prettyprint-Tiger-StrChar> h
+
+
+strategies
+  prettyprint-Tiger =
+    prettyprint-Tiger-Exp
+
+  prettyprint-Tiger(|sort):
+    t -> <prettyprint-Tiger-Exp>
+    where <?"Exp"> sort
+
+  prettyprint-Tiger-Exp :
+    String(t1__) -> [ H(
+                        [SOpt(HS(), "0")]
+                      , t1__'
+                      )
+                    ]
+    with t1__' := <clean-layout-empty-symbols(
+                   | ""
+                   , FALSE()
+                   , FALSE()
+                   )
+                   ; flatten-list> [ <check-nonterminal-isEmpty ; id
+                                      <+ pp-one-Z(prettyprint-Tiger-StrConst)
+                                      <+ pp-one-Z(prettyprint-completion-aux)> t1__
+                                   ]
+
+  is-Tiger-Exp =
+    ?String(_)
+
+  Tiger-get-indent :
+    (t@String(t1__), index) -> indent
+    where sort := <ia-get-sort> t
+          ; <?"Exp"> sort
+    with switch !index
+           case ?1 :
+             indent := ""
+           otherwise :
+             indent := ""
+         end
+
+  Tiger-get-separator :
+    (t@String(t1__), index) -> separator
+    where sort := <ia-get-sort> t
+          ; <?"Exp"> sort
+    with switch !index
+           case ?1 :
+             separator := ""
+           otherwise :
+             separator := ""
+         end
+
+  Tiger-get-leading-ws :
+    (t@String(t1__), index) -> ws
+    where sort := <ia-get-sort> t
+          ; <?"Exp"> sort
+    with switch !index
+           case ?1 :
+             ws := ""
+           otherwise :
+             ws := ""
+         end
+
+  is-Tiger-Exp =
+    fail
+
+  prettyprint-Tiger-Exp :
+    amb([h|hs]) -> <prettyprint-Tiger-Exp> h
+
+  prettyprint-Tiger-Exp :
+    Exp-Plhdr() -> [ H(
+                       [SOpt(HS(), "0")]
+                     , [S("$Exp")]
+                     )
+                   ]
+
+  is-Tiger-Exp =
+    ?Exp-Plhdr()
+
+  prettyprint-Tiger-StrConst :
+    StrConst-Plhdr() -> [ H(
+                            [SOpt(HS(), "0")]
+                          , [S("$StrConst")]
+                          )
+                        ]
+
+  is-Tiger-StrConst =
+    ?StrConst-Plhdr()
+
+  prettyprint-Tiger-Exp :
+    Exp-Plhdr(_) -> [ H(
+                        [SOpt(HS(), "0")]
+                      , [S("$Exp")]
+                      )
+                    ]
+
+  is-Tiger-Exp =
+    ?Exp-Plhdr(_)
+
+  prettyprint-Tiger-StrConst :
+    StrConst-Plhdr(_) -> [ H(
+                             [SOpt(HS(), "0")]
+                           , [S("$StrConst")]
+                           )
+                         ]
+
+  is-Tiger-StrConst =
+    ?StrConst-Plhdr(_)

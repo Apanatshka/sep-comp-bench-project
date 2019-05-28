@@ -1,0 +1,107 @@
+module completion/ATerms-cp
+
+imports
+  libstratego-gpp
+  libspoofax/editor/completion/-
+
+
+imports
+  signatures/ATerms-sig
+
+
+rules
+
+  suggest-completions(|completions):
+    Term-Plhdr() -> <add-completions(
+                     | ( "Str"
+                       , Str(
+                           <try(inline-completions(|Term-Plhdr()))> String-Plhdr()
+                         )
+                       )
+                     )
+                     ; fail> completions
+
+  suggest-completions(|completions):
+    Term-Plhdr() -> <add-completions(
+                     | ( "Int"
+                       , Int(
+                           <try(inline-completions(|Term-Plhdr()))> Int-Plhdr()
+                         )
+                       )
+                     )
+                     ; fail> completions
+
+  suggest-completions(|completions):
+    Term-Plhdr() -> <add-completions(
+                     | ( "App"
+                       , App(
+                           <try(inline-completions(|Term-Plhdr()))> Cons-Plhdr()
+                         , CURSOR_ELEMENT()
+                         )
+                       )
+                     )
+                     ; fail> completions
+
+  suggest-completions(|completions):
+    Term-Plhdr() -> <add-completions(
+                     | ("List", List(CURSOR_ELEMENT()))
+                     )
+                     ; fail> completions
+
+  suggest-completions(|completions):
+    Term-Plhdr() -> <add-completions(
+                     | ("Tuple", Tuple(CURSOR_ELEMENT()))
+                     )
+                     ; fail> completions
+
+
+rules
+
+  is-lexical-completion-sort :
+    "Cons" -> <id>
+
+  is-lexical-completion-sort :
+    "Int" -> <id>
+
+  is-lexical-completion-sort :
+    "String" -> <id>
+
+  is-lexical-completion-sort :
+    "StringChar" -> <id>
+
+  is-left-recursive :
+    "String" -> <is-left-recursive> "Term"
+    where <not(is-lexical-completion-sort)> "String"
+
+  is-right-recursive :
+    "String" -> <is-right-recursive> "Term"
+    where <not(is-lexical-completion-sort)> "String"
+
+  is-Term-completion-sort :
+    "String" -> <id>
+
+  is-left-recursive :
+    "Int" -> <is-left-recursive> "Term"
+    where <not(is-lexical-completion-sort)> "Int"
+
+  is-right-recursive :
+    "Int" -> <is-right-recursive> "Term"
+    where <not(is-lexical-completion-sort)> "Int"
+
+  is-Term-completion-sort :
+    "Int" -> <id>
+
+
+rules
+
+  is-SDF-placeholder =
+    ?String-Plhdr()
+
+  is-SDF-placeholder =
+    ?Int-Plhdr()
+
+  is-SDF-placeholder =
+    ?Cons-Plhdr()
+
+  is-SDF-placeholder =
+    ?Term-Plhdr()

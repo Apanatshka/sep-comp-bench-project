@@ -1,0 +1,16 @@
+module ds-signatures/Control-Flow-sig
+
+imports ds-signatures/Identifiers-sig
+
+imports ds-signatures/Variables-sig
+
+signature
+    sorts
+      Exp
+    constructors
+      Seq : List(Exp) -> Exp 
+      If : Exp * Exp * Exp -> Exp 
+      IfThen : Exp * Exp -> Exp 
+      While : Exp * Exp -> Exp 
+      For : Var * Exp * Exp * Exp -> Exp 
+      Break : Exp 

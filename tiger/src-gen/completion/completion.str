@@ -1,0 +1,56 @@
+module completion
+
+imports
+  
+  libspoofax/editor/completion/-
+  completion/Tiger-cp
+  pp/-
+  pp
+ 
+  
+rules
+
+  pp-partial-Tiger-string(|sort) = fail
+  pp-partial-Tiger-string = fail
+  parenthesize-Tiger = fail
+  Tiger-get-indent = fail
+  Tiger-get-leading-ws = fail
+  Tiger-get-separator = fail
+
+  
+  get-proposals-empty-program-Tiger                         = ?(sort, _); 
+                                                                 get-proposals-empty-program(pp-partial-Tiger-string(|sort), parenthesize-Tiger, 
+                                                                                             Tiger-get-indent, Tiger-get-leading-ws, 
+                                                                                             Tiger-get-separator)
+  get-proposals-left-recursive-Tiger                        = ?(sort, _); 
+                                                                 get-proposals-left-recursive(pp-partial-Tiger-string, parenthesize-Tiger, 
+                                                                                             Tiger-get-indent, Tiger-get-leading-ws, 
+                                                                                             Tiger-get-separator)
+  get-proposals-right-recursive-Tiger                       = ?(sort, _); 
+                                                                 get-proposals-right-recursive(pp-partial-Tiger-string, parenthesize-Tiger, 
+                                                                                             Tiger-get-indent, Tiger-get-leading-ws, 
+                                                                                             Tiger-get-separator)
+  get-proposals-placeholder-Tiger                           = ?(sort, _, _, _);
+                                                                 get-proposals-placeholder(pp-partial-Tiger-string(|sort), parenthesize-Tiger, 
+                                                                                             Tiger-get-indent, Tiger-get-leading-ws, 
+                                                                                             Tiger-get-separator)
+  get-proposals-optional-Tiger                              = ?(sort, _, _);
+                                                                 get-proposals-optional(pp-partial-Tiger-string(|sort), parenthesize-Tiger, 
+                                                                                             Tiger-get-indent, Tiger-get-leading-ws, 
+                                                                                             Tiger-get-separator)
+  get-proposals-list-Tiger                                  = ?(sort, _, _, _);
+                                                                 get-proposals-list(pp-partial-Tiger-string(|sort), parenthesize-Tiger, 
+                                                                                             Tiger-get-indent, Tiger-get-leading-ws, 
+                                                                                             Tiger-get-separator)
+  get-proposals-incorrect-programs-Tiger                    = ?(sort, _, _, _, _);
+                                                                 get-proposals-incorrect-programs(pp-partial-Tiger-string(|sort), parenthesize-Tiger, 
+                                                                                             Tiger-get-indent, Tiger-get-leading-ws, 
+                                                                                             Tiger-get-separator)
+  get-proposals-incorrect-programs-nested-Tiger             = ?(sort, _, _, _, _, _);
+                                                                 get-proposals-incorrect-programs-nested(pp-partial-Tiger-string(|sort), parenthesize-Tiger, 
+                                                                                             Tiger-get-indent, Tiger-get-leading-ws, 
+                                                                                             Tiger-get-separator)
+  get-proposals-incorrect-programs-single-placeholder-Tiger = ?(sort, _, _, _, _, _, _);
+                                                                 get-proposals-incorrect-programs-single-placeholder(pp-partial-Tiger-string(|sort), parenthesize-Tiger, 
+                                                                                             Tiger-get-indent, Tiger-get-leading-ws, 
+                                                                                             Tiger-get-separator)

@@ -1,0 +1,154 @@
+module statics/tiger
+
+imports
+  signatures/nabl2/shared/-
+  signatures/nabl2/shared/common/-
+  signatures/nabl2/shared/constraints/-
+  nabl2/shared/-
+  signatures/nabl2/runtime/-
+  signatures/nabl2/runtime/analysis/-
+  signatures/nabl2/runtime/common/-
+  nabl2/runtime/-
+  nabl2/runtime/analysis/-
+  nabl2/runtime/prelude/-
+  nabl2/runtime/stdlib/-
+
+
+rules
+
+
+rules
+
+
+rules
+
+
+imports
+  statics/arrays
+
+
+imports
+  statics/base
+
+
+imports
+  statics/bindings
+
+
+imports
+  statics/control-flow
+
+
+imports
+  statics/functions
+
+
+imports
+  statics/nabl-lib
+
+
+imports
+  statics/numbers
+
+
+imports
+  statics/records
+
+
+imports
+  statics/strings
+
+
+imports
+  statics/types
+
+
+imports
+  statics/variables
+
+
+rules
+
+  prettyprint-Tiger(|sort) =
+    prettyprint-NaBL2-api-term(|sort)
+
+  prettyprint-Tiger-NaBL2Scope(|) =
+    prettyprint-NaBL2-api-term
+
+  prettyprint-Tiger-NaBL2Occurrence(|) =
+    prettyprint-NaBL2-api-term
+
+  nabl2--generate-constraint-init-rule(|):
+    (nabl2_source, term91@wld1) -> (args24, constraint10)
+    with(type32 := <nabl2--fresh-var(|nabl2_source)> "type32"
+         ; s := <nabl2--fresh-var(|nabl2_source)> "s"
+         ; id)
+    with(args24 := ParamsAndType((s), type32))
+    with(constraint10 := CNew([s], <nabl2--get-ast-index> term91))
+    with(if nabl2--is-debug-collection-enabled then
+           nabl2--collection-info-msg(
+           | <concat-strings> [ "init ^ "
+                              , <pp-NaBL2-CTerm> (s)
+                              , " : "
+                              , <pp-NaBL2-objlangterm> type32
+                              ]
+           )
+         end)
+
+  nabl2--generate-constraint-default-rule(|):
+    ( nabl2_source
+    , term92@m@Mod(e)
+    , args25
+    ) -> constraint11
+    with(ty := <nabl2--fresh-var(|nabl2_source)> "ty" ; id)
+    with(ParamsAndType(params16@(s), type33) := args25
+         <+ fatal-err(
+            | <concat-strings> [ "Cannot match expected "
+                               , "^ (s) : type33"
+                               , " with actual "
+                               , <nabl2--pp-flat-args> args25
+                               , " when matching "
+                               , "Mod(e)"
+                               , " with "
+                               , <pp-NaBL2-Term> term92
+                               , "."
+                               ]
+            ))
+    with(if nabl2--is-debug-collection-enabled then
+           nabl2--collection-info-msg(
+           | <concat-strings> [ "default"
+                              , " [[ "
+                              , <pp-NaBL2-Term> term92
+                              , " ^ "
+                              , <pp-NaBL2-CTerm> params16
+                              , " : "
+                              , <pp-NaBL2-objlangterm> type33
+                              , " ]]"
+                              ]
+           )
+         end)
+    with(constraint11 := CConj(
+                           CEqual(
+                             type33
+                           , ty
+                           , Message(Error(), Default(), <nabl2--get-ast-index> term92)
+                           )
+                         , CConj(
+                             CAstProperty(<nabl2--get-ast-index> term92, Type(), type33)
+                           , CConj(
+                               CAstProperty(
+                                 <nabl2--get-ast-index> term92
+                               , Params()
+                               , (s)
+                               )
+                             , CConj(
+                                 CAstProperty(
+                                   <nabl2--get-ast-index> m
+                                 , Property("bodyScope")
+                                 , s
+                                 )
+                               , <nabl2--generate-constraint(nabl2--generate-constraint-default-rule|"default")> (nabl2_source, e, ParamsAndType((s), ty))
+                               )
+                             )
+                           )
+                         ))

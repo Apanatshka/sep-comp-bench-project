@@ -1,0 +1,123 @@
+module completion/Records-cp
+
+imports
+  libstratego-gpp
+  libspoofax/editor/completion/-
+
+
+imports
+  signatures/Records-sig
+
+
+imports
+  completion/Base-cp
+
+
+imports
+  completion/Types-cp
+
+
+imports
+  completion/Occurrences-cp
+
+
+rules
+
+  suggest-completions(|completions):
+    Type-Plhdr() -> <add-completions(
+                     | ("RecordTy", RecordTy(CURSOR_ELEMENT()))
+                     )
+                     ; fail> completions
+
+  suggest-completions(|completions):
+    Field-Plhdr() -> <add-completions(
+                      | ( "Field"
+                        , Field(
+                            <try(inline-completions(|Field-Plhdr()))> Occ-Plhdr()
+                          , <try(inline-completions(|Field-Plhdr()))> TypeId-Plhdr()
+                          )
+                        )
+                      )
+                      ; fail> completions
+
+  suggest-completions(|completions):
+    Exp-Plhdr() -> <add-completions(|("NilExp", NilExp()))
+                    ; fail> completions
+
+  suggest-completions(|completions):
+    Exp-Plhdr() -> <add-completions(
+                    | ( "Record"
+                      , Record(
+                          <try(inline-completions(|Exp-Plhdr()))> TypeId-Plhdr()
+                        , CURSOR_ELEMENT()
+                        )
+                      )
+                    )
+                    ; fail> completions
+
+  suggest-completions(|completions):
+    InitField-Plhdr() -> <add-completions(
+                          | ( "InitField"
+                            , InitField(
+                                <try(inline-completions(|InitField-Plhdr()))> Occ-Plhdr()
+                              , <try(inline-completions(|InitField-Plhdr()))> Exp-Plhdr()
+                              )
+                            )
+                          )
+                          ; fail> completions
+
+  suggest-completions(|completions):
+    LValue-Plhdr() -> <add-completions(
+                       | ( "FieldVar"
+                         , FieldVar(
+                             <try(inline-completions(|LValue-Plhdr()))> LValue-Plhdr()
+                           , <try(inline-completions(|LValue-Plhdr()))> Occ-Plhdr()
+                           )
+                         )
+                       )
+                       ; fail> completions
+
+
+rules
+
+  is-left-recursive :
+    "LValue" -> <id>
+
+  suggest-completions-left-rec(|completions):
+    (sort, orig-term) -> <add-completions(
+                          | ( "FieldVar"
+                            , FieldVar(
+                                orig-term
+                              , <try(inline-completions(|LValue-Plhdr()))> Occ-Plhdr()
+                              )
+                            )
+                          )
+                          ; fail> completions
+    where <is-LValue-completion-sort> sort
+
+  is-LValue-completion-sort :
+    "LValue" -> <id>
+
+
+rules
+
+  is-SDF-placeholder =
+    ?Type-Plhdr()
+
+  is-SDF-placeholder =
+    ?Field-Plhdr()
+
+  is-SDF-placeholder =
+    ?TypeId-Plhdr()
+
+  is-SDF-placeholder =
+    ?InitField-Plhdr()
+
+  is-SDF-placeholder =
+    ?Exp-Plhdr()
+
+  is-SDF-placeholder =
+    ?LValue-Plhdr()
+
+  is-SDF-placeholder =
+    ?Occ-Plhdr()

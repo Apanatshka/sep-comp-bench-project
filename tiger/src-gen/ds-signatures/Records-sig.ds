@@ -1,0 +1,22 @@
+module ds-signatures/Records-sig
+
+imports ds-signatures/Base-sig
+
+imports ds-signatures/Types-sig
+
+imports ds-signatures/Occurrences-sig
+
+signature
+    sorts
+      Type
+      Field
+      Exp
+      InitField
+      LValue
+    constructors
+      RecordTy : List(Field) -> Type 
+      Field : Occ * TypeId -> Field 
+      NilExp : Exp 
+      Record : TypeId * List(InitField) -> Exp 
+      InitField : Occ * Exp -> InitField 
+      FieldVar : LValue * Occ -> LValue 

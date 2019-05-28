@@ -1,0 +1,19 @@
+module ds-signatures/Variables-sig
+
+imports ds-signatures/Types-sig
+
+imports ds-signatures/Occurrences-sig
+
+signature
+    sorts
+      Dec
+      Var
+      LValue
+      Exp
+    constructors
+      VarDec : Occ * Type * Exp -> Dec 
+      VarDecNoType : Occ * Exp -> Dec 
+      Var : Occ -> Var 
+      __Var2LValue__ : Var -> LValue {implicit}
+      __LValue2Exp__ : LValue -> Exp {implicit}
+      Assign : LValue * Exp -> Exp 

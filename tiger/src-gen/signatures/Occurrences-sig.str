@@ -1,0 +1,13 @@
+module signatures/Occurrences-sig
+
+imports
+  signatures/Identifiers-sig
+
+
+signature
+  constructors
+              : Id -> Occ
+    Occ-Plhdr : Occ
+    Id-Plhdr  : Id
+    Occ-Plhdr : COMPLETION-INSERTION -> Occ
+    Id-Plhdr  : COMPLETION-INSERTION -> Id

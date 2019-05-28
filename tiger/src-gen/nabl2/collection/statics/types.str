@@ -1,0 +1,224 @@
+module statics/types
+
+imports
+  signatures/nabl2/shared/-
+  signatures/nabl2/shared/common/-
+  signatures/nabl2/shared/constraints/-
+  nabl2/shared/-
+  signatures/nabl2/runtime/-
+  signatures/nabl2/runtime/analysis/-
+  signatures/nabl2/runtime/common/-
+  nabl2/runtime/-
+  nabl2/runtime/analysis/-
+  nabl2/runtime/prelude/-
+  nabl2/runtime/stdlib/-
+
+
+rules
+
+
+rules
+
+
+rules
+
+
+imports
+  signatures/-
+
+
+imports
+  statics/nabl-lib
+
+
+imports
+  statics/base
+
+
+rules
+
+  nabl2--generate-constraint-Dec-rule(|):
+    (nabl2_source, term78@TypeDecs(tdecs), args20) -> constraint6
+    with(id)
+    with(Params(params13@(s, s_outer)) := args20
+         <+ fatal-err(
+            | <concat-strings> [ "Cannot match expected "
+                               , "^ (s, s_outer)"
+                               , " with actual "
+                               , <nabl2--pp-flat-args> args20
+                               , " when matching "
+                               , "TypeDecs(tdecs)"
+                               , " with "
+                               , <pp-NaBL2-Term> term78
+                               , "."
+                               ]
+            ))
+    with(if nabl2--is-debug-collection-enabled then
+           nabl2--collection-info-msg(
+           | <concat-strings> [ "Dec"
+                              , " [[ "
+                              , <pp-NaBL2-Term> term78
+                              , " ^ "
+                              , <pp-NaBL2-CTerm> params13
+                              , " ]]"
+                              ]
+           )
+         end)
+    with(constraint6 := CConj(
+                          CAstProperty(
+                            <nabl2--get-ast-index> term78
+                          , Params()
+                          , (s, s_outer)
+                          )
+                        , <nabl2--generate-constraint(nabl2--generate-constraint-Map-rule|"Map")> (nabl2_source, tdecs, Params((s)))
+                        ))
+
+  nabl2--generate-constraint-default-rule(|):
+    (nabl2_source, term79@TypeDec(x, t), args21) -> constraint7
+    with(ty := <nabl2--fresh-var(|nabl2_source)> "ty" ; id)
+    with(Params(params14@(s)) := args21
+         <+ fatal-err(
+            | <concat-strings> [ "Cannot match expected "
+                               , "^ (s)"
+                               , " with actual "
+                               , <nabl2--pp-flat-args> args21
+                               , " when matching "
+                               , "TypeDec(x, t)"
+                               , " with "
+                               , <pp-NaBL2-Term> term79
+                               , "."
+                               ]
+            ))
+    with(if nabl2--is-debug-collection-enabled then
+           nabl2--collection-info-msg(
+           | <concat-strings> [ "default"
+                              , " [[ "
+                              , <pp-NaBL2-Term> term79
+                              , " ^ "
+                              , <pp-NaBL2-CTerm> params14
+                              , " ]]"
+                              ]
+           )
+         end)
+    with(constraint7 := CConj(
+                          CAstProperty(
+                            <nabl2--get-ast-index> term79
+                          , Params()
+                          , (s)
+                          )
+                        , CConj(
+                            <nabl2--generate-constraint(nabl2--generate-constraint-default-rule|"default")> (nabl2_source, t, ParamsAndType((s), ty))
+                          , CConj(
+                              CGDecl(
+                                Occurrence(
+                                  Namespace("Type")
+                                , x
+                                , <nabl2--occurrence-index-of> x
+                                )
+                              , s
+                              , <nabl2--get-ast-index> term79
+                              )
+                            , CDeclProperty(
+                                Occurrence(
+                                  Namespace("Type")
+                                , x
+                                , <nabl2--occurrence-index-of> x
+                                )
+                              , Type()
+                              , ty
+                              , "!"
+                              , Message(Error(), Default(), <nabl2--get-ast-index> term79)
+                              )
+                            )
+                          )
+                        ))
+
+
+rules
+
+  nabl2--generate-constraint-default-rule(|):
+    (nabl2_source, term80@Tid(x), args19) -> constraint5
+    with(d := <nabl2--fresh-var(|nabl2_source)> "d"
+         ; ty := <nabl2--fresh-var(|nabl2_source)> "ty"
+         ; id)
+    with(ParamsAndType(params12@(s), type15) := args19
+         <+ fatal-err(
+            | <concat-strings> [ "Cannot match expected "
+                               , "^ (s) : type15"
+                               , " with actual "
+                               , <nabl2--pp-flat-args> args19
+                               , " when matching "
+                               , "Tid(x)"
+                               , " with "
+                               , <pp-NaBL2-Term> term80
+                               , "."
+                               ]
+            ))
+    with(if nabl2--is-debug-collection-enabled then
+           nabl2--collection-info-msg(
+           | <concat-strings> [ "default"
+                              , " [[ "
+                              , <pp-NaBL2-Term> term80
+                              , " ^ "
+                              , <pp-NaBL2-CTerm> params12
+                              , " : "
+                              , <pp-NaBL2-objlangterm> type15
+                              , " ]]"
+                              ]
+           )
+         end)
+    with(constraint5 := CConj(
+                          CEqual(
+                            type15
+                          , ty
+                          , Message(Error(), Default(), <nabl2--get-ast-index> term80)
+                          )
+                        , CConj(
+                            CAstProperty(<nabl2--get-ast-index> term80, Type(), type15)
+                          , CConj(
+                              CAstProperty(
+                                <nabl2--get-ast-index> term80
+                              , Params()
+                              , (s)
+                              )
+                            , CConj(
+                                CGRef(
+                                  Occurrence(
+                                    Namespace("Type")
+                                  , x
+                                  , <nabl2--occurrence-index-of> x
+                                  )
+                                , s
+                                , <nabl2--get-ast-index> term80
+                                )
+                              , CConj(
+                                  CResolve(
+                                    Occurrence(
+                                      Namespace("Type")
+                                    , x
+                                    , <nabl2--occurrence-index-of> x
+                                    )
+                                  , d
+                                  , Message(
+                                      Error()
+                                    , Formatted(
+                                        [ Text("Type ")
+                                        , Term(x)
+                                        , Text(" not declared")
+                                        ]
+                                      )
+                                    , <nabl2--get-ast-index> term80
+                                    )
+                                  )
+                                , CDeclProperty(
+                                    d
+                                  , Type()
+                                  , ty
+                                  , ""
+                                  , Message(Error(), Default(), <nabl2--get-ast-index> term80)
+                                  )
+                                )
+                              )
+                            )
+                          )
+                        ))

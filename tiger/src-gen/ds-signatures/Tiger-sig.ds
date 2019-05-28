@@ -1,0 +1,29 @@
+module ds-signatures/Tiger-sig
+
+imports ds-signatures/Whitespace-sig
+
+imports ds-signatures/Types-sig
+
+imports ds-signatures/Identifiers-sig
+
+imports ds-signatures/Bindings-sig
+
+imports ds-signatures/Variables-sig
+
+imports ds-signatures/Functions-sig
+
+imports ds-signatures/Numbers-sig
+
+imports ds-signatures/Strings-sig
+
+imports ds-signatures/Records-sig
+
+imports ds-signatures/Arrays-sig
+
+imports ds-signatures/Control-Flow-sig
+
+signature
+    sorts
+      Module
+    constructors
+      Mod : Exp -> Module 

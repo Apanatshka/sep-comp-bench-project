@@ -1,0 +1,126 @@
+module completion/Arrays-cp
+
+imports
+  libstratego-gpp
+  libspoofax/editor/completion/-
+
+
+imports
+  signatures/Arrays-sig
+
+
+imports
+  completion/Types-cp
+
+
+rules
+
+  suggest-completions(|completions):
+    Type-Plhdr() -> <add-completions(
+                     | ( "ArrayTy"
+                       , ArrayTy(
+                           <try(inline-completions(|Type-Plhdr()))> TypeId-Plhdr()
+                         )
+                       )
+                     )
+                     ; fail> completions
+
+  suggest-completions(|completions):
+    Exp-Plhdr() -> <add-completions(
+                    | ( "Array"
+                      , Array(
+                          <try(inline-completions(|Exp-Plhdr()))> TypeId-Plhdr()
+                        , <try(inline-completions(|Exp-Plhdr()))> Exp-Plhdr()
+                        , <try(inline-completions(|Exp-Plhdr()))> Exp-Plhdr()
+                        )
+                      )
+                    )
+                    ; fail> completions
+
+  suggest-completions(|completions):
+    LValue-Plhdr() -> <add-completions(
+                       | ( "Subscript"
+                         , Subscript(
+                             <try(inline-completions(|LValue-Plhdr()))> LValue-Plhdr()
+                           , <try(inline-completions(|LValue-Plhdr()))> Index-Plhdr()
+                           )
+                         )
+                       )
+                       ; fail> completions
+
+  suggest-completions(|completions):
+    Index-Plhdr() -> <suggest-completions(|completions)> Exp-Plhdr()
+    where <not(is-expanded)> (Index-Plhdr(), Exp-Plhdr())
+          ; rules (
+              is-expanded :
+                (Index-Plhdr(), Exp-Plhdr()) -> <id>
+            )
+
+
+rules
+
+  is-left-recursive :
+    "LValue" -> <id>
+
+  suggest-completions-left-rec(|completions):
+    (sort, orig-term) -> <add-completions(
+                          | ( "Subscript"
+                            , Subscript(
+                                orig-term
+                              , <try(inline-completions(|LValue-Plhdr()))> Index-Plhdr()
+                              )
+                            )
+                          )
+                          ; fail> completions
+    where <is-LValue-completion-sort> sort
+
+  is-LValue-completion-sort :
+    "LValue" -> <id>
+
+  is-right-recursive :
+    "Exp" -> <id>
+
+  suggest-completions-right-rec(|completions):
+    (sort, orig-term) -> <add-completions(
+                          | ( "Array"
+                            , Array(
+                                <try(inline-completions(|Exp-Plhdr()))> TypeId-Plhdr()
+                              , <try(inline-completions(|Exp-Plhdr()))> Exp-Plhdr()
+                              , orig-term
+                              )
+                            )
+                          )
+                          ; fail> completions
+    where <is-Exp-completion-sort> sort
+
+  is-Exp-completion-sort :
+    "Exp" -> <id>
+
+  is-left-recursive :
+    "Exp" -> <is-left-recursive> "Index"
+    where <not(is-lexical-completion-sort)> "Exp"
+
+  is-right-recursive :
+    "Exp" -> <is-right-recursive> "Index"
+    where <not(is-lexical-completion-sort)> "Exp"
+
+  is-Index-completion-sort :
+    "Exp" -> <id>
+
+
+rules
+
+  is-SDF-placeholder =
+    ?Type-Plhdr()
+
+  is-SDF-placeholder =
+    ?TypeId-Plhdr()
+
+  is-SDF-placeholder =
+    ?LValue-Plhdr()
+
+  is-SDF-placeholder =
+    ?Index-Plhdr()
+
+  is-SDF-placeholder =
+    ?Exp-Plhdr()

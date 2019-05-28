@@ -1,0 +1,11 @@
+module ds-signatures/Strings-sig
+
+signature
+    sorts
+      StrConst
+      Exp
+    sort aliases
+      StrConst = String
+      StrChar = String
+    constructors
+      String : StrConst -> Exp 

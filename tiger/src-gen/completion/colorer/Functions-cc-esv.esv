@@ -1,0 +1,13 @@
+module completion/colorer/Functions-cc-esv
+
+imports
+  completion/colorer/Types-cc-esv
+  completion/colorer/Occurrences-cc-esv
+
+colorer
+  _.Dec-Plhdr    : gray   
+  _.FunDec-Plhdr : gray   
+  _.FArg-Plhdr   : gray   
+  _.Type-Plhdr   : gray   
+  _.Occ-Plhdr    : gray   
+  _.Exp-Plhdr    : gray   

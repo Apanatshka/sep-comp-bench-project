@@ -1,0 +1,37 @@
+module signatures/Bindings-sig
+
+imports
+  signatures/Control-Flow-sig
+
+
+imports
+  signatures/Identifiers-sig
+
+
+imports
+  signatures/Types-sig
+
+
+imports
+  signatures/Functions-sig
+
+
+imports
+  signatures/Variables-sig
+
+
+signature
+  sorts
+    Declarations
+
+  constructors
+    Let                : List(Dec) * List(Exp) -> Exp
+    Declarations       : List(Dec) -> Declarations
+    Exp-Plhdr          : Exp
+    Declarations-Plhdr : Declarations
+    Dec-Plhdr          : Dec
+    Exp-Plhdr          : COMPLETION-INSERTION -> Exp
+    Declarations-Plhdr : COMPLETION-INSERTION -> Declarations
+    Dec-Plhdr          : COMPLETION-INSERTION -> Dec
+    Exp-Opt-Plhdr      : Exp
+    Dec-Opt-Plhdr      : Dec

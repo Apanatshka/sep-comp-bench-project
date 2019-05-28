@@ -1,0 +1,51 @@
+module signatures/Types-sig
+
+imports
+  signatures/Bindings-sig
+
+
+imports
+  signatures/Occurrences-sig
+
+
+signature
+  sorts
+    Type
+
+  sorts
+    Ty Scope
+
+  constructors
+    TypeDecs      : List(TypeDec) -> Dec
+    TypeDec       : Occ * Type -> TypeDec
+    Dec-Plhdr     : Dec
+    TypeDec-Plhdr : TypeDec
+    Occ-Plhdr     : Occ
+    Type-Plhdr    : Type
+    Dec-Plhdr     : COMPLETION-INSERTION -> Dec
+    TypeDec-Plhdr : COMPLETION-INSERTION -> TypeDec
+    Occ-Plhdr     : COMPLETION-INSERTION -> Occ
+    Type-Plhdr    : COMPLETION-INSERTION -> Type
+                  : TypeId -> Type
+    Tid           : Occ -> TypeId
+    Type-Plhdr    : Type
+    TypeId-Plhdr  : TypeId
+    Occ-Plhdr     : Occ
+    Type-Plhdr    : COMPLETION-INSERTION -> Type
+    TypeId-Plhdr  : COMPLETION-INSERTION -> TypeId
+    Occ-Plhdr     : COMPLETION-INSERTION -> Occ
+    INT           : Ty
+    STRING        : Ty
+    NIL           : Ty
+    UNIT          : Ty
+    NAME          : Occ -> Ty
+    RECORD        : Scope -> Ty
+    ARRAY         : Ty * Scope -> Ty
+    FUN           : List(Ty) * Ty -> Ty
+    Occ-Plhdr     : Occ
+    Scope-Plhdr   : Scope
+    Ty-Plhdr      : Ty
+    Occ-Plhdr     : COMPLETION-INSERTION -> Occ
+    Scope-Plhdr   : COMPLETION-INSERTION -> Scope
+    Ty-Plhdr      : COMPLETION-INSERTION -> Ty
+    Ty-Opt-Plhdr  : Ty

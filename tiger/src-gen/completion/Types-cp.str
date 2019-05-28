@@ -1,0 +1,189 @@
+module completion/Types-cp
+
+imports
+  libstratego-gpp
+  libspoofax/editor/completion/-
+
+
+imports
+  signatures/Types-sig
+
+
+imports
+  completion/Bindings-cp
+
+
+imports
+  completion/Occurrences-cp
+
+
+rules
+
+  suggest-completions(|completions):
+    Dec-Plhdr() -> <add-completions(
+                    | ( "TypeDecs"
+                      , TypeDecs(
+                          [ <try(inline-completions(|Dec-Plhdr()))> TypeDec-Plhdr()
+                          ]
+                        )
+                      )
+                    )
+                    ; fail> completions
+
+  suggest-completions(|completions):
+    TypeDec-Plhdr() -> <add-completions(
+                        | ( "TypeDec"
+                          , TypeDec(
+                              <try(inline-completions(|TypeDec-Plhdr()))> Occ-Plhdr()
+                            , <try(inline-completions(|TypeDec-Plhdr()))> Type-Plhdr()
+                            )
+                          )
+                        )
+                        ; fail> completions
+
+  suggest-completions(|completions):
+    Type-Plhdr() -> <suggest-completions(|completions)> TypeId-Plhdr()
+    where <not(is-expanded)> (Type-Plhdr(), TypeId-Plhdr())
+          ; rules (
+              is-expanded :
+                (Type-Plhdr(), TypeId-Plhdr()) -> <id>
+            )
+
+  suggest-completions(|completions):
+    TypeId-Plhdr() -> <add-completions(
+                       | ( "Tid"
+                         , Tid(
+                             <try(inline-completions(|TypeId-Plhdr()))> Occ-Plhdr()
+                           )
+                         )
+                       )
+                       ; fail> completions
+
+  suggest-completions(|completions):
+    Ty-Plhdr() -> <add-completions(|("INT", INT()))
+                   ; fail> completions
+
+  suggest-completions(|completions):
+    Ty-Plhdr() -> <add-completions(|("STRING", STRING()))
+                   ; fail> completions
+
+  suggest-completions(|completions):
+    Ty-Plhdr() -> <add-completions(|("NIL", NIL()))
+                   ; fail> completions
+
+  suggest-completions(|completions):
+    Ty-Plhdr() -> <add-completions(|("UNIT", UNIT()))
+                   ; fail> completions
+
+  suggest-completions(|completions):
+    Ty-Plhdr() -> <add-completions(
+                   | ( "NAME"
+                     , NAME(
+                         <try(inline-completions(|Ty-Plhdr()))> Occ-Plhdr()
+                       )
+                     )
+                   )
+                   ; fail> completions
+
+  suggest-completions(|completions):
+    Ty-Plhdr() -> <add-completions(
+                   | ( "RECORD"
+                     , RECORD(
+                         <try(inline-completions(|Ty-Plhdr()))> Scope-Plhdr()
+                       )
+                     )
+                   )
+                   ; fail> completions
+
+  suggest-completions(|completions):
+    Ty-Plhdr() -> <add-completions(
+                   | ( "ARRAY"
+                     , ARRAY(
+                         <try(inline-completions(|Ty-Plhdr()))> Ty-Plhdr()
+                       , <try(inline-completions(|Ty-Plhdr()))> Scope-Plhdr()
+                       )
+                     )
+                   )
+                   ; fail> completions
+
+  suggest-completions(|completions):
+    Ty-Plhdr() -> <add-completions(
+                   | ( "FUN"
+                     , FUN(
+                         CURSOR_ELEMENT()
+                       , <try(inline-completions(|Ty-Plhdr()))> Ty-Plhdr()
+                       )
+                     )
+                   )
+                   ; fail> completions
+
+
+rules
+
+  is-left-recursive :
+    "TypeId" -> <is-left-recursive> "Type"
+    where <not(is-lexical-completion-sort)> "TypeId"
+
+  is-right-recursive :
+    "TypeId" -> <is-right-recursive> "Type"
+    where <not(is-lexical-completion-sort)> "TypeId"
+
+  is-Type-completion-sort :
+    "TypeId" -> <id>
+
+  is-left-recursive :
+    "Occ" -> <is-left-recursive> "TypeId"
+    where <not(is-lexical-completion-sort)> "Occ"
+
+  is-right-recursive :
+    "Occ" -> <is-right-recursive> "TypeId"
+    where <not(is-lexical-completion-sort)> "Occ"
+
+  is-TypeId-completion-sort :
+    "Occ" -> <id>
+
+  is-right-recursive :
+    "Ty" -> <id>
+
+  suggest-completions-right-rec(|completions):
+    (sort, orig-term) -> <add-completions(
+                          | ("FUN", FUN(CURSOR_ELEMENT(), orig-term))
+                          )
+                          ; fail> completions
+    where <is-Ty-completion-sort> sort
+
+  is-Ty-completion-sort :
+    "Ty" -> <id>
+
+
+rules
+
+  is-SDF-placeholder =
+    ?Dec-Plhdr()
+
+  is-SDF-placeholder =
+    ?TypeDec-Plhdr()
+
+  is-SDF-placeholder =
+    ?Occ-Plhdr()
+
+  is-SDF-placeholder =
+    ?Type-Plhdr()
+
+  is-SDF-placeholder =
+    ?Type-Plhdr()
+
+  is-SDF-placeholder =
+    ?TypeId-Plhdr()
+
+  is-SDF-placeholder =
+    ?Occ-Plhdr()
+
+  is-SDF-placeholder =
+    ?Occ-Plhdr()
+
+  is-SDF-placeholder =
+    ?Scope-Plhdr()
+
+  is-SDF-placeholder =
+    ?Ty-Plhdr()

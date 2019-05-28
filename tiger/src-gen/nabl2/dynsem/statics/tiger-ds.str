@@ -1,0 +1,22 @@
+module statics/tiger-ds
+
+imports
+  nabl2/runtime/-
+  nabl2/runtime/analysis/-
+
+
+imports
+  statics/arrays-ds
+  statics/base-ds
+  statics/bindings-ds
+  statics/control-flow-ds
+  statics/functions-ds
+  statics/nabl-lib-ds
+  statics/numbers-ds
+  statics/records-ds
+  statics/strings-ds
+  statics/types-ds
+  statics/variables-ds
+
+
+rules

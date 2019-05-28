@@ -1,0 +1,23 @@
+module statics/tiger
+
+imports nabl2/runtime/interpreter/scopegraph-api ds-signatures/Tiger-sig
+
+signature
+    sorts
+    constructors
+    native operators
+      nabl2_paramsOfModule : Module -> Scope
+      nabl2_paramsOfExp : Exp -> Scope
+      nabl2_paramsOfDec : Dec -> (Scope * Scope)
+    arrows
+      Module -paramsOf-> Scope
+      Exp -paramsOf-> Scope
+      Dec -paramsOf-> (Scope * Scope)
+
+rules
+
+  t : Module -paramsOf-> nabl2_paramsOfModule(t)
+
+  t : Exp -paramsOf-> nabl2_paramsOfExp(t)
+
+  t : Dec -paramsOf-> nabl2_paramsOfDec(t)

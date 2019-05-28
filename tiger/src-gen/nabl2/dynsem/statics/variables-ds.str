@@ -1,0 +1,44 @@
+module statics/variables-ds
+
+imports
+  nabl2/runtime/-
+  nabl2/runtime/analysis/-
+
+
+imports
+  signatures/-
+  statics/nabl-lib-ds
+  statics/base-ds
+
+
+rules
+
+  nabl2--transform-occurrences(|):
+    VarDec(x, t, e){a*} -> VarDec(
+                             Occurrence(
+                               Namespace("Var")
+                             , x
+                             , <is-string ; has-annos ; nabl2--occurrence-index-of> x
+                             )
+                           , t
+                           , e
+                           ){a*}
+
+  nabl2--transform-occurrences(|):
+    VarDecNoType(x, e){a*} -> VarDecNoType(
+                                Occurrence(
+                                  Namespace("Var")
+                                , x
+                                , <is-string ; has-annos ; nabl2--occurrence-index-of> x
+                                )
+                              , e
+                              ){a*}
+
+  nabl2--transform-occurrences(|):
+    Var(x){a*} -> Var(
+                    Occurrence(
+                      Namespace("Var")
+                    , x
+                    , <is-string ; has-annos ; nabl2--occurrence-index-of> x
+                    )
+                  ){a*}

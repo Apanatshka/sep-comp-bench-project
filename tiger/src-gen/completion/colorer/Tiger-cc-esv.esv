@@ -1,0 +1,18 @@
+module completion/colorer/Tiger-cc-esv
+
+imports
+  completion/colorer/Whitespace-cc-esv
+  completion/colorer/Types-cc-esv
+  completion/colorer/Identifiers-cc-esv
+  completion/colorer/Bindings-cc-esv
+  completion/colorer/Variables-cc-esv
+  completion/colorer/Functions-cc-esv
+  completion/colorer/Numbers-cc-esv
+  completion/colorer/Strings-cc-esv
+  completion/colorer/Records-cc-esv
+  completion/colorer/Arrays-cc-esv
+  completion/colorer/Control-Flow-cc-esv
+
+colorer
+  _.Module-Plhdr : gray   
+  _.Exp-Plhdr    : gray   
