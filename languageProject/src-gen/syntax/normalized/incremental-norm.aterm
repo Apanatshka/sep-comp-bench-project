@@ -3,7 +3,8 @@ Module(
 , [Imports([Module(Unparameterized("normalized/Common-norm"))])]
 , [ SDFSection(
       Kernel(
-        [ SdfProduction(
+        [ SdfProduction(Lit("\"\""), Rhs([]), NoAttrs())
+        , SdfProduction(
             Lit("\"file\"")
           , Rhs(
               [ CharClass(Simple(Present(Numeric("\\102"))))
@@ -80,6 +81,24 @@ Module(
           , NoAttrs()
           )
         , SdfProduction(
+            Lit("\"$UnusedSort\"")
+          , Rhs(
+              [ CharClass(Simple(Present(Numeric("\\36"))))
+              , CharClass(Simple(Present(Numeric("\\85"))))
+              , CharClass(Simple(Present(Numeric("\\110"))))
+              , CharClass(Simple(Present(Numeric("\\117"))))
+              , CharClass(Simple(Present(Numeric("\\115"))))
+              , CharClass(Simple(Present(Numeric("\\101"))))
+              , CharClass(Simple(Present(Numeric("\\100"))))
+              , CharClass(Simple(Present(Numeric("\\83"))))
+              , CharClass(Simple(Present(Numeric("\\111"))))
+              , CharClass(Simple(Present(Numeric("\\114"))))
+              , CharClass(Simple(Present(Numeric("\\116"))))
+              ]
+            )
+          , NoAttrs()
+          )
+        , SdfProduction(
             Lit("\"$Start\"")
           , Rhs(
               [ CharClass(Simple(Present(Numeric("\\36"))))
@@ -98,6 +117,11 @@ Module(
           , NoAttrs()
           )
         , SdfProduction(Cf(Opt(Layout())), Rhs([]), NoAttrs())
+        , SdfProductionWithCons(
+            SortCons(Cf(Sort("UnusedSort")), Constructor("UnusedConstr"))
+          , Rhs([Lit("\"\"")])
+          , NoAttrs()
+          )
         , SdfProductionWithCons(
             SortCons(Cf(Sort("Start")), Constructor("Empty"))
           , Rhs([])
@@ -132,6 +156,11 @@ Module(
           , Attrs([Term(Default(Fun(Unquoted("recover"))))])
           )
         , SdfProductionWithCons(
+            SortCons(Cf(Sort("UnusedSort")), Constructor("UnusedSort-Plhdr"))
+          , Rhs([Lit("\"$UnusedSort\"")])
+          , Attrs([Placeholder()])
+          )
+        , SdfProductionWithCons(
             SortCons(Cf(Sort("Start")), Constructor("Start-Plhdr"))
           , Rhs([Lit("\"$Start\"")])
           , Attrs([Placeholder()])
@@ -159,6 +188,22 @@ Module(
   , SDFSection(
       Restrictions(
         [ Follow(
+            [Lit("\"$UnusedSort\"")]
+          , List(
+              [ CharClass(
+                  Simple(
+                    Present(
+                      Conc(
+                        Range(Numeric("\\65"), Numeric("\\90"))
+                      , Range(Numeric("\\97"), Numeric("\\122"))
+                      )
+                    )
+                  )
+                )
+              ]
+            )
+          )
+        , Follow(
             [Lit("\"$Start\"")]
           , List(
               [ CharClass(

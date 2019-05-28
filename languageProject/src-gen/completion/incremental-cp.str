@@ -15,6 +15,10 @@ imports
 
 rules
 
+  suggest-completions(|completions):
+    UnusedSort-Plhdr() -> <add-completions(|("UnusedConstr", UnusedConstr()))
+                           ; fail> completions
+
   null-constructor-completion-sort :
     "Start" -> Empty()
 
@@ -24,6 +28,9 @@ rules
 
 
 rules
+
+  is-SDF-placeholder =
+    ?UnusedSort-Plhdr()
 
   is-SDF-placeholder =
     ?Start-Plhdr()

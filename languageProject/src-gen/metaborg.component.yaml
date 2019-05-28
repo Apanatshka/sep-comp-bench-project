@@ -29,7 +29,6 @@ language:
     - "stratego-sdf"
     - "-la"
     - "strc"
-    build: "incremental"
     format: "jar"
 id: "org.metaborg:incremental:0.1.0-SNAPSHOT"
 dependencies:

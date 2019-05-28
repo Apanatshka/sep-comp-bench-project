@@ -39,22 +39,22 @@ rules
 
   nabl2--generate-constraint-Dec-rule(|):
     ( nabl2_source
-    , term117@VarDec(x, t, e)
-    , args41
-    ) -> constraint27
+    , term87@VarDec(x, t, e)
+    , args21
+    ) -> constraint7
     with(ty2 := <nabl2--fresh-var(|nabl2_source)> "ty2"
          ; ty1 := <nabl2--fresh-var(|nabl2_source)> "ty1"
          ; id)
-    with(Params(params33@(s, s_outer)) := args41
+    with(Params(params14@(s, s_outer)) := args21
          <+ fatal-err(
             | <concat-strings> [ "Cannot match expected "
                                , "^ (s, s_outer)"
                                , " with actual "
-                               , <nabl2--pp-flat-args> args41
+                               , <nabl2--pp-flat-args> args21
                                , " when matching "
                                , "VarDec(x, t, e)"
                                , " with "
-                               , <pp-NaBL2-Term> term117
+                               , <pp-NaBL2-Term> term87
                                , "."
                                ]
             ))
@@ -62,81 +62,81 @@ rules
            nabl2--collection-info-msg(
            | <concat-strings> [ "Dec"
                               , " [[ "
-                              , <pp-NaBL2-Term> term117
+                              , <pp-NaBL2-Term> term87
                               , " ^ "
-                              , <pp-NaBL2-CTerm> params33
+                              , <pp-NaBL2-CTerm> params14
                               , " ]]"
                               ]
            )
          end)
-    with(constraint27 := CConj(
-                           CAstProperty(
-                             <nabl2--get-ast-index> term117
-                           , Params()
-                           , (s, s_outer)
-                           )
-                         , CConj(
-                             <nabl2--generate-constraint(nabl2--generate-constraint-default-rule|"default")> (nabl2_source, t, ParamsAndType((s_outer), ty1))
-                           , CConj(
-                               <nabl2--generate-constraint(nabl2--generate-constraint-default-rule|"default")> (nabl2_source, e, ParamsAndType((s_outer), ty2))
-                             , CConj(
-                                 CCheckRel(
-                                   ty2
-                                 , DefaultRelation()
-                                 , ty1
-                                 , Message(
-                                     Error()
-                                   , Formatted(
-                                       [ Text("type mismatch got ")
-                                       , Term(ty2)
-                                       , Text(" where ")
-                                       , Term(ty1)
-                                       , Text(" expected")
-                                       ]
-                                     )
-                                   , <nabl2--get-ast-index> e
-                                   )
-                                 )
-                               , CConj(
-                                   CGDecl(
-                                     Occurrence(
-                                       Namespace("Var")
-                                     , x
-                                     , <nabl2--occurrence-index-of> x
-                                     )
-                                   , s
-                                   , <nabl2--get-ast-index> term117
-                                   )
-                                 , CDeclProperty(
-                                     Occurrence(
-                                       Namespace("Var")
-                                     , x
-                                     , <nabl2--occurrence-index-of> x
-                                     )
-                                   , Type()
-                                   , ty1
-                                   , "!"
-                                   , Message(Error(), Default(), <nabl2--get-ast-index> term117)
-                                   )
-                                 )
-                               )
-                             )
-                           )
-                         ))
+    with(constraint7 := CConj(
+                          CAstProperty(
+                            <nabl2--get-ast-index> term87
+                          , Params()
+                          , (s, s_outer)
+                          )
+                        , CConj(
+                            <nabl2--generate-constraint(nabl2--generate-constraint-default-rule|"default")> (nabl2_source, t, ParamsAndType((s_outer), ty1))
+                          , CConj(
+                              <nabl2--generate-constraint(nabl2--generate-constraint-default-rule|"default")> (nabl2_source, e, ParamsAndType((s_outer), ty2))
+                            , CConj(
+                                CCheckRel(
+                                  ty2
+                                , DefaultRelation()
+                                , ty1
+                                , Message(
+                                    Error()
+                                  , Formatted(
+                                      [ Text("type mismatch got ")
+                                      , Term(ty2)
+                                      , Text(" where ")
+                                      , Term(ty1)
+                                      , Text(" expected")
+                                      ]
+                                    )
+                                  , <nabl2--get-ast-index> e
+                                  )
+                                )
+                              , CConj(
+                                  CGDecl(
+                                    Occurrence(
+                                      Namespace("Var")
+                                    , x
+                                    , <nabl2--occurrence-index-of> x
+                                    )
+                                  , s
+                                  , <nabl2--get-ast-index> term87
+                                  )
+                                , CDeclProperty(
+                                    Occurrence(
+                                      Namespace("Var")
+                                    , x
+                                    , <nabl2--occurrence-index-of> x
+                                    )
+                                  , Type()
+                                  , ty1
+                                  , "!"
+                                  , Message(Error(), Default(), <nabl2--get-ast-index> term87)
+                                  )
+                                )
+                              )
+                            )
+                          )
+                        ))
 
   nabl2--generate-constraint-Dec-rule(|):
-    (nabl2_source, term118@VarDecNoType(x, e), args42) -> constraint28
+    (nabl2_source, term88@VarDecNoType(x, e), args22) -> constraint8
     with(ty := <nabl2--fresh-var(|nabl2_source)> "ty" ; id)
-    with(Params(params34@(s, s_outer)) := args42
+    with(Params(params15@(s, s_outer)) := args22
          <+ fatal-err(
             | <concat-strings> [ "Cannot match expected "
                                , "^ (s, s_outer)"
                                , " with actual "
-                               , <nabl2--pp-flat-args> args42
+                               , <nabl2--pp-flat-args> args22
                                , " when matching "
                                , "VarDecNoType(x, e)"
                                , " with "
-                               , <pp-NaBL2-Term> term118
+                               , <pp-NaBL2-Term> term88
                                , "."
                                ]
             ))
@@ -144,75 +144,75 @@ rules
            nabl2--collection-info-msg(
            | <concat-strings> [ "Dec"
                               , " [[ "
-                              , <pp-NaBL2-Term> term118
+                              , <pp-NaBL2-Term> term88
                               , " ^ "
-                              , <pp-NaBL2-CTerm> params34
+                              , <pp-NaBL2-CTerm> params15
                               , " ]]"
                               ]
            )
          end)
-    with(constraint28 := CConj(
-                           CAstProperty(
-                             <nabl2--get-ast-index> term118
-                           , Params()
-                           , (s, s_outer)
-                           )
-                         , CConj(
-                             <nabl2--generate-constraint(nabl2--generate-constraint-default-rule|"default")> (nabl2_source, e, ParamsAndType((s_outer), ty))
-                           , CConj(
-                               CInequal(
-                                 ty
-                               , NIL()
-                               , Message(
-                                   Error()
-                                 , Formatted([Text("explicit type expected for variable initialized with nil")])
-                                 , <nabl2--get-ast-index> term118
-                                 )
-                               )
-                             , CConj(
-                                 CGDecl(
-                                   Occurrence(
-                                     Namespace("Var")
-                                   , x
-                                   , <nabl2--occurrence-index-of> x
-                                   )
-                                 , s
-                                 , <nabl2--get-ast-index> term118
-                                 )
-                               , CDeclProperty(
-                                   Occurrence(
-                                     Namespace("Var")
-                                   , x
-                                   , <nabl2--occurrence-index-of> x
-                                   )
-                                 , Type()
-                                 , ty
-                                 , "!"
-                                 , Message(Error(), Default(), <nabl2--get-ast-index> term118)
-                                 )
-                               )
-                             )
-                           )
-                         ))
+    with(constraint8 := CConj(
+                          CAstProperty(
+                            <nabl2--get-ast-index> term88
+                          , Params()
+                          , (s, s_outer)
+                          )
+                        , CConj(
+                            <nabl2--generate-constraint(nabl2--generate-constraint-default-rule|"default")> (nabl2_source, e, ParamsAndType((s_outer), ty))
+                          , CConj(
+                              CInequal(
+                                ty
+                              , NIL()
+                              , Message(
+                                  Error()
+                                , Formatted([Text("explicit type expected for variable initialized with nil")])
+                                , <nabl2--get-ast-index> term88
+                                )
+                              )
+                            , CConj(
+                                CGDecl(
+                                  Occurrence(
+                                    Namespace("Var")
+                                  , x
+                                  , <nabl2--occurrence-index-of> x
+                                  )
+                                , s
+                                , <nabl2--get-ast-index> term88
+                                )
+                              , CDeclProperty(
+                                  Occurrence(
+                                    Namespace("Var")
+                                  , x
+                                  , <nabl2--occurrence-index-of> x
+                                  )
+                                , Type()
+                                , ty
+                                , "!"
+                                , Message(Error(), Default(), <nabl2--get-ast-index> term88)
+                                )
+                              )
+                            )
+                          )
+                        ))
 
 
 rules
 
   nabl2--generate-constraint-default-rule(|):
-    (nabl2_source, term119@Var(x), args40) -> constraint26
+    (nabl2_source, term89@Var(x), args20) -> constraint6
     with(d := <nabl2--fresh-var(|nabl2_source)> "d"
          ; ty := <nabl2--fresh-var(|nabl2_source)> "ty"
          ; id)
-    with(ParamsAndType(params32@(s), type46) := args40
+    with(ParamsAndType(params13@(s), type39) := args20
          <+ fatal-err(
             | <concat-strings> [ "Cannot match expected "
-                               , "^ (s) : type46"
+                               , "^ (s) : type39"
                                , " with actual "
-                               , <nabl2--pp-flat-args> args40
+                               , <nabl2--pp-flat-args> args20
                                , " when matching "
                                , "Var(x)"
                                , " with "
-                               , <pp-NaBL2-Term> term119
+                               , <pp-NaBL2-Term> term89
                                , "."
                                ]
             ))
@@ -220,80 +220,80 @@ rules
            nabl2--collection-info-msg(
            | <concat-strings> [ "default"
                               , " [[ "
-                              , <pp-NaBL2-Term> term119
+                              , <pp-NaBL2-Term> term89
                               , " ^ "
-                              , <pp-NaBL2-CTerm> params32
+                              , <pp-NaBL2-CTerm> params13
                               , " : "
-                              , <pp-NaBL2-objlangterm> type46
+                              , <pp-NaBL2-objlangterm> type39
                               , " ]]"
                               ]
            )
          end)
-    with(constraint26 := CConj(
-                           CEqual(
-                             type46
-                           , ty
-                           , Message(Error(), Default(), <nabl2--get-ast-index> term119)
-                           )
-                         , CConj(
-                             CAstProperty(<nabl2--get-ast-index> term119, Type(), type46)
-                           , CConj(
-                               CAstProperty(
-                                 <nabl2--get-ast-index> term119
-                               , Params()
-                               , (s)
-                               )
-                             , CConj(
-                                 CGRef(
-                                   Occurrence(
-                                     Namespace("Var")
-                                   , x
-                                   , <nabl2--occurrence-index-of> x
-                                   )
-                                 , s
-                                 , <nabl2--get-ast-index> term119
-                                 )
-                               , CConj(
-                                   CResolve(
-                                     Occurrence(
-                                       Namespace("Var")
-                                     , x
-                                     , <nabl2--occurrence-index-of> x
-                                     )
-                                   , d
-                                   , Message(Error(), Default(), <nabl2--get-ast-index> term119)
-                                   )
-                                 , CDeclProperty(
-                                     d
-                                   , Type()
-                                   , ty
-                                   , ""
-                                   , Message(Error(), Default(), <nabl2--get-ast-index> term119)
-                                   )
-                                 )
-                               )
-                             )
-                           )
-                         ))
+    with(constraint6 := CConj(
+                          CEqual(
+                            type39
+                          , ty
+                          , Message(Error(), Default(), <nabl2--get-ast-index> term89)
+                          )
+                        , CConj(
+                            CAstProperty(<nabl2--get-ast-index> term89, Type(), type39)
+                          , CConj(
+                              CAstProperty(
+                                <nabl2--get-ast-index> term89
+                              , Params()
+                              , (s)
+                              )
+                            , CConj(
+                                CGRef(
+                                  Occurrence(
+                                    Namespace("Var")
+                                  , x
+                                  , <nabl2--occurrence-index-of> x
+                                  )
+                                , s
+                                , <nabl2--get-ast-index> term89
+                                )
+                              , CConj(
+                                  CResolve(
+                                    Occurrence(
+                                      Namespace("Var")
+                                    , x
+                                    , <nabl2--occurrence-index-of> x
+                                    )
+                                  , d
+                                  , Message(Error(), Default(), <nabl2--get-ast-index> term89)
+                                  )
+                                , CDeclProperty(
+                                    d
+                                  , Type()
+                                  , ty
+                                  , ""
+                                  , Message(Error(), Default(), <nabl2--get-ast-index> term89)
+                                  )
+                                )
+                              )
+                            )
+                          )
+                        ))
 
 
 rules
 
   nabl2--generate-constraint-default-rule(|):
-    (nabl2_source, term120@Assign(e1, e2), args39) -> constraint25
+    (nabl2_source, term91@Assign(e1, e2), args19) -> constraint5
     with(ty2 := <nabl2--fresh-var(|nabl2_source)> "ty2"
          ; ty1 := <nabl2--fresh-var(|nabl2_source)> "ty1"
          ; id)
-    with(ParamsAndType(params31@(s), type47) := args39
+    with(ParamsAndType(params12@(s), type40) := args19
          <+ fatal-err(
             | <concat-strings> [ "Cannot match expected "
-                               , "^ (s) : type47"
+                               , "^ (s) : type40"
                                , " with actual "
-                               , <nabl2--pp-flat-args> args39
+                               , <nabl2--pp-flat-args> args19
                                , " when matching "
                                , "Assign(e1, e2)"
                                , " with "
-                               , <pp-NaBL2-Term> term120
+                               , <pp-NaBL2-Term> term91
                                , "."
                                ]
             ))
@@ -301,52 +301,52 @@ rules
            nabl2--collection-info-msg(
            | <concat-strings> [ "default"
                               , " [[ "
-                              , <pp-NaBL2-Term> term120
+                              , <pp-NaBL2-Term> term91
                               , " ^ "
-                              , <pp-NaBL2-CTerm> params31
+                              , <pp-NaBL2-CTerm> params12
                               , " : "
-                              , <pp-NaBL2-objlangterm> type47
+                              , <pp-NaBL2-objlangterm> type40
                               , " ]]"
                               ]
            )
          end)
-    with(constraint25 := CConj(
-                           CEqual(
-                             type47
-                           , UNIT()
-                           , Message(Error(), Default(), <nabl2--get-ast-index> term120)
-                           )
-                         , CConj(
-                             CAstProperty(<nabl2--get-ast-index> term120, Type(), type47)
-                           , CConj(
-                               CAstProperty(
-                                 <nabl2--get-ast-index> term120
-                               , Params()
-                               , (s)
-                               )
-                             , CConj(
-                                 <nabl2--generate-constraint(nabl2--generate-constraint-default-rule|"default")> (nabl2_source, e1, ParamsAndType((s), ty1))
-                               , CConj(
-                                   <nabl2--generate-constraint(nabl2--generate-constraint-default-rule|"default")> (nabl2_source, e2, ParamsAndType((s), ty2))
-                                 , CCheckRel(
-                                     ty2
-                                   , DefaultRelation()
-                                   , ty1
-                                   , Message(
-                                       Error()
-                                     , Formatted(
-                                         [ Text("type mismatch got ")
-                                         , Term(ty2)
-                                         , Text(" where ")
-                                         , Term(ty1)
-                                         , Text(" expected")
-                                         ]
-                                       )
-                                     , <nabl2--get-ast-index> e2
-                                     )
-                                   )
-                                 )
-                               )
-                             )
-                           )
-                         ))
+    with(constraint5 := CConj(
+                          CEqual(
+                            type40
+                          , UNIT()
+                          , Message(Error(), Default(), <nabl2--get-ast-index> term91)
+                          )
+                        , CConj(
+                            CAstProperty(<nabl2--get-ast-index> term91, Type(), type40)
+                          , CConj(
+                              CAstProperty(
+                                <nabl2--get-ast-index> term91
+                              , Params()
+                              , (s)
+                              )
+                            , CConj(
+                                <nabl2--generate-constraint(nabl2--generate-constraint-default-rule|"default")> (nabl2_source, e1, ParamsAndType((s), ty1))
+                              , CConj(
+                                  <nabl2--generate-constraint(nabl2--generate-constraint-default-rule|"default")> (nabl2_source, e2, ParamsAndType((s), ty2))
+                                , CCheckRel(
+                                    ty2
+                                  , DefaultRelation()
+                                  , ty1
+                                  , Message(
+                                      Error()
+                                    , Formatted(
+                                        [ Text("type mismatch got ")
+                                        , Term(ty2)
+                                        , Text(" where ")
+                                        , Term(ty1)
+                                        , Text(" expected")
+                                        ]
+                                      )
+                                    , <nabl2--get-ast-index> e2
+                                    )
+                                  )
+                                )
+                              )
+                            )
+                          )
+                        ))

@@ -126,9 +126,16 @@ strategies
   prettyprint-Tiger =
     prettyprint-Tiger-Module
 
+  prettyprint-Tiger =
+    prettyprint-Tiger-UnusedSort
+
   prettyprint-Tiger(|sort):
     t -> <prettyprint-Tiger-Module>
     where <?"Module"> sort
+
+  prettyprint-Tiger(|sort):
+    t -> <prettyprint-Tiger-UnusedSort>
+    where <?"UnusedSort"> sort
 
   prettyprint-Tiger-Module :
     Mod(t1__) -> [ H(
@@ -182,11 +189,57 @@ strategies
              ws := ""
          end
 
+  prettyprint-Tiger-UnusedSort :
+    UnusedConstr() -> [ H(
+                          []
+                        , [S("")]
+                        )
+                      ]
+
+  is-Tiger-UnusedSort =
+    ?UnusedConstr()
+
+  Tiger-get-indent :
+    (t@UnusedConstr(), index) -> indent
+    where sort := <ia-get-sort> t
+          ; <?"UnusedSort"> sort
+    with switch !index
+           otherwise :
+             indent := ""
+         end
+
+  Tiger-get-separator :
+    (t@UnusedConstr(), index) -> separator
+    where sort := <ia-get-sort> t
+          ; <?"UnusedSort"> sort
+    with switch !index
+           otherwise :
+             separator := ""
+         end
+
+  Tiger-get-leading-ws :
+    (t@UnusedConstr(), index) -> ws
+    where sort := <ia-get-sort> t
+          ; <?"UnusedSort"> sort
+    with switch !index
+           otherwise :
+             ws := ""
+         end
+
+  check-nonterminal-isEmpty =
+    ?UnusedConstr()
+
   is-Tiger-Module =
+    fail
+
+  is-Tiger-UnusedSort =
     fail
 
   prettyprint-Tiger-Module :
     amb([h|hs]) -> <prettyprint-Tiger-Module> h
+
+  prettyprint-Tiger-UnusedSort :
+    amb([h|hs]) -> <prettyprint-Tiger-UnusedSort> h
 
   prettyprint-Tiger-Module :
     Module-Plhdr() -> [ H(
@@ -208,6 +261,16 @@ strategies
   is-Tiger-Exp =
     ?Exp-Plhdr()
 
+  prettyprint-Tiger-UnusedSort :
+    UnusedSort-Plhdr() -> [ H(
+                              [SOpt(HS(), "0")]
+                            , [S("$UnusedSort")]
+                            )
+                          ]
+
+  is-Tiger-UnusedSort =
+    ?UnusedSort-Plhdr()
+
   prettyprint-Tiger-Module :
     Module-Plhdr(_) -> [ H(
                            [SOpt(HS(), "0")]
@@ -227,3 +290,13 @@ strategies
 
   is-Tiger-Exp =
     ?Exp-Plhdr(_)
+
+  prettyprint-Tiger-UnusedSort :
+    UnusedSort-Plhdr(_) -> [ H(
+                               [SOpt(HS(), "0")]
+                             , [S("$UnusedSort")]
+                             )
+                           ]
+
+  is-Tiger-UnusedSort =
+    ?UnusedSort-Plhdr(_)

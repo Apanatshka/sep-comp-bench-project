@@ -18,6 +18,9 @@ context-free syntax
 
   Module.Mod = Exp
 
+
+  UnusedSort.UnusedConstr = ""
+
 context-free priorities
 
   Exp.Or 

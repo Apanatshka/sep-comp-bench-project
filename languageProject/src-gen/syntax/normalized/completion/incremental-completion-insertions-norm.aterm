@@ -3,7 +3,8 @@ Module(
 , [Imports([Module(Unparameterized("normalized/incremental-norm")), Module(Unparameterized("normalized/completion/Common-completion-insertions-norm"))])]
 , [ SDFSection(
       Kernel(
-        [ SdfProduction(
+        [ SdfProduction(Lit("\"\""), Rhs([]), NoAttrs())
+        , SdfProduction(
             Lit("\"This\"")
           , Rhs(
               [ CharClass(Simple(Present(Numeric("\\84"))))
@@ -80,6 +81,24 @@ Module(
           , NoAttrs()
           )
         , SdfProduction(
+            Lit("\"$UnusedSort\"")
+          , Rhs(
+              [ CharClass(Simple(Present(Numeric("\\36"))))
+              , CharClass(Simple(Present(Numeric("\\85"))))
+              , CharClass(Simple(Present(Numeric("\\110"))))
+              , CharClass(Simple(Present(Numeric("\\117"))))
+              , CharClass(Simple(Present(Numeric("\\115"))))
+              , CharClass(Simple(Present(Numeric("\\101"))))
+              , CharClass(Simple(Present(Numeric("\\100"))))
+              , CharClass(Simple(Present(Numeric("\\83"))))
+              , CharClass(Simple(Present(Numeric("\\111"))))
+              , CharClass(Simple(Present(Numeric("\\114"))))
+              , CharClass(Simple(Present(Numeric("\\116"))))
+              ]
+            )
+          , NoAttrs()
+          )
+        , SdfProduction(
             Lit("\"$Start\"")
           , Rhs(
               [ CharClass(Simple(Present(Numeric("\\36"))))
@@ -127,9 +146,19 @@ Module(
           )
         , SdfProduction(Cf(Opt(Layout())), Rhs([]), NoAttrs())
         , SdfProductionWithCons(
+            SortCons(Cf(Sort("UnusedSort")), Constructor("UnusedSort-Plhdr"))
+          , Rhs([Cf(Sort("COMPLETION-INSERTION"))])
+          , Attrs([PlaceholderInsertion()])
+          )
+        , SdfProductionWithCons(
             SortCons(Cf(Sort("Start")), Constructor("Start-Plhdr"))
           , Rhs([Cf(Sort("COMPLETION-INSERTION"))])
           , Attrs([PlaceholderInsertion()])
+          )
+        , SdfProduction(
+            Lit("\"\"")
+          , Rhs([Lex(Sort("COMPLETION-INSERTION"))])
+          , Attrs([LiteralCompletion()])
           )
         , SdfProduction(
             Lit("\"This\"")
@@ -168,6 +197,11 @@ Module(
           , NoAttrs()
           )
         , SdfProductionWithCons(
+            SortCons(Cf(Sort("UnusedSort")), Constructor("UnusedSort-Plhdr"))
+          , Rhs([Lit("\"$UnusedSort\"")])
+          , Attrs([Placeholder()])
+          )
+        , SdfProductionWithCons(
             SortCons(Cf(Sort("Start")), Constructor("Start-Plhdr"))
           , Rhs([Lit("\"$Start\"")])
           , Attrs([Placeholder()])
@@ -181,6 +215,13 @@ Module(
             Cf(Layout())
           , Rhs([Cf(Layout()), Cf(Layout())])
           , Attrs([Assoc(Left())])
+          )
+        , SdfProduction(
+            Start()
+          , Rhs(
+              [Cf(Opt(Layout())), Cf(Sort("UnusedSort")), Cf(Opt(Layout()))]
+            )
+          , NoAttrs()
           )
         , SdfProduction(
             Start()
@@ -200,6 +241,22 @@ Module(
   , SDFSection(
       Restrictions(
         [ Follow(
+            [Lit("\"$UnusedSort\"")]
+          , List(
+              [ CharClass(
+                  Simple(
+                    Present(
+                      Conc(
+                        Range(Numeric("\\65"), Numeric("\\90"))
+                      , Range(Numeric("\\97"), Numeric("\\122"))
+                      )
+                    )
+                  )
+                )
+              ]
+            )
+          )
+        , Follow(
             [Lit("\"$Start\"")]
           , List(
               [ CharClass(

@@ -65,6 +65,10 @@ rules
                        )
                        ; fail> completions
 
+  suggest-completions(|completions):
+    UnusedSort-Plhdr() -> <add-completions(|("UnusedConstr", UnusedConstr()))
+                           ; fail> completions
+
 
 rules
 
@@ -87,3 +91,6 @@ rules
 
   is-SDF-placeholder =
     ?Exp-Plhdr()
+
+  is-SDF-placeholder =
+    ?UnusedSort-Plhdr()

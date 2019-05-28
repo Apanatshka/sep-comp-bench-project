@@ -25,5 +25,7 @@ imports ds-signatures/Control-Flow-sig
 signature
     sorts
       Module
+      UnusedSort
     constructors
       Mod : Exp -> Module 
+      UnusedConstr : UnusedSort 

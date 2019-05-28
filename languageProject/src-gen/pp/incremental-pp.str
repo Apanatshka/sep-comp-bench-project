@@ -44,11 +44,58 @@ strategies
 
 strategies
   prettyprint-incremental =
+    prettyprint-incremental-UnusedSort
+
+  prettyprint-incremental =
     prettyprint-incremental-Start
+
+  prettyprint-incremental(|sort):
+    t -> <prettyprint-incremental-UnusedSort>
+    where <?"UnusedSort"> sort
 
   prettyprint-incremental(|sort):
     t -> <prettyprint-incremental-Start>
     where <?"Start"> sort
+
+  prettyprint-incremental-UnusedSort :
+    UnusedConstr() -> [ H(
+                          []
+                        , [S("")]
+                        )
+                      ]
+
+  is-incremental-UnusedSort =
+    ?UnusedConstr()
+
+  incremental-get-indent :
+    (t@UnusedConstr(), index) -> indent
+    where sort := <ia-get-sort> t
+          ; <?"UnusedSort"> sort
+    with switch !index
+           otherwise :
+             indent := ""
+         end
+
+  incremental-get-separator :
+    (t@UnusedConstr(), index) -> separator
+    where sort := <ia-get-sort> t
+          ; <?"UnusedSort"> sort
+    with switch !index
+           otherwise :
+             separator := ""
+         end
+
+  incremental-get-leading-ws :
+    (t@UnusedConstr(), index) -> ws
+    where sort := <ia-get-sort> t
+          ; <?"UnusedSort"> sort
+    with switch !index
+           otherwise :
+             ws := ""
+         end
+
+  check-nonterminal-isEmpty =
+    ?UnusedConstr()
 
   prettyprint-incremental-Start :
     Empty() -> [ H(
@@ -144,11 +191,27 @@ strategies
              ws := ""
          end
 
+  is-incremental-UnusedSort =
+    fail
+
   is-incremental-Start =
     fail
 
+  prettyprint-incremental-UnusedSort :
+    amb([h|hs]) -> <prettyprint-incremental-UnusedSort> h
+
   prettyprint-incremental-Start :
     amb([h|hs]) -> <prettyprint-incremental-Start> h
+
+  prettyprint-incremental-UnusedSort :
+    UnusedSort-Plhdr() -> [ H(
+                              [SOpt(HS(), "0")]
+                            , [S("$UnusedSort")]
+                            )
+                          ]
+
+  is-incremental-UnusedSort =
+    ?UnusedSort-Plhdr()
 
   prettyprint-incremental-Start :
     Start-Plhdr() -> [ H(
@@ -159,6 +222,16 @@ strategies
 
   is-incremental-Start =
     ?Start-Plhdr()
+
+  prettyprint-incremental-UnusedSort :
+    UnusedSort-Plhdr(_) -> [ H(
+                               [SOpt(HS(), "0")]
+                             , [S("$UnusedSort")]
+                             )
+                           ]
+
+  is-incremental-UnusedSort =
+    ?UnusedSort-Plhdr(_)
 
   prettyprint-incremental-Start :
     Start-Plhdr(_) -> [ H(

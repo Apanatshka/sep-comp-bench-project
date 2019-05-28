@@ -17,7 +17,8 @@ Module(
   ]
 , [ SDFSection(
       Kernel(
-        [ SdfProduction(
+        [ SdfProduction(Lit("\"\""), Rhs([]), NoAttrs())
+        , SdfProduction(
             Lit("\"$Module\"")
           , Rhs(
               [ CharClass(Simple(Present(Numeric("\\36"))))
@@ -43,6 +44,24 @@ Module(
           , NoAttrs()
           )
         , SdfProduction(
+            Lit("\"$UnusedSort\"")
+          , Rhs(
+              [ CharClass(Simple(Present(Numeric("\\36"))))
+              , CharClass(Simple(Present(Numeric("\\85"))))
+              , CharClass(Simple(Present(Numeric("\\110"))))
+              , CharClass(Simple(Present(Numeric("\\117"))))
+              , CharClass(Simple(Present(Numeric("\\115"))))
+              , CharClass(Simple(Present(Numeric("\\101"))))
+              , CharClass(Simple(Present(Numeric("\\100"))))
+              , CharClass(Simple(Present(Numeric("\\83"))))
+              , CharClass(Simple(Present(Numeric("\\111"))))
+              , CharClass(Simple(Present(Numeric("\\114"))))
+              , CharClass(Simple(Present(Numeric("\\116"))))
+              ]
+            )
+          , NoAttrs()
+          )
+        , SdfProduction(
             Cf(Opt(Layout()))
           , Rhs([Cf(Layout())])
           , NoAttrs()
@@ -54,6 +73,11 @@ Module(
           , NoAttrs()
           )
         , SdfProductionWithCons(
+            SortCons(Cf(Sort("UnusedSort")), Constructor("UnusedConstr"))
+          , Rhs([Lit("\"\"")])
+          , NoAttrs()
+          )
+        , SdfProductionWithCons(
             SortCons(Cf(Sort("Module")), Constructor("Module-Plhdr"))
           , Rhs([Lit("\"$Module\"")])
           , Attrs([Placeholder()])
@@ -61,6 +85,11 @@ Module(
         , SdfProductionWithCons(
             SortCons(Cf(Sort("Exp")), Constructor("Exp-Plhdr"))
           , Rhs([Lit("\"$Exp\"")])
+          , Attrs([Placeholder()])
+          )
+        , SdfProductionWithCons(
+            SortCons(Cf(Sort("UnusedSort")), Constructor("UnusedSort-Plhdr"))
+          , Rhs([Lit("\"$UnusedSort\"")])
           , Attrs([Placeholder()])
           )
         , SdfProduction(
@@ -103,6 +132,22 @@ Module(
           )
         , Follow(
             [Lit("\"$Exp\"")]
+          , List(
+              [ CharClass(
+                  Simple(
+                    Present(
+                      Conc(
+                        Range(Numeric("\\65"), Numeric("\\90"))
+                      , Range(Numeric("\\97"), Numeric("\\122"))
+                      )
+                    )
+                  )
+                )
+              ]
+            )
+          )
+        , Follow(
+            [Lit("\"$UnusedSort\"")]
           , List(
               [ CharClass(
                   Simple(

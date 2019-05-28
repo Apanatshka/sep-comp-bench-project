@@ -38,18 +38,18 @@ imports
 rules
 
   nabl2--generate-constraint-default-rule(|):
-    (nabl2_source, term82@String(str), args20) -> constraint6
+    (nabl2_source, term96@String(str), args23) -> constraint9
     with(id)
-    with(ParamsAndType(params12@(s), type23) := args20
+    with(ParamsAndType(params16@(s), type43) := args23
          <+ fatal-err(
             | <concat-strings> [ "Cannot match expected "
-                               , "^ (s) : type23"
+                               , "^ (s) : type43"
                                , " with actual "
-                               , <nabl2--pp-flat-args> args20
+                               , <nabl2--pp-flat-args> args23
                                , " when matching "
                                , "String(str)"
                                , " with "
-                               , <pp-NaBL2-Term> term82
+                               , <pp-NaBL2-Term> term96
                                , "."
                                ]
             ))
@@ -57,30 +57,30 @@ rules
            nabl2--collection-info-msg(
            | <concat-strings> [ "default"
                               , " [[ "
-                              , <pp-NaBL2-Term> term82
+                              , <pp-NaBL2-Term> term96
                               , " ^ "
-                              , <pp-NaBL2-CTerm> params12
+                              , <pp-NaBL2-CTerm> params16
                               , " : "
-                              , <pp-NaBL2-objlangterm> type23
+                              , <pp-NaBL2-objlangterm> type43
                               , " ]]"
                               ]
            )
          end)
-    with(constraint6 := CConj(
+    with(constraint9 := CConj(
                           CEqual(
-                            type23
+                            type43
                           , STRING()
-                          , Message(Error(), Default(), <nabl2--get-ast-index> term82)
+                          , Message(Error(), Default(), <nabl2--get-ast-index> term96)
                           )
                         , CConj(
-                            CAstProperty(<nabl2--get-ast-index> term82, Type(), type23)
+                            CAstProperty(<nabl2--get-ast-index> term96, Type(), type43)
                           , CConj(
                               CAstProperty(
-                                <nabl2--get-ast-index> term82
+                                <nabl2--get-ast-index> term96
                               , Params()
                               , (s)
                               )
-                            , CTrue(<nabl2--get-ast-index> term82)
+                            , CTrue(<nabl2--get-ast-index> term96)
                             )
                           )
                         ))

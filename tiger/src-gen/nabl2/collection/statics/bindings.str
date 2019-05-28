@@ -47,22 +47,22 @@ rules
 
   nabl2--generate-constraint-default-rule(|):
     ( nabl2_source
-    , term83@l@Let(blocks, exps)
-    , args25
-    ) -> constraint11
+    , term89@l@Let(blocks, exps)
+    , args24
+    ) -> constraint10
     with(ty := <nabl2--fresh-var(|nabl2_source)> "ty"
          ; s_body := <nabl2--fresh-var(|nabl2_source)> "s_body"
          ; id)
-    with(ParamsAndType(params17@(s), type23) := args25
+    with(ParamsAndType(params17@(s), type26) := args24
          <+ fatal-err(
             | <concat-strings> [ "Cannot match expected "
-                               , "^ (s) : type23"
+                               , "^ (s) : type26"
                                , " with actual "
-                               , <nabl2--pp-flat-args> args25
+                               , <nabl2--pp-flat-args> args24
                                , " when matching "
                                , "Let(blocks, exps)"
                                , " with "
-                               , <pp-NaBL2-Term> term83
+                               , <pp-NaBL2-Term> term89
                                , "."
                                ]
             ))
@@ -70,31 +70,31 @@ rules
            nabl2--collection-info-msg(
            | <concat-strings> [ "default"
                               , " [[ "
-                              , <pp-NaBL2-Term> term83
+                              , <pp-NaBL2-Term> term89
                               , " ^ "
                               , <pp-NaBL2-CTerm> params17
                               , " : "
-                              , <pp-NaBL2-objlangterm> type23
+                              , <pp-NaBL2-objlangterm> type26
                               , " ]]"
                               ]
            )
          end)
-    with(constraint11 := CConj(
+    with(constraint10 := CConj(
                            CEqual(
-                             type23
+                             type26
                            , ty
-                           , Message(Error(), Default(), <nabl2--get-ast-index> term83)
+                           , Message(Error(), Default(), <nabl2--get-ast-index> term89)
                            )
                          , CConj(
-                             CAstProperty(<nabl2--get-ast-index> term83, Type(), type23)
+                             CAstProperty(<nabl2--get-ast-index> term89, Type(), type26)
                            , CConj(
                                CAstProperty(
-                                 <nabl2--get-ast-index> term83
+                                 <nabl2--get-ast-index> term89
                                , Params()
                                , (s)
                                )
                              , CConj(
-                                 CNew([s_body], <nabl2--get-ast-index> term83)
+                                 CNew([s_body], <nabl2--get-ast-index> term89)
                                , CConj(
                                    CAstProperty(
                                      <nabl2--get-ast-index> l
@@ -108,7 +108,7 @@ rules
                                      , CDistinct(
                                          NoProjection()
                                        , Declarations(s_body, DefaultNamespace())
-                                       , Message(Error(), Default(), <nabl2--get-ast-index> term83)
+                                       , Message(Error(), Default(), <nabl2--get-ast-index> term89)
                                        )
                                      )
                                    )
@@ -119,18 +119,18 @@ rules
                          ))
 
   nabl2--generate-constraint-Decs-rule(|):
-    (nabl2_source, term84@[], args26) -> constraint12
+    (nabl2_source, term91@[], args25) -> constraint11
     with(id)
-    with(Params(params18@(s_outer, s_body)) := args26
+    with(Params(params18@(s_outer, s_body)) := args25
          <+ fatal-err(
             | <concat-strings> [ "Cannot match expected "
                                , "^ (s_outer, s_body)"
                                , " with actual "
-                               , <nabl2--pp-flat-args> args26
+                               , <nabl2--pp-flat-args> args25
                                , " when matching "
                                , "[]"
                                , " with "
-                               , <pp-NaBL2-Term> term84
+                               , <pp-NaBL2-Term> term91
                                , "."
                                ]
             ))
@@ -138,16 +138,16 @@ rules
            nabl2--collection-info-msg(
            | <concat-strings> [ "Decs"
                               , " [[ "
-                              , <pp-NaBL2-Term> term84
+                              , <pp-NaBL2-Term> term91
                               , " ^ "
                               , <pp-NaBL2-CTerm> params18
                               , " ]]"
                               ]
            )
          end)
-    with(constraint12 := CConj(
+    with(constraint11 := CConj(
                            CAstProperty(
-                             <nabl2--get-ast-index> term84
+                             <nabl2--get-ast-index> term91
                            , Params()
                            , (s_outer, s_body)
                            )
@@ -155,23 +155,23 @@ rules
                              s_body
                            , P()
                            , s_outer
-                           , <nabl2--get-ast-index> term84
+                           , <nabl2--get-ast-index> term91
                            )
                          ))
 
   nabl2--generate-constraint-Decs-rule(|):
-    (nabl2_source, term85@[block], args27) -> constraint13
+    (nabl2_source, term92@[block], args26) -> constraint12
     with(id)
-    with(Params(params19@(s_outer, s_body)) := args27
+    with(Params(params19@(s_outer, s_body)) := args26
          <+ fatal-err(
             | <concat-strings> [ "Cannot match expected "
                                , "^ (s_outer, s_body)"
                                , " with actual "
-                               , <nabl2--pp-flat-args> args27
+                               , <nabl2--pp-flat-args> args26
                                , " when matching "
                                , "[block]"
                                , " with "
-                               , <pp-NaBL2-Term> term85
+                               , <pp-NaBL2-Term> term92
                                , "."
                                ]
             ))
@@ -179,16 +179,16 @@ rules
            nabl2--collection-info-msg(
            | <concat-strings> [ "Decs"
                               , " [[ "
-                              , <pp-NaBL2-Term> term85
+                              , <pp-NaBL2-Term> term92
                               , " ^ "
                               , <pp-NaBL2-CTerm> params19
                               , " ]]"
                               ]
            )
          end)
-    with(constraint13 := CConj(
+    with(constraint12 := CConj(
                            CAstProperty(
-                             <nabl2--get-ast-index> term85
+                             <nabl2--get-ast-index> term92
                            , Params()
                            , (s_outer, s_body)
                            )
@@ -197,7 +197,7 @@ rules
                                s_body
                              , P()
                              , s_outer
-                             , <nabl2--get-ast-index> term85
+                             , <nabl2--get-ast-index> term92
                              )
                            , <nabl2--generate-constraint(nabl2--generate-constraint-Dec-rule|"Dec")> (nabl2_source, block, Params((s_body, s_outer)))
                            )
@@ -205,20 +205,20 @@ rules
 
   nabl2--generate-constraint-Decs-rule(|):
     ( nabl2_source
-    , term86@[block|blocks@[wld1|wld2]]
-    , args28
-    ) -> constraint14
+    , term93@[block|blocks@[wld1|wld2]]
+    , args27
+    ) -> constraint13
     with(s_dec := <nabl2--fresh-var(|nabl2_source)> "s_dec" ; id)
-    with(Params(params20@(s_outer, s_body)) := args28
+    with(Params(params20@(s_outer, s_body)) := args27
          <+ fatal-err(
             | <concat-strings> [ "Cannot match expected "
                                , "^ (s_outer, s_body)"
                                , " with actual "
-                               , <nabl2--pp-flat-args> args28
+                               , <nabl2--pp-flat-args> args27
                                , " when matching "
                                , "[block|[wld1|wld2]]"
                                , " with "
-                               , <pp-NaBL2-Term> term86
+                               , <pp-NaBL2-Term> term93
                                , "."
                                ]
             ))
@@ -226,27 +226,27 @@ rules
            nabl2--collection-info-msg(
            | <concat-strings> [ "Decs"
                               , " [[ "
-                              , <pp-NaBL2-Term> term86
+                              , <pp-NaBL2-Term> term93
                               , " ^ "
                               , <pp-NaBL2-CTerm> params20
                               , " ]]"
                               ]
            )
          end)
-    with(constraint14 := CConj(
+    with(constraint13 := CConj(
                            CAstProperty(
-                             <nabl2--get-ast-index> term86
+                             <nabl2--get-ast-index> term93
                            , Params()
                            , (s_outer, s_body)
                            )
                          , CConj(
-                             CNew([s_dec], <nabl2--get-ast-index> term86)
+                             CNew([s_dec], <nabl2--get-ast-index> term93)
                            , CConj(
                                CGDirectEdge(
                                  s_dec
                                , P()
                                , s_outer
-                               , <nabl2--get-ast-index> term86
+                               , <nabl2--get-ast-index> term93
                                )
                              , CConj(
                                  CAstProperty(

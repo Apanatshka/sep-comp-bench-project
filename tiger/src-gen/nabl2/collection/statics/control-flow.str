@@ -38,18 +38,18 @@ imports
 rules
 
   nabl2--generate-constraint-Seq-rule(|):
-    (nabl2_source, term92@[], args29) -> constraint15
+    (nabl2_source, term98@[], args28) -> constraint14
     with(id)
-    with(ParamsAndType(params21@(s), type25) := args29
+    with(ParamsAndType(params21@(s), type28) := args28
          <+ fatal-err(
             | <concat-strings> [ "Cannot match expected "
-                               , "^ (s) : type25"
+                               , "^ (s) : type28"
                                , " with actual "
-                               , <nabl2--pp-flat-args> args29
+                               , <nabl2--pp-flat-args> args28
                                , " when matching "
                                , "[]"
                                , " with "
-                               , <pp-NaBL2-Term> term92
+                               , <pp-NaBL2-Term> term98
                                , "."
                                ]
             ))
@@ -57,74 +57,74 @@ rules
            nabl2--collection-info-msg(
            | <concat-strings> [ "Seq"
                               , " [[ "
-                              , <pp-NaBL2-Term> term92
+                              , <pp-NaBL2-Term> term98
                               , " ^ "
                               , <pp-NaBL2-CTerm> params21
                               , " : "
-                              , <pp-NaBL2-objlangterm> type25
+                              , <pp-NaBL2-objlangterm> type28
+                              , " ]]"
+                              ]
+           )
+         end)
+    with(constraint14 := CConj(
+                           CEqual(
+                             type28
+                           , UNIT()
+                           , Message(Error(), Default(), <nabl2--get-ast-index> term98)
+                           )
+                         , CConj(
+                             CAstProperty(<nabl2--get-ast-index> term98, Type(), type28)
+                           , CConj(
+                               CAstProperty(
+                                 <nabl2--get-ast-index> term98
+                               , Params()
+                               , (s)
+                               )
+                             , CTrue(<nabl2--get-ast-index> term98)
+                             )
+                           )
+                         ))
+
+  nabl2--generate-constraint-Seq-rule(|):
+    (nabl2_source, term99@[e], args29) -> constraint15
+    with(ty := <nabl2--fresh-var(|nabl2_source)> "ty" ; id)
+    with(ParamsAndType(params22@(s), type29) := args29
+         <+ fatal-err(
+            | <concat-strings> [ "Cannot match expected "
+                               , "^ (s) : type29"
+                               , " with actual "
+                               , <nabl2--pp-flat-args> args29
+                               , " when matching "
+                               , "[e]"
+                               , " with "
+                               , <pp-NaBL2-Term> term99
+                               , "."
+                               ]
+            ))
+    with(if nabl2--is-debug-collection-enabled then
+           nabl2--collection-info-msg(
+           | <concat-strings> [ "Seq"
+                              , " [[ "
+                              , <pp-NaBL2-Term> term99
+                              , " ^ "
+                              , <pp-NaBL2-CTerm> params22
+                              , " : "
+                              , <pp-NaBL2-objlangterm> type29
                               , " ]]"
                               ]
            )
          end)
     with(constraint15 := CConj(
                            CEqual(
-                             type25
-                           , UNIT()
-                           , Message(Error(), Default(), <nabl2--get-ast-index> term92)
-                           )
-                         , CConj(
-                             CAstProperty(<nabl2--get-ast-index> term92, Type(), type25)
-                           , CConj(
-                               CAstProperty(
-                                 <nabl2--get-ast-index> term92
-                               , Params()
-                               , (s)
-                               )
-                             , CTrue(<nabl2--get-ast-index> term92)
-                             )
-                           )
-                         ))
-
-  nabl2--generate-constraint-Seq-rule(|):
-    (nabl2_source, term94@[e], args30) -> constraint16
-    with(ty := <nabl2--fresh-var(|nabl2_source)> "ty" ; id)
-    with(ParamsAndType(params22@(s), type26) := args30
-         <+ fatal-err(
-            | <concat-strings> [ "Cannot match expected "
-                               , "^ (s) : type26"
-                               , " with actual "
-                               , <nabl2--pp-flat-args> args30
-                               , " when matching "
-                               , "[e]"
-                               , " with "
-                               , <pp-NaBL2-Term> term94
-                               , "."
-                               ]
-            ))
-    with(if nabl2--is-debug-collection-enabled then
-           nabl2--collection-info-msg(
-           | <concat-strings> [ "Seq"
-                              , " [[ "
-                              , <pp-NaBL2-Term> term94
-                              , " ^ "
-                              , <pp-NaBL2-CTerm> params22
-                              , " : "
-                              , <pp-NaBL2-objlangterm> type26
-                              , " ]]"
-                              ]
-           )
-         end)
-    with(constraint16 := CConj(
-                           CEqual(
-                             type26
+                             type29
                            , ty
-                           , Message(Error(), Default(), <nabl2--get-ast-index> term94)
+                           , Message(Error(), Default(), <nabl2--get-ast-index> term99)
                            )
                          , CConj(
-                             CAstProperty(<nabl2--get-ast-index> term94, Type(), type26)
+                             CAstProperty(<nabl2--get-ast-index> term99, Type(), type29)
                            , CConj(
                                CAstProperty(
-                                 <nabl2--get-ast-index> term94
+                                 <nabl2--get-ast-index> term99
                                , Params()
                                , (s)
                                )
@@ -136,17 +136,17 @@ rules
   nabl2--generate-constraint-Seq-rule(|):
     ( nabl2_source
     , term100@[e|es@[wld1|wld2]]
-    , args31
-    ) -> constraint17
+    , args30
+    ) -> constraint16
     with(ty' := <nabl2--fresh-var(|nabl2_source)> "ty'"
          ; ty := <nabl2--fresh-var(|nabl2_source)> "ty"
          ; id)
-    with(ParamsAndType(params23@(s), type27) := args31
+    with(ParamsAndType(params23@(s), type30) := args30
          <+ fatal-err(
             | <concat-strings> [ "Cannot match expected "
-                               , "^ (s) : type27"
+                               , "^ (s) : type30"
                                , " with actual "
-                               , <nabl2--pp-flat-args> args31
+                               , <nabl2--pp-flat-args> args30
                                , " when matching "
                                , "[e|[wld1|wld2]]"
                                , " with "
@@ -162,19 +162,19 @@ rules
                               , " ^ "
                               , <pp-NaBL2-CTerm> params23
                               , " : "
-                              , <pp-NaBL2-objlangterm> type27
+                              , <pp-NaBL2-objlangterm> type30
                               , " ]]"
                               ]
            )
          end)
-    with(constraint17 := CConj(
+    with(constraint16 := CConj(
                            CEqual(
-                             type27
+                             type30
                            , ty
                            , Message(Error(), Default(), <nabl2--get-ast-index> term100)
                            )
                          , CConj(
-                             CAstProperty(<nabl2--get-ast-index> term100, Type(), type27)
+                             CAstProperty(<nabl2--get-ast-index> term100, Type(), type30)
                            , CConj(
                                CAstProperty(
                                  <nabl2--get-ast-index> term100
@@ -190,14 +190,14 @@ rules
                          ))
 
   nabl2--generate-constraint-default-rule(|):
-    (nabl2_source, term101@Seq(es), args32) -> constraint18
+    (nabl2_source, term101@Seq(es), args31) -> constraint17
     with(ty := <nabl2--fresh-var(|nabl2_source)> "ty" ; id)
-    with(ParamsAndType(params24@(s), type28) := args32
+    with(ParamsAndType(params24@(s), type31) := args31
          <+ fatal-err(
             | <concat-strings> [ "Cannot match expected "
-                               , "^ (s) : type28"
+                               , "^ (s) : type31"
                                , " with actual "
-                               , <nabl2--pp-flat-args> args32
+                               , <nabl2--pp-flat-args> args31
                                , " when matching "
                                , "Seq(es)"
                                , " with "
@@ -213,19 +213,19 @@ rules
                               , " ^ "
                               , <pp-NaBL2-CTerm> params24
                               , " : "
-                              , <pp-NaBL2-objlangterm> type28
+                              , <pp-NaBL2-objlangterm> type31
                               , " ]]"
                               ]
            )
          end)
-    with(constraint18 := CConj(
+    with(constraint17 := CConj(
                            CEqual(
-                             type28
+                             type31
                            , ty
                            , Message(Error(), Default(), <nabl2--get-ast-index> term101)
                            )
                          , CConj(
-                             CAstProperty(<nabl2--get-ast-index> term101, Type(), type28)
+                             CAstProperty(<nabl2--get-ast-index> term101, Type(), type31)
                            , CConj(
                                CAstProperty(
                                  <nabl2--get-ast-index> term101
@@ -240,17 +240,17 @@ rules
   nabl2--generate-constraint-default-rule(|):
     ( nabl2_source
     , term102@If(e1, e2, e3)
-    , args34
-    ) -> constraint20
+    , args32
+    ) -> constraint18
     with(ty2 := <nabl2--fresh-var(|nabl2_source)> "ty2"
          ; ty3 := <nabl2--fresh-var(|nabl2_source)> "ty3"
          ; id)
-    with(ParamsAndType(params25@(s), type30) := args34
+    with(ParamsAndType(params25@(s), type32) := args32
          <+ fatal-err(
             | <concat-strings> [ "Cannot match expected "
-                               , "^ (s) : type30"
+                               , "^ (s) : type32"
                                , " with actual "
-                               , <nabl2--pp-flat-args> args34
+                               , <nabl2--pp-flat-args> args32
                                , " when matching "
                                , "If(e1, e2, e3)"
                                , " with "
@@ -266,19 +266,19 @@ rules
                               , " ^ "
                               , <pp-NaBL2-CTerm> params25
                               , " : "
-                              , <pp-NaBL2-objlangterm> type30
+                              , <pp-NaBL2-objlangterm> type32
                               , " ]]"
                               ]
            )
          end)
-    with(constraint20 := CConj(
+    with(constraint18 := CConj(
                            CEqual(
-                             type30
+                             type32
                            , ty2
                            , Message(Error(), Default(), <nabl2--get-ast-index> term102)
                            )
                          , CConj(
-                             CAstProperty(<nabl2--get-ast-index> term102, Type(), type30)
+                             CAstProperty(<nabl2--get-ast-index> term102, Type(), type32)
                            , CConj(
                                CAstProperty(
                                  <nabl2--get-ast-index> term102
@@ -312,14 +312,14 @@ rules
                          ))
 
   nabl2--generate-constraint-default-rule(|):
-    (nabl2_source, term103@IfThen(e1, e2), args35) -> constraint21
+    (nabl2_source, term103@IfThen(e1, e2), args34) -> constraint20
     with(id)
-    with(ParamsAndType(params27@(s), type33) := args35
+    with(ParamsAndType(params27@(s), type33) := args34
          <+ fatal-err(
             | <concat-strings> [ "Cannot match expected "
                                , "^ (s) : type33"
                                , " with actual "
-                               , <nabl2--pp-flat-args> args35
+                               , <nabl2--pp-flat-args> args34
                                , " when matching "
                                , "IfThen(e1, e2)"
                                , " with "
@@ -340,7 +340,7 @@ rules
                               ]
            )
          end)
-    with(constraint21 := CConj(
+    with(constraint20 := CConj(
                            CEqual(
                              type33
                            , UNIT()
@@ -371,15 +371,15 @@ rules
   nabl2--generate-constraint-default-rule(|):
     ( nabl2_source
     , term104@stm@While(e1, e2)
-    , args36
-    ) -> constraint22
+    , args35
+    ) -> constraint21
     with(s' := <nabl2--fresh-var(|nabl2_source)> "s'" ; id)
-    with(ParamsAndType(params28@(s), type34) := args36
+    with(ParamsAndType(params28@(s), type34) := args35
          <+ fatal-err(
             | <concat-strings> [ "Cannot match expected "
                                , "^ (s) : type34"
                                , " with actual "
-                               , <nabl2--pp-flat-args> args36
+                               , <nabl2--pp-flat-args> args35
                                , " when matching "
                                , "While(e1, e2)"
                                , " with "
@@ -400,7 +400,7 @@ rules
                               ]
            )
          end)
-    with(constraint22 := CConj(
+    with(constraint21 := CConj(
                            CEqual(
                              type34
                            , UNIT()
@@ -473,15 +473,15 @@ rules
   nabl2--generate-constraint-default-rule(|):
     ( nabl2_source
     , term105@stm@For(Var(x), e1, e2, e3)
-    , args37
-    ) -> constraint23
+    , args36
+    ) -> constraint22
     with(s_for := <nabl2--fresh-var(|nabl2_source)> "s_for" ; id)
-    with(ParamsAndType(params29@(s), type35) := args37
+    with(ParamsAndType(params29@(s), type35) := args36
          <+ fatal-err(
             | <concat-strings> [ "Cannot match expected "
                                , "^ (s) : type35"
                                , " with actual "
-                               , <nabl2--pp-flat-args> args37
+                               , <nabl2--pp-flat-args> args36
                                , " when matching "
                                , "For(Var(x), e1, e2, e3)"
                                , " with "
@@ -502,7 +502,7 @@ rules
                               ]
            )
          end)
-    with(constraint23 := CConj(
+    with(constraint22 := CConj(
                            CEqual(
                              type35
                            , UNIT()
@@ -603,14 +603,14 @@ rules
                          ))
 
   nabl2--generate-constraint-default-rule(|):
-    (nabl2_source, term106@stm@Break(), args38) -> constraint24
+    (nabl2_source, term106@stm@Break(), args37) -> constraint23
     with(d := <nabl2--fresh-var(|nabl2_source)> "d" ; id)
-    with(ParamsAndType(params30@(s), type36) := args38
+    with(ParamsAndType(params30@(s), type36) := args37
          <+ fatal-err(
             | <concat-strings> [ "Cannot match expected "
                                , "^ (s) : type36"
                                , " with actual "
-                               , <nabl2--pp-flat-args> args38
+                               , <nabl2--pp-flat-args> args37
                                , " when matching "
                                , "Break()"
                                , " with "
@@ -631,7 +631,7 @@ rules
                               ]
            )
          end)
-    with(constraint24 := CConj(
+    with(constraint23 := CConj(
                            CEqual(
                              type36
                            , UNIT()

@@ -6,8 +6,11 @@ imports
 
 signature
   constructors
-    Empty           : Start
-    Blank           : Start
-    Start-Plhdr     : Start
-    Start-Plhdr     : COMPLETION-INSERTION -> Start
-    Start-Opt-Plhdr : Start
+    UnusedConstr     : UnusedSort
+    Empty            : Start
+    Blank            : Start
+    UnusedSort-Plhdr : UnusedSort
+    Start-Plhdr      : Start
+    UnusedSort-Plhdr : COMPLETION-INSERTION -> UnusedSort
+    Start-Plhdr      : COMPLETION-INSERTION -> Start
+    Start-Opt-Plhdr  : Start

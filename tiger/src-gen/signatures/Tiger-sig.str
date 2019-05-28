@@ -46,8 +46,11 @@ imports
 
 signature
   constructors
-    Mod          : Exp -> Module
-    Module-Plhdr : Module
-    Exp-Plhdr    : Exp
-    Module-Plhdr : COMPLETION-INSERTION -> Module
-    Exp-Plhdr    : COMPLETION-INSERTION -> Exp
+    Mod              : Exp -> Module
+    UnusedConstr     : UnusedSort
+    Module-Plhdr     : Module
+    Exp-Plhdr        : Exp
+    UnusedSort-Plhdr : UnusedSort
+    Module-Plhdr     : COMPLETION-INSERTION -> Module
+    Exp-Plhdr        : COMPLETION-INSERTION -> Exp
+    UnusedSort-Plhdr : COMPLETION-INSERTION -> UnusedSort

@@ -9,6 +9,8 @@ context-free start-symbols
   Start
 
 context-free syntax
+
+  UnusedSort.UnusedConstr = ""
   
   Start.Empty = <>
   Start.Blank = <This file was intentionally left blank.>

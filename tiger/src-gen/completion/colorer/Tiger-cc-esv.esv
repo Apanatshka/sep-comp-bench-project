@@ -14,5 +14,6 @@ imports
   completion/colorer/Control-Flow-cc-esv
 
 colorer
-  _.Module-Plhdr : gray   
-  _.Exp-Plhdr    : gray   
+  _.Module-Plhdr     : gray   
+  _.Exp-Plhdr        : gray   
+  _.UnusedSort-Plhdr : gray   

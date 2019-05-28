@@ -16,44 +16,360 @@ strategies
 rules
 
   TigerParenthesize :
-    Gt(t_0, t_1) -> Gt(Parenthetical(t_0), t_1)
-    where <(?Gt(_, _)
-            + ?And(_, _)
+    Times(t_0, t_1) -> Times(Parenthetical(t_0), t_1)
+    where <(?Array(_, _, _)
+            + ?IfThen(_, _)
+            + ?Plus(_, _)
+            + ?Minus(_, _)
             + ?Or(_, _)
+            + ?Geq(_, _)
+            + ?For(_, _, _, _)
+            + ?If(_, _, _)
+            + ?Eq(_, _)
+            + ?Gt(_, _)
             + ?Lt(_, _)
+            + ?Leq(_, _)
+            + ?Neq(_, _)
+            + ?While(_, _)
+            + ?Assign(_, _)
+            + ?And(_, _)
+            + fail)> t_0
+
+  TigerParenthesize :
+    Times(t_0, t_1) -> Times(t_0, Parenthetical(t_1))
+    where <(?Times(_, _)
+            + ?Plus(_, _)
+            + ?Leq(_, _)
+            + ?Neq(_, _)
+            + ?Minus(_, _)
+            + ?Or(_, _)
+            + ?Geq(_, _)
+            + ?Divide(_, _)
+            + ?And(_, _)
+            + ?Eq(_, _)
+            + ?Gt(_, _)
+            + ?Lt(_, _)
+            + fail)> t_1
+
+  TigerParenthesize :
+    Plus(t_0, t_1) -> Plus(Parenthetical(t_0), t_1)
+    where <(?Array(_, _, _)
+            + ?IfThen(_, _)
+            + ?Geq(_, _)
+            + ?Or(_, _)
+            + ?For(_, _, _, _)
+            + ?If(_, _, _)
+            + ?Eq(_, _)
+            + ?Gt(_, _)
+            + ?Lt(_, _)
+            + ?Leq(_, _)
+            + ?Neq(_, _)
+            + ?While(_, _)
+            + ?Assign(_, _)
+            + ?And(_, _)
+            + fail)> t_0
+
+  TigerParenthesize :
+    Plus(t_0, t_1) -> Plus(t_0, Parenthetical(t_1))
+    where <(?Leq(_, _)
+            + ?Plus(_, _)
+            + ?Neq(_, _)
+            + ?Minus(_, _)
+            + ?Geq(_, _)
+            + ?Or(_, _)
+            + ?And(_, _)
+            + ?Eq(_, _)
+            + ?Gt(_, _)
+            + ?Lt(_, _)
+            + fail)> t_1
+
+  TigerParenthesize :
+    Minus(t_0, t_1) -> Minus(Parenthetical(t_0), t_1)
+    where <(?Array(_, _, _)
+            + ?IfThen(_, _)
+            + ?Geq(_, _)
+            + ?Or(_, _)
+            + ?For(_, _, _, _)
             + ?Eq(_, _)
             + ?If(_, _, _)
-            + ?Neq(_, _)
-            + ?Geq(_, _)
+            + ?Gt(_, _)
+            + ?Lt(_, _)
             + ?Leq(_, _)
+            + ?Assign(_, _)
             + ?While(_, _)
+            + ?Neq(_, _)
+            + ?And(_, _)
+            + fail)> t_0
+
+  TigerParenthesize :
+    Minus(t_0, t_1) -> Minus(t_0, Parenthetical(t_1))
+    where <(?Leq(_, _)
+            + ?Plus(_, _)
+            + ?Neq(_, _)
+            + ?Minus(_, _)
+            + ?Geq(_, _)
+            + ?Or(_, _)
+            + ?And(_, _)
+            + ?Eq(_, _)
+            + ?Gt(_, _)
+            + ?Lt(_, _)
+            + fail)> t_1
+
+  TigerParenthesize :
+    Divide(t_0, t_1) -> Divide(Parenthetical(t_0), t_1)
+    where <(?Array(_, _, _)
+            + ?IfThen(_, _)
+            + ?Plus(_, _)
+            + ?Minus(_, _)
+            + ?Or(_, _)
+            + ?Geq(_, _)
             + ?For(_, _, _, _)
-            + ?Array(_, _, _)
+            + ?Eq(_, _)
+            + ?If(_, _, _)
+            + ?Gt(_, _)
+            + ?Lt(_, _)
+            + ?Leq(_, _)
+            + ?Neq(_, _)
+            + ?While(_, _)
+            + ?Assign(_, _)
+            + ?And(_, _)
+            + fail)> t_0
+
+  TigerParenthesize :
+    Divide(t_0, t_1) -> Divide(t_0, Parenthetical(t_1))
+    where <(?Times(_, _)
+            + ?Leq(_, _)
+            + ?Plus(_, _)
+            + ?Neq(_, _)
+            + ?Minus(_, _)
+            + ?Or(_, _)
+            + ?Geq(_, _)
+            + ?Divide(_, _)
+            + ?And(_, _)
+            + ?Eq(_, _)
+            + ?Gt(_, _)
+            + ?Lt(_, _)
+            + fail)> t_1
+
+  TigerParenthesize :
+    Geq(t_0, t_1) -> Geq(Parenthetical(t_0), t_1)
+    where <(?Array(_, _, _)
+            + ?IfThen(_, _)
+            + ?Or(_, _)
+            + ?Geq(_, _)
+            + ?For(_, _, _, _)
+            + ?Eq(_, _)
+            + ?If(_, _, _)
+            + ?Gt(_, _)
+            + ?Lt(_, _)
+            + ?Leq(_, _)
+            + ?Assign(_, _)
+            + ?Neq(_, _)
+            + ?While(_, _)
+            + ?And(_, _)
+            + fail)> t_0
+
+  TigerParenthesize :
+    Geq(t_0, t_1) -> Geq(t_0, Parenthetical(t_1))
+    where <(?Leq(_, _)
+            + ?Neq(_, _)
+            + ?Or(_, _)
+            + ?Geq(_, _)
+            + ?And(_, _)
+            + ?Eq(_, _)
+            + ?Gt(_, _)
+            + ?Lt(_, _)
+            + fail)> t_1
+
+  TigerParenthesize :
+    Or(t_0, t_1) -> Or(Parenthetical(t_0), t_1)
+    where <(?Array(_, _, _)
+            + ?For(_, _, _, _)
+            + ?If(_, _, _)
             + ?IfThen(_, _)
             + ?Assign(_, _)
+            + ?While(_, _)
+            + fail)> t_0
+
+  TigerParenthesize :
+    Or(t_0, t_1) -> Or(t_0, Parenthetical(t_1))
+    where <(?Or(_, _) + fail)> t_1
+
+  TigerParenthesize :
+    Eq(t_0, t_1) -> Eq(Parenthetical(t_0), t_1)
+    where <(?Array(_, _, _)
+            + ?IfThen(_, _)
+            + ?Geq(_, _)
+            + ?Or(_, _)
+            + ?For(_, _, _, _)
+            + ?If(_, _, _)
+            + ?Eq(_, _)
+            + ?Gt(_, _)
+            + ?Lt(_, _)
+            + ?Leq(_, _)
+            + ?Neq(_, _)
+            + ?While(_, _)
+            + ?Assign(_, _)
+            + ?And(_, _)
+            + fail)> t_0
+
+  TigerParenthesize :
+    Eq(t_0, t_1) -> Eq(t_0, Parenthetical(t_1))
+    where <(?Leq(_, _)
+            + ?Neq(_, _)
+            + ?Geq(_, _)
+            + ?Or(_, _)
+            + ?And(_, _)
+            + ?Eq(_, _)
+            + ?Gt(_, _)
+            + ?Lt(_, _)
+            + fail)> t_1
+
+  TigerParenthesize :
+    Gt(t_0, t_1) -> Gt(Parenthetical(t_0), t_1)
+    where <(?Array(_, _, _)
+            + ?IfThen(_, _)
+            + ?Or(_, _)
+            + ?Geq(_, _)
+            + ?For(_, _, _, _)
+            + ?Eq(_, _)
+            + ?If(_, _, _)
+            + ?Gt(_, _)
+            + ?Lt(_, _)
+            + ?Leq(_, _)
+            + ?Assign(_, _)
+            + ?Neq(_, _)
+            + ?While(_, _)
+            + ?And(_, _)
             + fail)> t_0
 
   TigerParenthesize :
     Gt(t_0, t_1) -> Gt(t_0, Parenthetical(t_1))
     where <(?Leq(_, _)
-            + ?Gt(_, _)
-            + ?And(_, _)
+            + ?Neq(_, _)
             + ?Or(_, _)
-            + ?Lt(_, _)
+            + ?Geq(_, _)
+            + ?And(_, _)
             + ?Eq(_, _)
+            + ?Gt(_, _)
+            + ?Lt(_, _)
+            + fail)> t_1
+
+  TigerParenthesize :
+    Lt(t_0, t_1) -> Lt(Parenthetical(t_0), t_1)
+    where <(?Array(_, _, _)
+            + ?IfThen(_, _)
+            + ?Geq(_, _)
+            + ?Or(_, _)
+            + ?For(_, _, _, _)
+            + ?If(_, _, _)
+            + ?Eq(_, _)
+            + ?Gt(_, _)
+            + ?Lt(_, _)
+            + ?Leq(_, _)
+            + ?While(_, _)
+            + ?Assign(_, _)
+            + ?Neq(_, _)
+            + ?And(_, _)
+            + fail)> t_0
+
+  TigerParenthesize :
+    Lt(t_0, t_1) -> Lt(t_0, Parenthetical(t_1))
+    where <(?Leq(_, _)
             + ?Neq(_, _)
             + ?Geq(_, _)
+            + ?Or(_, _)
+            + ?And(_, _)
+            + ?Eq(_, _)
+            + ?Gt(_, _)
+            + ?Lt(_, _)
+            + fail)> t_1
+
+  TigerParenthesize :
+    Uminus(t_0) -> Uminus(Parenthetical(t_0))
+    where <(?Times(_, _)
+            + ?Leq(_, _)
+            + ?Plus(_, _)
+            + ?Minus(_, _)
+            + ?Neq(_, _)
+            + ?Or(_, _)
+            + ?Geq(_, _)
+            + ?Divide(_, _)
+            + ?And(_, _)
+            + ?Eq(_, _)
+            + ?Gt(_, _)
+            + ?Lt(_, _)
+            + fail)> t_0
+
+  TigerParenthesize :
+    Leq(t_0, t_1) -> Leq(Parenthetical(t_0), t_1)
+    where <(?Array(_, _, _)
+            + ?IfThen(_, _)
+            + ?Geq(_, _)
+            + ?Or(_, _)
+            + ?For(_, _, _, _)
+            + ?If(_, _, _)
+            + ?Eq(_, _)
+            + ?Gt(_, _)
+            + ?Lt(_, _)
+            + ?Leq(_, _)
+            + ?While(_, _)
+            + ?Neq(_, _)
+            + ?Assign(_, _)
+            + ?And(_, _)
+            + fail)> t_0
+
+  TigerParenthesize :
+    Leq(t_0, t_1) -> Leq(t_0, Parenthetical(t_1))
+    where <(?Leq(_, _)
+            + ?Neq(_, _)
+            + ?Geq(_, _)
+            + ?Or(_, _)
+            + ?And(_, _)
+            + ?Eq(_, _)
+            + ?Gt(_, _)
+            + ?Lt(_, _)
+            + fail)> t_1
+
+  TigerParenthesize :
+    Neq(t_0, t_1) -> Neq(Parenthetical(t_0), t_1)
+    where <(?Array(_, _, _)
+            + ?IfThen(_, _)
+            + ?Or(_, _)
+            + ?Geq(_, _)
+            + ?For(_, _, _, _)
+            + ?Eq(_, _)
+            + ?If(_, _, _)
+            + ?Gt(_, _)
+            + ?Lt(_, _)
+            + ?Leq(_, _)
+            + ?Assign(_, _)
+            + ?Neq(_, _)
+            + ?While(_, _)
+            + ?And(_, _)
+            + fail)> t_0
+
+  TigerParenthesize :
+    Neq(t_0, t_1) -> Neq(t_0, Parenthetical(t_1))
+    where <(?Leq(_, _)
+            + ?Neq(_, _)
+            + ?Or(_, _)
+            + ?Geq(_, _)
+            + ?And(_, _)
+            + ?Eq(_, _)
+            + ?Gt(_, _)
+            + ?Lt(_, _)
             + fail)> t_1
 
   TigerParenthesize :
     And(t_0, t_1) -> And(Parenthetical(t_0), t_1)
-    where <(?While(_, _)
+    where <(?Array(_, _, _)
+            + ?IfThen(_, _)
+            + ?While(_, _)
+            + ?Assign(_, _)
             + ?Or(_, _)
             + ?For(_, _, _, _)
             + ?If(_, _, _)
-            + ?Array(_, _, _)
-            + ?IfThen(_, _)
-            + ?Assign(_, _)
             + fail)> t_0
 
   TigerParenthesize :
@@ -62,463 +378,17 @@ rules
             + ?And(_, _)
             + fail)> t_1
 
-  TigerParenthesize :
-    Or(t_0, t_1) -> Or(Parenthetical(t_0), t_1)
-    where <(?Array(_, _, _)
-            + ?While(_, _)
-            + ?For(_, _, _, _)
-            + ?IfThen(_, _)
-            + ?If(_, _, _)
-            + ?Assign(_, _)
-            + fail)> t_0
-
-  TigerParenthesize :
-    Or(t_0, t_1) -> Or(t_0, Parenthetical(t_1))
-    where <(?Or(_, _) + fail)> t_1
-
-  TigerParenthesize :
-    Lt(t_0, t_1) -> Lt(Parenthetical(t_0), t_1)
-    where <(?Gt(_, _)
-            + ?And(_, _)
-            + ?Or(_, _)
-            + ?Lt(_, _)
-            + ?Eq(_, _)
-            + ?If(_, _, _)
-            + ?Neq(_, _)
-            + ?Geq(_, _)
-            + ?Leq(_, _)
-            + ?While(_, _)
-            + ?For(_, _, _, _)
-            + ?Array(_, _, _)
-            + ?IfThen(_, _)
-            + ?Assign(_, _)
-            + fail)> t_0
-
-  TigerParenthesize :
-    Lt(t_0, t_1) -> Lt(t_0, Parenthetical(t_1))
-    where <(?Leq(_, _)
-            + ?Gt(_, _)
-            + ?And(_, _)
-            + ?Or(_, _)
-            + ?Lt(_, _)
-            + ?Eq(_, _)
-            + ?Neq(_, _)
-            + ?Geq(_, _)
-            + fail)> t_1
-
-  TigerParenthesize :
-    Eq(t_0, t_1) -> Eq(Parenthetical(t_0), t_1)
-    where <(?Gt(_, _)
-            + ?And(_, _)
-            + ?Or(_, _)
-            + ?Lt(_, _)
-            + ?If(_, _, _)
-            + ?Eq(_, _)
-            + ?Neq(_, _)
-            + ?Geq(_, _)
-            + ?Leq(_, _)
-            + ?While(_, _)
-            + ?For(_, _, _, _)
-            + ?Array(_, _, _)
-            + ?IfThen(_, _)
-            + ?Assign(_, _)
-            + fail)> t_0
-
-  TigerParenthesize :
-    Eq(t_0, t_1) -> Eq(t_0, Parenthetical(t_1))
-    where <(?Leq(_, _)
-            + ?Gt(_, _)
-            + ?And(_, _)
-            + ?Or(_, _)
-            + ?Lt(_, _)
-            + ?Eq(_, _)
-            + ?Neq(_, _)
-            + ?Geq(_, _)
-            + fail)> t_1
-
-  TigerParenthesize :
-    Minus(t_0, t_1) -> Minus(Parenthetical(t_0), t_1)
-    where <(?Gt(_, _)
-            + ?And(_, _)
-            + ?Or(_, _)
-            + ?Lt(_, _)
-            + ?Eq(_, _)
-            + ?If(_, _, _)
-            + ?Neq(_, _)
-            + ?Geq(_, _)
-            + ?Leq(_, _)
-            + ?While(_, _)
-            + ?For(_, _, _, _)
-            + ?Array(_, _, _)
-            + ?IfThen(_, _)
-            + ?Assign(_, _)
-            + fail)> t_0
-
-  TigerParenthesize :
-    Minus(t_0, t_1) -> Minus(t_0, Parenthetical(t_1))
-    where <(?Leq(_, _)
-            + ?Gt(_, _)
-            + ?And(_, _)
-            + ?Or(_, _)
-            + ?Lt(_, _)
-            + ?Eq(_, _)
-            + ?Minus(_, _)
-            + ?Plus(_, _)
-            + ?Neq(_, _)
-            + ?Geq(_, _)
-            + fail)> t_1
-
-  TigerParenthesize :
-    Plus(t_0, t_1) -> Plus(Parenthetical(t_0), t_1)
-    where <(?Gt(_, _)
-            + ?And(_, _)
-            + ?Or(_, _)
-            + ?Lt(_, _)
-            + ?If(_, _, _)
-            + ?Eq(_, _)
-            + ?Neq(_, _)
-            + ?Geq(_, _)
-            + ?Leq(_, _)
-            + ?While(_, _)
-            + ?For(_, _, _, _)
-            + ?Array(_, _, _)
-            + ?IfThen(_, _)
-            + ?Assign(_, _)
-            + fail)> t_0
-
-  TigerParenthesize :
-    Plus(t_0, t_1) -> Plus(t_0, Parenthetical(t_1))
-    where <(?Leq(_, _)
-            + ?Gt(_, _)
-            + ?And(_, _)
-            + ?Or(_, _)
-            + ?Lt(_, _)
-            + ?Eq(_, _)
-            + ?Minus(_, _)
-            + ?Plus(_, _)
-            + ?Neq(_, _)
-            + ?Geq(_, _)
-            + fail)> t_1
-
-  TigerParenthesize :
-    Times(t_0, t_1) -> Times(Parenthetical(t_0), t_1)
-    where <(?Gt(_, _)
-            + ?And(_, _)
-            + ?Or(_, _)
-            + ?Lt(_, _)
-            + ?If(_, _, _)
-            + ?Eq(_, _)
-            + ?Minus(_, _)
-            + ?Plus(_, _)
-            + ?Neq(_, _)
-            + ?Geq(_, _)
-            + ?Leq(_, _)
-            + ?While(_, _)
-            + ?For(_, _, _, _)
-            + ?Array(_, _, _)
-            + ?IfThen(_, _)
-            + ?Assign(_, _)
-            + fail)> t_0
-
-  TigerParenthesize :
-    Times(t_0, t_1) -> Times(t_0, Parenthetical(t_1))
-    where <(?Gt(_, _)
-            + ?Leq(_, _)
-            + ?And(_, _)
-            + ?Or(_, _)
-            + ?Lt(_, _)
-            + ?Eq(_, _)
-            + ?Minus(_, _)
-            + ?Plus(_, _)
-            + ?Times(_, _)
-            + ?Neq(_, _)
-            + ?Divide(_, _)
-            + ?Geq(_, _)
-            + fail)> t_1
-
-  TigerParenthesize :
-    Neq(t_0, t_1) -> Neq(Parenthetical(t_0), t_1)
-    where <(?Gt(_, _)
-            + ?And(_, _)
-            + ?Or(_, _)
-            + ?Lt(_, _)
-            + ?If(_, _, _)
-            + ?Eq(_, _)
-            + ?Neq(_, _)
-            + ?Geq(_, _)
-            + ?Leq(_, _)
-            + ?While(_, _)
-            + ?For(_, _, _, _)
-            + ?Array(_, _, _)
-            + ?IfThen(_, _)
-            + ?Assign(_, _)
-            + fail)> t_0
-
-  TigerParenthesize :
-    Neq(t_0, t_1) -> Neq(t_0, Parenthetical(t_1))
-    where <(?Gt(_, _)
-            + ?Leq(_, _)
-            + ?And(_, _)
-            + ?Or(_, _)
-            + ?Lt(_, _)
-            + ?Eq(_, _)
-            + ?Neq(_, _)
-            + ?Geq(_, _)
-            + fail)> t_1
-
-  TigerParenthesize :
-    Geq(t_0, t_1) -> Geq(Parenthetical(t_0), t_1)
-    where <(?Gt(_, _)
-            + ?And(_, _)
-            + ?Or(_, _)
-            + ?Lt(_, _)
-            + ?Eq(_, _)
-            + ?If(_, _, _)
-            + ?Neq(_, _)
-            + ?Geq(_, _)
-            + ?Leq(_, _)
-            + ?While(_, _)
-            + ?For(_, _, _, _)
-            + ?Array(_, _, _)
-            + ?IfThen(_, _)
-            + ?Assign(_, _)
-            + fail)> t_0
-
-  TigerParenthesize :
-    Geq(t_0, t_1) -> Geq(t_0, Parenthetical(t_1))
-    where <(?Leq(_, _)
-            + ?Gt(_, _)
-            + ?And(_, _)
-            + ?Or(_, _)
-            + ?Lt(_, _)
-            + ?Eq(_, _)
-            + ?Neq(_, _)
-            + ?Geq(_, _)
-            + fail)> t_1
-
-  TigerParenthesize :
-    Divide(t_0, t_1) -> Divide(Parenthetical(t_0), t_1)
-    where <(?Gt(_, _)
-            + ?And(_, _)
-            + ?Or(_, _)
-            + ?Lt(_, _)
-            + ?Eq(_, _)
-            + ?If(_, _, _)
-            + ?Minus(_, _)
-            + ?Plus(_, _)
-            + ?Neq(_, _)
-            + ?Geq(_, _)
-            + ?Leq(_, _)
-            + ?While(_, _)
-            + ?For(_, _, _, _)
-            + ?Array(_, _, _)
-            + ?IfThen(_, _)
-            + ?Assign(_, _)
-            + fail)> t_0
-
-  TigerParenthesize :
-    Divide(t_0, t_1) -> Divide(t_0, Parenthetical(t_1))
-    where <(?Gt(_, _)
-            + ?Leq(_, _)
-            + ?And(_, _)
-            + ?Or(_, _)
-            + ?Lt(_, _)
-            + ?Eq(_, _)
-            + ?Minus(_, _)
-            + ?Plus(_, _)
-            + ?Times(_, _)
-            + ?Neq(_, _)
-            + ?Geq(_, _)
-            + ?Divide(_, _)
-            + fail)> t_1
-
-  TigerParenthesize :
-    Leq(t_0, t_1) -> Leq(Parenthetical(t_0), t_1)
-    where <(?Gt(_, _)
-            + ?And(_, _)
-            + ?Or(_, _)
-            + ?Lt(_, _)
-            + ?Eq(_, _)
-            + ?If(_, _, _)
-            + ?Neq(_, _)
-            + ?Geq(_, _)
-            + ?Leq(_, _)
-            + ?While(_, _)
-            + ?For(_, _, _, _)
-            + ?Array(_, _, _)
-            + ?IfThen(_, _)
-            + ?Assign(_, _)
-            + fail)> t_0
-
-  TigerParenthesize :
-    Leq(t_0, t_1) -> Leq(t_0, Parenthetical(t_1))
-    where <(?Gt(_, _)
-            + ?Leq(_, _)
-            + ?And(_, _)
-            + ?Or(_, _)
-            + ?Lt(_, _)
-            + ?Eq(_, _)
-            + ?Neq(_, _)
-            + ?Geq(_, _)
-            + fail)> t_1
-
-  TigerParenthesize :
-    Uminus(t_0) -> Uminus(Parenthetical(t_0))
-    where <(?Leq(_, _)
-            + ?Gt(_, _)
-            + ?And(_, _)
-            + ?Or(_, _)
-            + ?Lt(_, _)
-            + ?Eq(_, _)
-            + ?Minus(_, _)
-            + ?Times(_, _)
-            + ?Plus(_, _)
-            + ?Neq(_, _)
-            + ?Divide(_, _)
-            + ?Geq(_, _)
-            + fail)> t_0
-
 
 rules
-
-  TigerParenthesize-deep :
-    Or(t_0, t_1) -> Or(t_0', t_1)
-    where t_0' := <RightContext(
-                     ?Array(_, _, _)
-                     + ?While(_, _)
-                     + ?IfThen(_, _)
-                     + ?For(_, _, _, _)
-                     + ?If(_, _, _)
-                     + ?Assign(_, _)
-                     + fail
-                   )
-                   + fail> t_0
-
-  TigerParenthesize-deep :
-    And(t_0, t_1) -> And(t_0', t_1)
-    where t_0' := <RightContext(
-                     ?Array(_, _, _)
-                     + ?While(_, _)
-                     + ?IfThen(_, _)
-                     + ?For(_, _, _, _)
-                     + ?If(_, _, _)
-                     + ?Assign(_, _)
-                     + fail
-                   )
-                   + fail> t_0
-
-  TigerParenthesize-deep :
-    Eq(t_0, t_1) -> Eq(t_0', t_1)
-    where t_0' := <RightContext(
-                     ?Array(_, _, _)
-                     + ?While(_, _)
-                     + ?IfThen(_, _)
-                     + ?For(_, _, _, _)
-                     + ?If(_, _, _)
-                     + ?Assign(_, _)
-                     + fail
-                   )
-                   + fail> t_0
-
-  TigerParenthesize-deep :
-    Plus(t_0, t_1) -> Plus(t_0', t_1)
-    where t_0' := <RightContext(
-                     ?Array(_, _, _)
-                     + ?While(_, _)
-                     + ?IfThen(_, _)
-                     + ?For(_, _, _, _)
-                     + ?If(_, _, _)
-                     + ?Assign(_, _)
-                     + fail
-                   )
-                   + fail> t_0
-
-  TigerParenthesize-deep :
-    Leq(t_0, t_1) -> Leq(t_0', t_1)
-    where t_0' := <RightContext(
-                     ?Array(_, _, _)
-                     + ?While(_, _)
-                     + ?IfThen(_, _)
-                     + ?For(_, _, _, _)
-                     + ?If(_, _, _)
-                     + ?Assign(_, _)
-                     + fail
-                   )
-                   + fail> t_0
 
   TigerParenthesize-deep :
     Minus(t_0, t_1) -> Minus(t_0', t_1)
     where t_0' := <RightContext(
                      ?Array(_, _, _)
-                     + ?While(_, _)
-                     + ?IfThen(_, _)
                      + ?For(_, _, _, _)
-                     + ?If(_, _, _)
-                     + ?Assign(_, _)
-                     + fail
-                   )
-                   + fail> t_0
-
-  TigerParenthesize-deep :
-    Divide(t_0, t_1) -> Divide(t_0', t_1)
-    where t_0' := <RightContext(
-                     ?Array(_, _, _)
-                     + ?While(_, _)
                      + ?IfThen(_, _)
-                     + ?For(_, _, _, _)
                      + ?If(_, _, _)
-                     + ?Assign(_, _)
-                     + fail
-                   )
-                   + fail> t_0
-
-  TigerParenthesize-deep :
-    Times(t_0, t_1) -> Times(t_0', t_1)
-    where t_0' := <RightContext(
-                     ?Array(_, _, _)
                      + ?While(_, _)
-                     + ?IfThen(_, _)
-                     + ?For(_, _, _, _)
-                     + ?If(_, _, _)
-                     + ?Assign(_, _)
-                     + fail
-                   )
-                   + fail> t_0
-
-  TigerParenthesize-deep :
-    Lt(t_0, t_1) -> Lt(t_0', t_1)
-    where t_0' := <RightContext(
-                     ?Array(_, _, _)
-                     + ?While(_, _)
-                     + ?IfThen(_, _)
-                     + ?For(_, _, _, _)
-                     + ?If(_, _, _)
-                     + ?Assign(_, _)
-                     + fail
-                   )
-                   + fail> t_0
-
-  TigerParenthesize-deep :
-    Neq(t_0, t_1) -> Neq(t_0', t_1)
-    where t_0' := <RightContext(
-                     ?Array(_, _, _)
-                     + ?While(_, _)
-                     + ?IfThen(_, _)
-                     + ?For(_, _, _, _)
-                     + ?If(_, _, _)
-                     + ?Assign(_, _)
-                     + fail
-                   )
-                   + fail> t_0
-
-  TigerParenthesize-deep :
-    Geq(t_0, t_1) -> Geq(t_0', t_1)
-    where t_0' := <RightContext(
-                     ?Array(_, _, _)
-                     + ?While(_, _)
-                     + ?IfThen(_, _)
-                     + ?For(_, _, _, _)
-                     + ?If(_, _, _)
                      + ?Assign(_, _)
                      + fail
                    )
@@ -528,10 +398,140 @@ rules
     Gt(t_0, t_1) -> Gt(t_0', t_1)
     where t_0' := <RightContext(
                      ?Array(_, _, _)
-                     + ?While(_, _)
-                     + ?IfThen(_, _)
                      + ?For(_, _, _, _)
+                     + ?IfThen(_, _)
                      + ?If(_, _, _)
+                     + ?While(_, _)
+                     + ?Assign(_, _)
+                     + fail
+                   )
+                   + fail> t_0
+
+  TigerParenthesize-deep :
+    Geq(t_0, t_1) -> Geq(t_0', t_1)
+    where t_0' := <RightContext(
+                     ?Array(_, _, _)
+                     + ?For(_, _, _, _)
+                     + ?IfThen(_, _)
+                     + ?If(_, _, _)
+                     + ?While(_, _)
+                     + ?Assign(_, _)
+                     + fail
+                   )
+                   + fail> t_0
+
+  TigerParenthesize-deep :
+    And(t_0, t_1) -> And(t_0', t_1)
+    where t_0' := <RightContext(
+                     ?Array(_, _, _)
+                     + ?For(_, _, _, _)
+                     + ?IfThen(_, _)
+                     + ?If(_, _, _)
+                     + ?While(_, _)
+                     + ?Assign(_, _)
+                     + fail
+                   )
+                   + fail> t_0
+
+  TigerParenthesize-deep :
+    Leq(t_0, t_1) -> Leq(t_0', t_1)
+    where t_0' := <RightContext(
+                     ?Array(_, _, _)
+                     + ?For(_, _, _, _)
+                     + ?IfThen(_, _)
+                     + ?If(_, _, _)
+                     + ?While(_, _)
+                     + ?Assign(_, _)
+                     + fail
+                   )
+                   + fail> t_0
+
+  TigerParenthesize-deep :
+    Divide(t_0, t_1) -> Divide(t_0', t_1)
+    where t_0' := <RightContext(
+                     ?Array(_, _, _)
+                     + ?For(_, _, _, _)
+                     + ?IfThen(_, _)
+                     + ?If(_, _, _)
+                     + ?While(_, _)
+                     + ?Assign(_, _)
+                     + fail
+                   )
+                   + fail> t_0
+
+  TigerParenthesize-deep :
+    Neq(t_0, t_1) -> Neq(t_0', t_1)
+    where t_0' := <RightContext(
+                     ?Array(_, _, _)
+                     + ?For(_, _, _, _)
+                     + ?IfThen(_, _)
+                     + ?If(_, _, _)
+                     + ?While(_, _)
+                     + ?Assign(_, _)
+                     + fail
+                   )
+                   + fail> t_0
+
+  TigerParenthesize-deep :
+    Lt(t_0, t_1) -> Lt(t_0', t_1)
+    where t_0' := <RightContext(
+                     ?Array(_, _, _)
+                     + ?For(_, _, _, _)
+                     + ?IfThen(_, _)
+                     + ?If(_, _, _)
+                     + ?While(_, _)
+                     + ?Assign(_, _)
+                     + fail
+                   )
+                   + fail> t_0
+
+  TigerParenthesize-deep :
+    Plus(t_0, t_1) -> Plus(t_0', t_1)
+    where t_0' := <RightContext(
+                     ?Array(_, _, _)
+                     + ?For(_, _, _, _)
+                     + ?IfThen(_, _)
+                     + ?If(_, _, _)
+                     + ?While(_, _)
+                     + ?Assign(_, _)
+                     + fail
+                   )
+                   + fail> t_0
+
+  TigerParenthesize-deep :
+    Times(t_0, t_1) -> Times(t_0', t_1)
+    where t_0' := <RightContext(
+                     ?Array(_, _, _)
+                     + ?For(_, _, _, _)
+                     + ?IfThen(_, _)
+                     + ?If(_, _, _)
+                     + ?While(_, _)
+                     + ?Assign(_, _)
+                     + fail
+                   )
+                   + fail> t_0
+
+  TigerParenthesize-deep :
+    Eq(t_0, t_1) -> Eq(t_0', t_1)
+    where t_0' := <RightContext(
+                     ?Array(_, _, _)
+                     + ?For(_, _, _, _)
+                     + ?IfThen(_, _)
+                     + ?If(_, _, _)
+                     + ?While(_, _)
+                     + ?Assign(_, _)
+                     + fail
+                   )
+                   + fail> t_0
+
+  TigerParenthesize-deep :
+    Or(t_0, t_1) -> Or(t_0', t_1)
+    where t_0' := <RightContext(
+                     ?Array(_, _, _)
+                     + ?For(_, _, _, _)
+                     + ?IfThen(_, _)
+                     + ?If(_, _, _)
+                     + ?While(_, _)
                      + ?Assign(_, _)
                      + fail
                    )

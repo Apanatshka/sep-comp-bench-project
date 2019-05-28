@@ -39,10 +39,10 @@ rules
     prettyprint-NaBL2-api-term
 
   nabl2--generate-constraint-init-rule(|):
-    (nabl2_source, term0@wld1) -> (args0, constraint0)
+    (nabl2_source, term78@wld1) -> (args19, constraint5)
     with(s := <nabl2--fresh-var(|nabl2_source)> "s" ; id)
-    with(args0 := Params((s)))
-    with(constraint0 := CNew([s], <nabl2--get-ast-index> term0))
+    with(args19 := Params((s)))
+    with(constraint5 := CNew([s], <nabl2--get-ast-index> term78))
     with(if nabl2--is-debug-collection-enabled then
            nabl2--collection-info-msg(
            | <concat-strings> ["init ^ ", <pp-NaBL2-CTerm> (s)]
@@ -50,18 +50,18 @@ rules
          end)
 
   nabl2--generate-constraint-default-rule(|):
-    (nabl2_source, term1@Empty(), args1) -> constraint1
+    (nabl2_source, term79@Empty(), args20) -> constraint6
     with(id)
-    with(Params(params12@(s)) := args1
+    with(Params(params12@(s)) := args20
          <+ fatal-err(
             | <concat-strings> [ "Cannot match expected "
                                , "^ (s)"
                                , " with actual "
-                               , <nabl2--pp-flat-args> args1
+                               , <nabl2--pp-flat-args> args20
                                , " when matching "
                                , "Empty()"
                                , " with "
-                               , <pp-NaBL2-Term> term1
+                               , <pp-NaBL2-Term> term79
                                , "."
                                ]
             ))
@@ -69,20 +69,20 @@ rules
            nabl2--collection-info-msg(
            | <concat-strings> [ "default"
                               , " [[ "
-                              , <pp-NaBL2-Term> term1
+                              , <pp-NaBL2-Term> term79
                               , " ^ "
                               , <pp-NaBL2-CTerm> params12
                               , " ]]"
                               ]
            )
          end)
-    with(constraint1 := CConj(
+    with(constraint6 := CConj(
                           CAstProperty(
-                            <nabl2--get-ast-index> term1
+                            <nabl2--get-ast-index> term79
                           , Params()
                           , (s)
                           )
                         , CFalse(
-                            Message(Note(), "Specify name binding and typing rules in static-semantics.nabl2", <nabl2--get-ast-index> term1)
+                            Message(Note(), "Specify name binding and typing rules in static-semantics.nabl2", <nabl2--get-ast-index> term79)
                           )
                         ))
