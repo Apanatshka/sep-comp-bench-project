@@ -26,7 +26,6 @@ language:
     placeholder:
       prefix: "$"
   stratego:
-    build: incremental
     format: jar
     args:
     - -la
