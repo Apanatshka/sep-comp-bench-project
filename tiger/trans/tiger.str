@@ -42,4 +42,5 @@ rules // Desugaring
       filename := <guarantee-extension(|"sg")> path;
       analysis := <nabl2-get-resource-analysis> $[[project-path]/[path]];
       result := <nabl2--debug-scope-graph(|analysis)>
+
       
